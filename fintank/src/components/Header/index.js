@@ -10,6 +10,9 @@ import SearchForm from "./SearchForm"
 import UserMenu from "./UserMenu"
 import DropdownMenuItem from "./DropdownMenuItem"
 import UseWindowSize from "@hooks/UseWindowSize"
+
+
+
 const Header = (props) => {
   const [parentName, setParentName] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
@@ -20,7 +23,7 @@ const Header = (props) => {
   }
   // highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
   const highlightDropdownParent = () => {
-    console.log("Initial ROute", Router.route);
+    console.log("Initial Route", Router.route);
     menu.map((item) => {
       item.dropdown &&
         item.dropdown.map((dropdownLink) => {
@@ -167,3 +170,5 @@ const Header = (props) => {
 }
 
 export default Header
+
+

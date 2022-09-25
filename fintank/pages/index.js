@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import Image from "@components/CustomImage"
+import axios from 'axios'
 import { Container, Row, Col, Button } from "react-bootstrap"
 import Swiper from "@components/Swiper"
 import {SwiperSlide } from "swiper/react"
@@ -15,8 +16,15 @@ import blog from "@data/blog.json"
 import Icon from "@components/Icon"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
+import { useHomeIndex } from "@hooks/useHomeIndex"
 
 export async function getStaticProps() {
+
+  // const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/homepage_indexes/`);
+  // // console.log(res)
+  // const data = res.data;
+  
+
   return {
     props: {
       nav: {
@@ -24,12 +32,16 @@ export async function getStaticProps() {
         classes: "shadow",
         color: "white",
       },
-      title: "Homepage",
+      title: "Fintank",
+      data
     },
   }
 }
 
-const Index = () => {
+const Index = (props) => {
+
+  const indexData = useHomeIndex()
+
   return (
     <React.Fragment>
       <section className="hero-home">
@@ -83,12 +95,12 @@ const Index = () => {
                 wrapperClasses="dark-overlay"
                 indexReturns
                 perView={4}
-                data={data.topBlocks.blocks}
+                data={indexData.data}
                 loop
-                speed={2000}
+                speed={1000}
                 pagination
                 autoplay={{
-                  delay: 10000,
+                  delay: 5000,
                 }}
               />
           </Container>
@@ -179,3 +191,17 @@ const Index = () => {
 }
 
 export default Index
+
+
+
+// export async function getServerSideProps(){
+//   const res = await axios.get(`${process.env.API_URL}/all_indexes/`);
+//   console.log(res)
+//   const data = res.data;
+
+//   return {
+//     props:{
+//       data,
+//     }
+//   }
+// }

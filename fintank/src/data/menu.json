@@ -1,279 +1,55 @@
 [
   {
     "title": "Home",
+    "link":"/"
+  },
+  {
+    "title": "Major Indexes",
+    "link": "/markets"
+  },
+  {
+    "title":"Equities",
     "dropdown": [
       {
-        "title": "Rooms",
-        "link": "/"
+        "title": "S&P 500 Stocks",
+        "link": "/universe/sp500"
       },
       {
-        "title": "Restaurant",
-        "link": "/index-2"
+        "title": "Nasdaq Stocks",
+        "link": "/universe/nasdaq"
       },
       {
-        "title": "Travel",
-        "link": "/index-3"
+        "title": "S&P/TSX Composite",
+        "link": "/universe/sptsx"
       },
       {
-        "title": "Real estate",
-        "link": "/index-4",
+        "title": "European Equities",
+        "link": "/universe/eurostocks",
+        "new": true
+      },
+      {
+        "title": "ETFs",
+        "link": "/universe/etfs",
+        "new": true
+      },
+      {
+        "title": "All Stocks",
+        "link": "/universe/allstocks",
         "new": true
       }
     ]
   },
   {
-    "title": "Major Indexes",
-    "position": "static",
-    "megamenu": [
-      [
-        {
-          "title": "Homepage",
-          "links": [
-            {
-              "title": "Rooms",
-              "link": "/",
-              "parent": "Home"
-            },
-            {
-              "title": "Restaurants",
-              "link": "/index-2",
-              "parent": "Home"
-            },
-            {
-              "title": "Travel",
-              "link": "/index-3",
-              "parent": "Home"
-            },
-            {
-              "title": "Real estate",
-              "link": "/index-4",
-              "parent": "Home",
-              "new": true
-            }
-          ]
-        },
-        {
-          "title": "Restaurants",
-          "links": [
-            {
-              "title": "Category - Map on the top",
-              "link": "/category"
-            },
-            {
-              "title": "Category - Map on the right",
-              "link": "/category-2"
-            },
-            {
-              "title": "Category - no map",
-              "link": "/category-3"
-            },
-            {
-              "title": "Restaurant detail",
-              "link": "/detail"
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "title": "Rooms",
-          "links": [
-            {
-              "title": "Category - Map on the top",
-              "link": "/category-rooms"
-            },
-            {
-              "title": "Category - Map on the right",
-              "link": "/category-2-rooms"
-            },
-            {
-              "title": "Category - no map",
-              "link": "/category-3-rooms"
-            },
-            {
-              "title": "Room detail",
-              "link": "/detail-rooms"
-            }
-          ]
-        },
-        {
-          "title": "Blog",
-          "links": [
-            {
-              "title": "Blog",
-              "link": "/blog"
-            },
-            {
-              "title": "Post",
-              "link": "/blog/[slug]",
-              "as": "/blog/autumn-fashion-tips-and-tricks"
-            }
-          ]
-        },
-        {
-          "title": "Pages",
-          "links": [
-            {
-              "title": "Comparison",
-              "link": "/compare"
-            },
-            {
-              "title": "Team",
-              "link": "/team"
-            },
-            {
-              "title": "Contact",
-              "link": "/contact",
-              "parent": "Contact"
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "title": "Pages",
-          "links": [
-            {
-              "title": "Pricing",
-              "link": "/pricing"
-            },
-            {
-              "title": "Text page",
-              "link": "/text"
-            },
-            {
-              "title": "F.A.Q.s",
-              "link": "/faq"
-            },
-            {
-              "title": "Coming soon",
-              "link": "/coming-soon"
-            },
-            {
-              "title": "404 page",
-              "link": "/404"
-            },
-            {
-              "title": "Knowledge Base",
-              "link": "/knowledge-base",
-              "new": true
-            },
-            {
-              "title": "Knowledge Base - Topic",
-              "link": "/knowledge-base-topic",
-              "new": true
-            },
-            {
-              "title": "Terms & Conditions",
-              "link": "/terms",
-              "new": true
-            }
-          ]
-        },
-        {
-          "title": "Host",
-          "links": [
-            {
-              "title": "Add new listing - 6 pages",
-              "link": "/user-add-0"
-            },
-            {
-              "title": "Bookings - list view",
-              "link": "/user-list"
-            }
-          ]
-        }
-      ],
-      [
-        {
-          "title": "User",
-          "links": [
-            {
-              "title": "Profile",
-              "link": "/user-profile"
-            },
-            {
-              "title": "Account",
-              "link": "/user-account"
-            },
-            {
-              "title": "Personal info - forms",
-              "link": "/user-personal"
-            },
-            {
-              "title": "Password & security - forms",
-              "link": "/user-security"
-            },
-            {
-              "title": "Sign in",
-              "link": "/login"
-            },
-            {
-              "title": "Sign up",
-              "link": "/signup"
-            },
-            {
-              "title": "Booking process - 4 pages",
-              "link": "/user-booking-1"
-            },
-            {
-              "title": "Bookings - grid view",
-              "link": "/user-grid"
-            },
-            {
-              "title": "Booking detail",
-              "link": "/user-booking-detail"
-            },
-            {
-              "title": "Invoice",
-              "link": "/user-invoice",
-              "new": true
-            },
-            {
-              "title": "Messages",
-              "link": "/user-messages",
-              "new": true
-            },
-            {
-              "title": "Message Detail",
-              "link": "/user-messages-detail",
-              "new": true
-            }
-          ]
-        }
-      ]
-    ],
-    "services": [
-      {
-        "title": "Best rentals",
-        "content": "Find the perfect place",
-        "icon": "destination-map-1"
-      },
-      {
-        "title": "Earn points",
-        "content": "And get great rewards",
-        "icon": "money-box-1"
-      },
-      {
-        "title": "020-800-456-747",
-        "content": "24/7 Available Support",
-        "icon": "customer-support-1"
-      },
-      {
-        "title": "Secure Payment",
-        "content": "Secure Payment",
-        "icon": "secure-payment-1"
-      }
-    ],
-    "image": "/content/img/photo/photo-1521170665346-3f21e2291d8b.jpg"
+    "title": "Equity Screener",
+    "link": "/universe/commodities"
   },
   {
     "title": "Commodities",
-    "link": "/contact"
+    "link": "/universe/commodities"
   },
   {
     "title": "Crypto",
-    "link": "/login",
+    "link": "/universe/cryptos",
     "hideToLoggedUser": true
   },
   {

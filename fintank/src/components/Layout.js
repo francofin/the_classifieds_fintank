@@ -27,7 +27,7 @@ const Layout = (pageProps) => {
         className={pageProps.className}
       >
         <Head>
-          <title>{pageProps.title} - Directory React Theme</title>
+          <title>{pageProps.title} - Portfolio Manager</title>
           <link rel="icon" href="/favicon.png" />
         </Head>
         <NextNProgress color="#4E66F8" options={{ showSpinner: false }} />

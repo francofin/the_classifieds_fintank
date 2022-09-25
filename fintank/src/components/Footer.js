@@ -49,9 +49,9 @@ const Footer = () => {
                       {item.content}
                     </p>
                   )}
-                  {item.social && (
+                  {/* {item.social && (
                     <ul className="list-inline">
-                      {item.social.map((socialIcon) => {
+                      {item.social.map((socialIcon, index) => {
                         let socialIconFA
                         switch (socialIcon.title) {
                           case "facebook":
@@ -77,7 +77,8 @@ const Footer = () => {
                             <Link
                               href={socialIcon.link}
                               target="_blank"
-                              title={socialIcon.title}
+                              // title={socialIcon.title}
+                              passHref
                               className="text-muted text-hover-primary"
                             >
                               <FontAwesomeIcon icon={socialIconFA} />
@@ -86,12 +87,12 @@ const Footer = () => {
                         )
                       })}
                     </ul>
-                  )}
+                  )} */}
                   {item.links && (
                     <ul className="list-unstyled">
                       {item.links.map((link) => (
                         <li key={link.title}>
-                          <Link href={link.link}>
+                          <Link href={link.link} passHref>
                             <a className="text-muted">
                               {link.title}
                               {link.new && (
