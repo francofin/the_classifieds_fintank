@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useMemo } from "react"
 import Link from "next/link"
 import { DayPicker } from "react-day-picker"
 import "react-day-picker/dist/style.css"
 import {Container,Row,Col,Form,Button, Badge, Overlay} from "react-bootstrap"
 import UseWindowSize from "@hooks/UseWindowSize"
-import Swiper from "@components/Swiper"
-import Reviews from "@components/Reviews"
-import ReviewForm from "@components/ReviewForm"
 import roomData from "@data/stock-research.json"
 import blog from "@data/blog.json"
 import SwiperGallery from "@components/SwiperGallery"
@@ -14,26 +11,32 @@ import Gallery from "@components/Gallery"
 import Map from "@components/Map"
 import { useStockData } from "@hooks/useStockData"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {
-  faArrowRight,
-  faBath,
-  faBed,
-  faDoorOpen,
-  faHeart,
-  faLaptop,
-  faLongArrowAltRight,
-  faMapMarkerAlt,
-  faSnowflake,
-  faThermometerThreeQuarters,
-  faTshirt,
-  faTv,
-  faUsers,
-  faUtensils,
-  faWifi,
-} from "@fortawesome/free-solid-svg-icons"
-import Avatar from "@components/Avatar"
 import axios from 'axios';
-import { useLocationService } from "@hooks/useLocationService"
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+
+
+
 
 export function getAllPostIds() {
   return blog.posts.map((post) => ({
@@ -52,7 +55,27 @@ export function getPostData(slug) {
 }
 
 
-
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+    },
+    title: {
+      display: true,
+      text: 'Time Series Data',
+    },
+  },
+  animations: {
+    tension: {
+      duration: 1000,
+      easing: 'linear',
+      from: 1,
+      to: 0,
+      loop: false
+    }
+  }
+};
 // export async function getStaticPaths() {
 //   return {
 //     paths: getAllPostIds(),
@@ -67,9 +90,31 @@ export async function getServerSideProps({query }) {
     const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/stock-data/${ticker}`);
     const data = stockRequested.data
 
+    const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`)
+    const dailyData = dailyStockData.data
+
+    let universe;
+
+    try{
+      const universeData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getpeerlist/${ticker}/${data.stock[0]['universe']}`)
+      universe = universeData.data
+      
+    } catch(e){
+      console.log("No Universe Data Found")
+    }
+    
+
+    const labels = dailyData.dates;
+    const prices = dailyData.prices;
+
     
 
     console.log(data)
+
+    if (universe) {
+      console.log(universe)
+    }
+    
     const postData = getPostData("escape-city-today")
     return {
         props: {
@@ -80,13 +125,31 @@ export async function getServerSideProps({query }) {
         },
         // title: postData.title,
         postData,
-        data
+        data,
+        dailyData,
+        labels,
+        prices
         },
     }
 }
 const StockDetail = (props) => {
   const stockData = props.data.stock[0]
   const requestedData = useStockData(stockData.symbol)
+  const dailyData = props.dailyData;
+
+  console.log("Daily", dailyData);
+
+  const chartData = {
+    type:'line',
+    labels:props.labels,
+    datasets: [{
+      label: stockData.symbol,
+      data:props.prices,
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      pointRadius: 1
+    }]
+  }
 
 
 
@@ -95,19 +158,17 @@ const StockDetail = (props) => {
 
   useEffect(() => {
     
-    console.log(requestedData)
     setDataForStock(requestedData ? requestedData[0] : "")
   }, [requestedData])
 
   
 
 
-  useEffect(() => {
+  useMemo(() => {
 
     const fetcher = async (url) => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getgeocode/${dataForStock?.city}${" "}${dataForStock?.state}`)
       const resData = res.data
-      console.log(resData)
       setPosition(resData)
       return resData
     }
@@ -116,7 +177,6 @@ const StockDetail = (props) => {
 
   }, [dataForStock])
 
-  console.log(position)
 
   const size = UseWindowSize()
   const [range, setRange] = useState({
@@ -178,8 +238,9 @@ const StockDetail = (props) => {
               {roomData.amenities && (
                 <React.Fragment>
                   <div className="text-block">
-                    <h4 className="mb-4">Amenities</h4>
+                    <h4 className="mb-4">Stock Data</h4>
                     <Row>
+                      <Line options={options} data={chartData} style={{height:'100px'}}/>
                     </Row>
                   </div>
                   <div className="text-block">
