@@ -1,5 +1,6 @@
 import React from "react"
 import Layout from "@components/Layout"
+import { DjangoAuthProvider} from '@context/authContext';
 import "swiper/css/bundle"
 // swiper core styles
 import "swiper/css"
@@ -13,9 +14,11 @@ import "../src/scss/style.default.scss"
 
 const App = ({ Component, pageProps }) => {
   return (
-    <Layout {...pageProps}>
-      <Component {...pageProps} />
-    </Layout>
+    <DjangoAuthProvider>
+      <Layout {...pageProps}>
+        <Component {...pageProps} />
+      </Layout>
+    </DjangoAuthProvider>
   )
 }
 

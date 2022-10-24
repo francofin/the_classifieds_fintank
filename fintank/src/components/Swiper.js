@@ -7,6 +7,7 @@ import MarketReturns from "./MarketReturns"
 import { Navigation, Pagination, Autoplay, EffectFade, Grid } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import Image from "./CustomImage";
+import MoverReturns from "./MoverReturns"
 
 const SwiperComponent = (props) => {
   const breakpoints = []
@@ -85,6 +86,11 @@ const SwiperComponent = (props) => {
             {props.indexReturns && (
               <div className="w-100 h-100 hover-animate">
                 <MarketReturns data={slide} />
+            </div>
+            )}
+            {props.moverReturns && (
+              <div className="w-100 h-100 hover-animate">
+                <MoverReturns data={slide} />
             </div>
             )}
             {props.propertyCards && (

@@ -19,7 +19,7 @@ module.exports = withPlugins(
     [
       reactSvg,
       {
-        include: path.resolve(__dirname, "src/assets/svg"),
+        include: path.resolve(__dirname, "./src/assets/svg"),
       },
     ],
   ],
@@ -28,6 +28,9 @@ module.exports = withPlugins(
       deviceSizes: [320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
       // loader: "imgix", // Uncomment this line for STATIC EXPORT
       // path: "", // Uncomment this line for STATIC EXPORT
+      domains:[
+        "thetradingfloor.s3.amazonaws.com"
+      ]
     },
     env: {
       production_type: "server", // Change variable to "static" for STATIC EXPORT

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import Link from "next/link"
 import Router from "next/router"
 import { Navbar, Nav, Container, Button } from "react-bootstrap"
-import ActiveLink from "./../ActiveLink"
+import ActiveLink from "@components/ActiveLink"
 import menu from "@data/menu.json"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
@@ -10,17 +10,22 @@ import SearchForm from "./SearchForm"
 import UserMenu from "./UserMenu"
 import DropdownMenuItem from "./DropdownMenuItem"
 import UseWindowSize from "@hooks/UseWindowSize"
-
+import { DjangoAuthContext } from '@context/authContext';
 
 
 const Header = (props) => {
   const [parentName, setParentName] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
+
   const size = UseWindowSize()
   const onLinkClick = (parent) => {
     size.width < 991 && setCollapsed(!collapsed)
     setParentName(parent)
   }
+
+  const {user, loading, logout} = useContext(DjangoAuthContext);
+  // console.log(useContext(DjangoAuthContext))
+ 
   // highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
   const highlightDropdownParent = () => {
     console.log("Initial Route", Router.route);
@@ -110,8 +115,8 @@ const Header = (props) => {
                 menu.map((item) =>
                   item.dropdown || item.megamenu ? (
                     // show entire menu to unlogged user or hide items that have hideToLoggedUser set to true
-                    !props.loggedUser ||
-                    (props.loggedUser && !item.hideToLoggedUser) ? (
+                    !user ||
+                    (user && !item.hideToLoggedUser) ? (
                       // DROPDOWN ITEM
                       <DropdownMenuItem
                         onLinkClick={onLinkClick}
@@ -122,8 +127,8 @@ const Header = (props) => {
                     ) : (
                       ""
                     )
-                  ) : (props.loggedUser && !item.hideToLoggedUser) ||
-                    !props.loggedUser ? (
+                  ) : (user && !item.hideToLoggedUser) ||
+                    !user ? (
                     // NAV ITEM
                     <Nav.Item
                       key={item.title}
@@ -134,7 +139,7 @@ const Header = (props) => {
                       }
                     >
                       {item.button ? (
-                        item.showToLoggedUser !== false && (
+                        !user && (
                           <ActiveLink activeClassName="active" href={item.link}>
                             <Button onClick={() => onLinkClick(item.title)}>
                               {item.title}
@@ -158,7 +163,7 @@ const Header = (props) => {
                   )
                 )}
               {/* USER MENU */}
-              {props.loggedUser && <UserMenu onLinkClick={onLinkClick} />}
+              {user ? <UserMenu onLinkClick={onLinkClick}/> : ""}
               {/* USER MENU */}
             </Nav>
             {/* END MENU */}

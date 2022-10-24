@@ -1,10 +1,11 @@
 import React from "react"
-import OrionSprite from "@assets/svg/orion-svg-sprite.svg"
+import OrionSprite from "../assets/svg/orion-svg-sprite.svg"
 
-const Icons = () => (
+
+const SvgIcons = () => (
   <div style={{ position: "absolute" }}>
     <OrionSprite />
   </div>
 )
 
-export default Icons
+export default SvgIcons

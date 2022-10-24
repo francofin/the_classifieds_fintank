@@ -1,8 +1,8 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import Link from "next/link"
 import Image from "@components/CustomImage"
 import axios from 'axios'
-import { Container, Row, Col, Button } from "react-bootstrap"
+import { Container, Row, Col, Button, Dropdown } from "react-bootstrap"
 import Swiper from "@components/Swiper"
 import {SwiperSlide } from "swiper/react"
 import SearchBar from "@components/SearchBar"
@@ -17,14 +17,44 @@ import Icon from "@components/Icon"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
 import { useHomeIndex } from "@hooks/useHomeIndex"
+import { useSectorReturnTS } from "@hooks/UseSectorTS"
+import { useSectorData } from "@hooks/UseSectorData"
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+
+const fetcher = async (url) => {
+  const res = await axios.get(url)
+  
+  const resData = res.data
+  return resData
+}
 
 export async function getStaticProps() {
 
-  // const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/homepage_indexes/`);
-  // // console.log(res)
-  // const data = res.data;
+  const URL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/movers/`;
+  const moverData = await fetcher(URL);
   
-
   return {
     props: {
       nav: {
@@ -33,7 +63,8 @@ export async function getStaticProps() {
         color: "white",
       },
       title: "Fintank",
-      data
+      data,
+      moverData
     },
   }
 }
@@ -41,6 +72,58 @@ export async function getStaticProps() {
 const Index = (props) => {
 
   const indexData = useHomeIndex()
+  const [frequency, setFrequency] = useState('fifteen')
+  const [newFreq, setNewFreq] = useState('')
+  const [sectorReturnTS, setSectorReturnTs] = useState({})
+  const [sectorReturnOptions, setSectorReturnOptions] = useState({})
+  const [sectorVolTS, setSectorVolTs] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [cleanFrequencyName, setCleanFrequencyName] = useState('')
+  const {data:sectorData} = useSectorData()
+
+  const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
+
+  const adjustFrequencyName = (frequency) => {
+    switch(frequency){
+      case 'fifteen':
+        setCleanFrequencyName('15')
+        break;
+      case 'thirty':
+        setCleanFrequencyName('30')
+        break;
+      case 'sixty':
+        setCleanFrequencyName('60')
+        break;
+      case 'ninety':
+        setCleanFrequencyName('90')
+        break;
+
+    }
+  }
+
+
+  useEffect(() => {
+    setSectorReturnTs(exportedData)
+    setSectorReturnOptions(options)
+    setLoading(true)
+    adjustFrequencyName(frequency)
+
+  }, [frequency])
+
+
+  const handleFrequencyChange = (e) => {
+    console.log(e)
+    setFrequency(e)
+  }
+
+  console.log(sectorReturnTS)
+
+  console.log(newFreq);
+
+
+
+  
+  console.log('Mover Stuff', sectorData)
 
   return (
     <React.Fragment>
@@ -85,7 +168,7 @@ const Index = (props) => {
         <section className="py-6 bg-gray-100">
           <Container>
             <div className="text-center pb-lg-4">
-              <p className="subtitle text-secondary">
+              <p className="subtitle text-primary">
                 {data.topBlocks.subTitle}
               </p>
               <h2 className="mb-5">{data.topBlocks.title}</h2>
@@ -106,6 +189,151 @@ const Index = (props) => {
           </Container>
         </section>
       )}
+      
+      <section className="pt-6 pb-6">
+        {sectorData &&
+          <Container fluid>
+            <div className="text-center pb-lg-4">
+              <p className="h2">
+                Sector Performance
+              </p>
+            </div>
+            <Row>
+              {sectorData.map((sector, index) => (
+                <Col
+                  xs="6"
+                  lg="4"
+                  xl="3"
+                  className={`px-0 ${
+                    index === sectorData.length - 1
+                      ? "d-none d-lg-block d-xl-none"
+                      : ""
+                  }`}
+                  key={index}
+                >
+                  <div
+                    style={{ minHeight: "400px" }}
+                    className="d-flex align-items-center dark-overlay hover-scale-bg-image"
+                  >
+                    {parseInt(sector.changesPercentage) > 0 ?
+                      <Image
+                        src={`/images/stockPerformance/stock-up.jpg`}
+                        alt={sector.sector}
+                        layout="fill"
+                        className="bg-image"
+                        // alt="Hero image"
+                      /> : 
+                      <Image
+                        src={`/images/stockPerformance/stock-down-3.jpg`}
+                        alt={sector.sector}
+                        layout="fill"
+                        className="bg-image"
+                        // alt="Hero image"
+                      /> 
+                    }
+                    <div className="p-3 p-sm-5 text-white z-index-20">
+                      <h4 className="h4 text-center">{sector.sector}</h4>
+                      <p className="mb-4"><strong>{parseFloat(sector.changesPercentage).toFixed(2)}%</strong></p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        }   
+      </section>
+      {loading && sectorReturnTS ? 
+        <section className="pt-3 pb-6">
+          <div className="text-center pb-lg-4">
+              <p className="h2">
+                {`Sector Performance Over Time: ${cleanFrequencyName} Day Rolling Returns and Volatility`}
+              </p>
+              <Dropdown drop="down" className="d-inline-block" variant="light" onSelect={(e) => {handleFrequencyChange(e)}}>
+                <Dropdown.Toggle variant="outline-primary">Adjust Frequency</Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Header className="fw-normal">
+                      Frequency
+                    </Dropdown.Header>
+                      <Dropdown.Item eventKey='fifteen'>15 Day</Dropdown.Item>
+                      <Dropdown.Item eventKey='thirty'>30 Day</Dropdown.Item>
+                      <Dropdown.Item eventKey='sixty'>60 Day</Dropdown.Item>
+                      <Dropdown.Item eventKey='ninety'>90 Day</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown >
+            </div>
+            <Row>
+              <Col lg="6">
+                <Line options={options} data={exportedData} />
+              </Col>
+              <Col lg="6">
+                <Line options={options} data={exportedVolData} />
+              </Col>
+            </Row>
+      </section> : ""
+      }
+      
+      {props.moverData && (
+        <section className="py-6 bg-gray-100">
+          <Container>
+            <div className="text-center pb-lg-4">
+              <p className="subtitle text-primary">
+                {data.movers.subTitle}
+              </p>
+              <h2 className="mb-5">{data.movers.gainers}</h2>
+            </div>
+            <Swiper
+                className="swiper-container-mx-negative pt-1 pb-5"
+                wrapperClasses="dark-overlay"
+                moverReturns
+                perView={6}
+                data={props.moverData?.most_gainer}
+                loop
+                speed={1000}
+                pagination
+                autoplay={{
+                  delay: 5000,
+                }}
+              />
+          </Container>
+          <Container>
+            <div className="text-center pb-lg-4">
+              <h2 className="mb-5">{data.movers.losers}</h2>
+            </div>
+            <Swiper
+                className="swiper-container-mx-negative pt-1 pb-5"
+                wrapperClasses="dark-overlay"
+                moverReturns
+                perView={6}
+                data={props.moverData?.most_loser}
+                loop
+                speed={1000}
+                pagination
+                autoplay={{
+                  delay: 5000,
+                }}
+              />
+          </Container>
+          <Container>
+            <div className="text-center pb-lg-4">
+              <h2 className="mb-5">{data.movers.active}</h2>
+            </div>
+            <Swiper
+                className="swiper-container-mx-negative pt-1 pb-5"
+                wrapperClasses="dark-overlay"
+                moverReturns
+                perView={6}
+                data={props.moverData?.most_active}
+                loop
+                speed={1000}
+                pagination
+                autoplay={{
+                  delay: 5000,
+                }}
+              />
+          </Container>
+        </section>
+      )}
+
       {data.jumbotron && (
         <section className="py-7 position-relative dark-overlay">
           <Image
@@ -126,21 +354,8 @@ const Index = (props) => {
           </Container>
         </section>
       )}
-      <Guides />
-      <LastMinute greyBackground />
-      {data.testimonials && (
-        <section className="py-7">
-          <Container>
-            <div className="text-center">
-              <p className="subtitle text-primary">
-                {data.testimonials.subTitle}
-              </p>
-              <h2 className="mb-5">{data.testimonials.title}</h2>
-            </div>
-            <SwiperTestimonial data={data.testimonials.swiperItems} />
-          </Container>
-        </section>
-      )}
+      {/* <Guides /> */}
+      {/* <LastMinute greyBackground /> */}
       {blog.posts && (
         <section className="py-6 bg-gray-100">
           <Container>
@@ -165,21 +380,6 @@ const Index = (props) => {
                   </a>
                 </Link>
               </Col>
-            </Row>
-            <Row>
-              {blog.posts.map((post, index) => {
-                if (index <= 2)
-                  return (
-                    <Col
-                      key={post.title}
-                      lg="4"
-                      sm="6"
-                      className="mb-4 hover-animate"
-                    >
-                      <CardPost data={post} />
-                    </Col>
-                  )
-              })}
             </Row>
           </Container>
         </section>

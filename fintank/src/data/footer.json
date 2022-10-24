@@ -1,7 +1,7 @@
 [
     {
-        "title": "Directory",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipisicing.",
+        "title": "Fintank",
+        "content": "We Make Investing an even playing ground.",
         "social": [
             {
                 "title": "twitter",
@@ -27,26 +27,26 @@
         "lg": "4"
     },
     {
-        "title": "Rentals",
+        "title": "Markets",
         "links": [
             {
-                "title": "Rooms",
+                "title": "US Equities",
                 "link": "/"
             },
             {
-                "title": "Map on top",
+                "title": "Canadian Equities",
                 "link": "/category-rooms"
             },
             {
-                "title": "Side map",
+                "title": "Global Equities",
                 "link": "/category-2-rooms"
             },
             {
-                "title": "No map",
+                "title": "Commodities",
                 "link": "/category-3-rooms"
             },
             {
-                "title": "Room detail",
+                "title": "Crypto",
                 "link": "/detail-rooms"
             }
         ],

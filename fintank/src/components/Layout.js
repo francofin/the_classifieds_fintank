@@ -5,7 +5,7 @@ import Header from "./Header"
 import Footer from "./Footer"
 import { FormProvider } from "@components/FormContext"
 import { BookingProvider } from "@components/BookingContext"
-import SvgIcons from "./SvgIcons"
+import SvgIcons from "@components/SvgIcons"
 import SSRProvider from "react-bootstrap/SSRProvider"
 
 const Layout = (pageProps) => {

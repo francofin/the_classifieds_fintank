@@ -60,6 +60,12 @@
             }
         ]
     },
+    "movers": {
+        "subTitle":"Days Top Movers, Losers and Most Active",
+        "gainers": "Top Gainers in Markets",
+        "losers": "Biggest Losers today",
+        "active":"Most Active Stocks"
+    },
     "jumbotron": {
         "title": "The Classifieds Finance Research Platform",
         "button": "Fintank Research",

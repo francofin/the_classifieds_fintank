@@ -49,8 +49,11 @@
   },
   {
     "title": "Crypto",
-    "link": "/universe/cryptos",
-    "hideToLoggedUser": true
+    "link": "/universe/cryptos"
+  },
+  {
+    "title": "Research",
+    "link": "/research-posts"
   },
   {
     "title": "Sign up",
@@ -59,7 +62,7 @@
   },
   {
     "title": "Log In",
-    "link": "/user-add-0",
+    "link": "/login",
     "button": true,
     "hideToLoggedUser": true
   }

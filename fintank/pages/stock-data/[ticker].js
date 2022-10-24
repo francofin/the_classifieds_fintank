@@ -90,8 +90,8 @@ export async function getServerSideProps({query }) {
     const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/stock-data/${ticker}`);
     const data = stockRequested.data
 
-    const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`)
-    const dailyData = dailyStockData.data
+    // const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`)
+    // const dailyData = dailyStockData.data
 
     let universe;
 
@@ -104,8 +104,8 @@ export async function getServerSideProps({query }) {
     }
     
 
-    const labels = dailyData.dates;
-    const prices = dailyData.prices;
+    // const labels = dailyData.dates;
+    // const prices = dailyData.prices;
 
     
 
@@ -126,30 +126,30 @@ export async function getServerSideProps({query }) {
         // title: postData.title,
         postData,
         data,
-        dailyData,
-        labels,
-        prices
+        // dailyData,
+        // labels,
+        // prices
         },
     }
 }
 const StockDetail = (props) => {
   const stockData = props.data.stock[0]
   const requestedData = useStockData(stockData.symbol)
-  const dailyData = props.dailyData;
+  // const dailyData = props.dailyData;
 
-  console.log("Daily", dailyData);
+  // console.log("Daily", dailyData);
 
-  const chartData = {
-    type:'line',
-    labels:props.labels,
-    datasets: [{
-      label: stockData.symbol,
-      data:props.prices,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-      pointRadius: 1
-    }]
-  }
+  // const chartData = {
+  //   type:'line',
+  //   labels:props.labels,
+  //   datasets: [{
+  //     label: stockData.symbol,
+  //     data:props.prices,
+  //     borderColor: 'rgb(255, 99, 132)',
+  //     backgroundColor: 'rgba(255, 99, 132, 0.5)',
+  //     pointRadius: 1
+  //   }]
+  // }
 
 
 
@@ -240,7 +240,7 @@ const StockDetail = (props) => {
                   <div className="text-block">
                     <h4 className="mb-4">Stock Data</h4>
                     <Row>
-                      <Line options={options} data={chartData} style={{height:'100px'}}/>
+                      {/* <Line options={options} data={chartData} style={{height:'100px'}}/> */}
                     </Row>
                   </div>
                   <div className="text-block">
