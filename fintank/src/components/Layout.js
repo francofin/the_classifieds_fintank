@@ -29,6 +29,7 @@ const Layout = (pageProps) => {
         <Head>
           <title>{pageProps.title} - Portfolio Manager</title>
           <link rel="icon" href="/favicon.png" />
+          <meta charset="UTF-8" />
         </Head>
         <NextNProgress color="#4E66F8" options={{ showSpinner: false }} />
         {!pageProps.hideHeader && <Header {...headerProps} />}

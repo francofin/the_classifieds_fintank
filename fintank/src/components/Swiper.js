@@ -3,6 +3,7 @@ import CardRestaurant from "./CardRestaurant"
 import CardRoom from "./CardRoom"
 import CardPoster from "./CardPoster"
 import CardProperty from "./CardProperty"
+import CardNews from "./CardNews"
 import MarketReturns from "./MarketReturns"
 import { Navigation, Pagination, Autoplay, EffectFade, Grid } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -102,6 +103,11 @@ const SwiperComponent = (props) => {
             {props.restaurantCards && (
               <div className="w-100 h-100 hover-animate">
                 <CardRestaurant data={slide.properties} />
+              </div>
+            )}
+            {props.newsCards && (
+              <div className="w-100 h-100 hover-animate">
+                <CardNews data={slide} />
               </div>
             )}
           </SwiperSlide>

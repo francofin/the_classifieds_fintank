@@ -29,7 +29,8 @@ module.exports = withPlugins(
       // loader: "imgix", // Uncomment this line for STATIC EXPORT
       // path: "", // Uncomment this line for STATIC EXPORT
       domains:[
-        "thetradingfloor.s3.amazonaws.com"
+        "thetradingfloor.s3.amazonaws.com",
+        "www.bing.com",
       ]
     },
     env: {

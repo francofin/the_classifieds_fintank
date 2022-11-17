@@ -1,0 +1,44 @@
+Photo by Pavel Danilyuk: https://www.pexels.com/photo/white-robot-toy-on-black-surface-8294594/ - robot
+Photo by Anamul Rezwan: https://www.pexels.com/photo/people-stands-near-green-metal-industrial-machine-1087083/ econ2
+Photo by Pixabay: https://www.pexels.com/photo/stock-exchange-board-210607/ market5
+Photo by energepic.com: https://www.pexels.com/photo/close-up-photo-of-monitor-159888/ market6
+Photo by Collis: https://www.pexels.com/photo/person-standing-infront-of-a-display-window-3056059/ econ3
+Photo by Aleksandar Pasaric: https://www.pexels.com/photo/people-walking-on-street-near-buildings-2303337/ econ4
+Photo by Markus Spiske: https://www.pexels.com/photo/text-102152/ market7
+Photo by Jose Francisco Fernandez Saura: https://www.pexels.com/photo/street-lights-802024/ econ5
+Photo by AlphaTradeZone: https://www.pexels.com/photo/monitor-with-data-on-stock-exchange-on-screen-5831251/ market8
+Photo by Pixabay: https://www.pexels.com/photo/agriculture-alternative-energy-clouds-countryside-414837/ comm2
+Photo by Pixabay: https://www.pexels.com/photo/air-air-pollution-chimney-clouds-459728/ comm3
+Photo by Irina Iriser: https://www.pexels.com/photo/black-windmills-during-sunset-671585/ comm4
+Photo by Pixabay: https://www.pexels.com/photo/stainless-steel-radio-receiver-164926/ tech2
+Photo by Markus Spiske: https://www.pexels.com/photo/black-laptop-computer-turned-on-showing-computer-codes-177598/ tech3
+Photo by ThisIsEngineering: https://www.pexels.com/photo/code-projected-over-woman-3861969/ tech4
+Photo by Christina Morillo: https://www.pexels.com/photo/close-up-photo-of-person-typing-on-laptop-1181675/ tech6
+Photo by Pixabay: https://www.pexels.com/photo/blue-bright-lights-373543/ tech7
+Photo by Thierry Fillieul: https://www.pexels.com/photo/photo-of-black-and-white-airplane-during-golden-hour-1046493/ econ6
+Photo by Alex Azabache: https://www.pexels.com/photo/photo-of-city-during-dawn-3757144/ fin1
+Photo by Pierre Blaché: https://www.pexels.com/photo/sea-city-dawn-sky-4651134/ fin2
+Photo by Pixabay: https://www.pexels.com/photo/bank-blur-business-buy-259200/ fin3
+Photo by Michael Steinberg: https://www.pexels.com/photo/gold-bars-366551/ comm5
+Photo by Brett Sayles: https://www.pexels.com/photo/low-angle-photo-of-glass-buildings-2599538/ fin4
+Photo by Amar Saleem: https://www.pexels.com/photo/city-skyline-beside-water-during-night-91628/ fin/econ/cons
+Photo by Tuur  Tisseghem: https://www.pexels.com/photo/people-inside-mall-2954405/ cons2
+Photo by Adrian Agawin: https://www.pexels.com/photo/photo-of-shopping-mall-2767756/ cons3
+Photo by Dex Planet: https://www.pexels.com/photo/people-walking-inside-shopping-mall-1628026/ cons4
+Photo by jc dubi: https://www.pexels.com/photo/high-rise-building-near-body-of-water-during-night-time-713458/ cons5
+Photo by Pixabay: https://www.pexels.com/photo/bullion-gold-gold-bars-golden-47047/ econ7
+Photo by Dmitry Demidov: https://www.pexels.com/photo/brown-and-silver-round-coins-3790637/ comm7
+Photo by Anna Shvets: https://www.pexels.com/photo/red-and-white-medication-pills-3683041/ hc1
+Photo by Maksim Goncharenok: https://www.pexels.com/photo/vial-and-pills-on-a-red-surface-5994622/ hc2
+Photo by Pixabay: https://www.pexels.com/photo/spilled-bottle-of-yellow-capsule-pills-208518/ hc3
+Photo by Pixabay: https://www.pexels.com/photo/thermometer-on-medical-pills-139398/ hc4
+Photo by Anna Shvets: https://www.pexels.com/photo/white-capsules-on-yellow-background-3683056/ hc5
+Photo by Szymon Shields: https://www.pexels.com/photo/notes-business-money-hospital-6042853/ hc6
+Photo by Pixabay: https://www.pexels.com/photo/black-smoke-coming-from-fire-417070/ war1
+Photo by Gladson Xavier: https://www.pexels.com/photo/king-chess-piece-59197/ war2
+Photo by cottonbro studio: https://www.pexels.com/photo/black-and-white-no-war-text-3831760/ war3
+Photo by Алесь Усцінаў : https://www.pexels.com/photo/bomb-in-front-of-building-11920867/ war4
+Photo by Markus Spiske: https://www.pexels.com/photo/climate-sign-outside-blur-2990644/ war5
+Photo by Aleksandar Pasaric: https://www.pexels.com/photo/people-walking-on-street-near-buildings-2303337/ marketsbanner
+Photo by Pixabay: https://www.pexels.com/photo/planet-earth-220201/ world
+Photo by Aksonsat Uanthoeng: https://www.pexels.com/photo/close-up-photo-of-assorted-color-of-push-pins-on-map-1078850/ chess
