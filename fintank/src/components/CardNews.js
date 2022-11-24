@@ -43,10 +43,8 @@ const CardNews = (props) => {
           <a className="tile-link" />
         </Link>
         <div className="card-img-overlay-bottom z-index-20">
-          <h5 className="text-white text-shadow">{data.name.slice(0,15)}</h5>
-          <p className="text-white mb-2 text-xs">
-            {data.provider[0].name}
-          </p>
+          <h5 className="text-white text-shadow" dangerouslySetInnerHTML={{__html: `${data.name.slice(0,15)}`}} />
+          <p className="text-white mb-2 text-xs" dangerouslySetInnerHTML ={{__html: `${data.provider[0].name}`}} />
         </div>
         <div className="card-img-overlay-top d-flex justify-content-between align-items-center">
           <Badge pill bg="transparent" className="px-3 py-2">
@@ -55,9 +53,8 @@ const CardNews = (props) => {
         </div>
       </div>
       <Card.Body>
-        <p className="text-sm text-muted mb-3">
-          {data.description.substring(0, 115) + "..."}
-        </p>
+        <p className="text-sm text-muted mb-3" dangerouslySetInnerHTML ={{__html: `${data.description.substring(0, 115) + "..."}`}} />
+          
         {/* <p className="text-sm mb-0">
           {data.tags.map((tag, index) => (
             <a key={index} className="me-1" href="#">
