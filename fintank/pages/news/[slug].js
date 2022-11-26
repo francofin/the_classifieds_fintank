@@ -11,6 +11,7 @@ import geoJSON from "@data/restaurants-geojson.json"
 import Image from "@components/CustomImage"
 import axios from 'axios';
 import { useRouter } from "next/router"
+import bannerImages from "@data/banner.json"
 
 export async function getServerSideProps({query}) {
 
@@ -39,9 +40,23 @@ const News = (props) => {
     const newsData = props.responseNews
     const  newsDataWithImages = newsData.data.filter((news, i) => news.image)
     const newsNoImages = newsData.data.filter((news, i) => !news.image)
+    const imagesForBanner = bannerImages.bannerImages
 
-    console.log("images", newsDataWithImages)
-    console.log("Articles", newsData)
+    const [randomImage, setRandomImage] = useState(0)
+
+
+    useEffect(() => {
+      let randomIndex = Math.floor(Math.random()*imagesForBanner.length)
+      setRandomImage(randomIndex)
+
+    }, [])
+
+
+
+
+    console.log("images", imagesForBanner)
+
+   
 
     const adjustTimeStamp = (date) => {
         const options = { year: "numeric", month: "long", day: "numeric"}
@@ -54,7 +69,7 @@ const News = (props) => {
       {data.hero && (
         <section className="d-flex align-items-center dark-overlay">
           <Image
-            src={`/images/homeImages/chess.jpg`}
+            src={`/images/${imagesForBanner[randomImage].img}`}
             layout="fill"
             className="bg-image"
             alt="Hero image"
@@ -171,7 +186,7 @@ const News = (props) => {
                 <p dangerouslySetInnerHTML ={{__html: `${message.provider[0].name}`}} />
                 </Badge>
                 <Link href={message.url}>
-                  <a className="stretched-link"></a>
+                  <a className="stretched-link" target="_blank"></a>
                 </Link>
               </Col>
               <Col xs="10" lg="7" className="ms-auto">
@@ -183,7 +198,7 @@ const News = (props) => {
                     <p className="text-sm">{adjustTimeStamp(message.datePublished)}</p>
                   </Col>
                   <Link href={message.url}>
-                    <a className="stretched-link"></a>
+                    <a className="stretched-link" target="_blank"></a>
                   </Link>
                 </Row>
               </Col>

@@ -1,6 +1,6 @@
 {
     "banner":"health/hc2.jpg",
-    "marketImages": [
+    "hcImages": [
         {
             "link": "#",
             "img": "health/hc1.jpg"

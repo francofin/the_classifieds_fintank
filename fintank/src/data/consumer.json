@@ -1,0 +1,24 @@
+{
+    "consumerImages": [
+        {
+            "link": "#",
+            "img": "consumer/cons1.jpg"
+        },
+        {
+            "link": "#",
+            "img": "consumer/cons2.jpg"
+        },
+        {
+            "link": "#",
+            "img":  "consumer/cons3.jpg"
+        },
+        {
+            "link": "#",
+            "img":  "consumer/cons4.jpg"
+        },
+        {
+            "link": "#",
+            "img":  "consumer/cons5.jpg"
+        }
+    ]
+}
