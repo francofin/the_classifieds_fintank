@@ -356,7 +356,7 @@ const Index = (props) => {
       )}
       {/* <Guides /> */}
       {/* <LastMinute greyBackground /> */}
-      {blog.posts && (
+      {/* {blog.posts && (
         <section className="py-6 bg-gray-100">
           <Container>
             <Row className="mb-5">
@@ -383,9 +383,8 @@ const Index = (props) => {
             </Row>
           </Container>
         </section>
-      )}
+      )} */}
 
-      <Instagram />
     </React.Fragment>
   )
 }
