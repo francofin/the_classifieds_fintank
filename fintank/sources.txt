@@ -133,3 +133,24 @@ Photo by Evgenia Kirpichnikova: https://www.pexels.com/photo/aerial-view-of-city
 Photo by Artyom Kulakov: https://www.pexels.com/photo/red-bus-2266406/ ru3
 Photo by Pixabay: https://www.pexels.com/photo/black-building-lighted-under-clear-sky-164583/ ru4
 Photo by Alexandr Bondar: https://www.pexels.com/photo/the-moskva-river-in-the-early-evening-5772312/ ru5
+Photo by Magda Ehlers: https://www.pexels.com/photo/brown-map-on-map-2660262/ af1
+Photo by Tope A. Asokere: https://www.pexels.com/photo/people-protesting-on-the-street-5789323/ af2
+Photo by ismail seghosime: https://www.pexels.com/photo/people-standing-on-street-5671397/ af3
+Photo by <a href="https://unsplash.com/@amani_nation?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Amani Nation</a> on <a href="https://unsplash.com/s/photos/kenya?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> af4
+Photo by <a href="https://unsplash.com/es/@yonkokilasi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Yonko Kilasi</a> on <a href="https://unsplash.com/s/photos/nairobi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> af5 
+Photo by <a href="https://unsplash.com/@lorenzocerato?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lorenzo Cerato</a> on <a href="https://unsplash.com/s/photos/nairobi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> af6
+Photo by <a href="https://unsplash.com/@lorenzocerato?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lorenzo Cerato</a> on <a href="https://unsplash.com/s/photos/nairobi?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> af7
+Photo by <a href="https://unsplash.com/@kylefrederick10?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">kylefromthenorth</a> on <a href="https://unsplash.com/s/photos/south-africa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> af8
+Photo by Scott Webb: https://www.pexels.com/photo/aerial-photography-of-urban-city-under-blue-sky-136721/ af9
+Photo by Blue Ox Studio: https://www.pexels.com/photo/photo-of-people-walking-outdoors-2014342/ af10
+Photo by Tracy Le Blanc: https://www.pexels.com/photo/person-holding-iphone-showing-social-networks-folder-607812/ comun1
+Photo by Timur Saglambilek: https://www.pexels.com/photo/analytics-text-185576/ comun2
+Photo by Kaboompics .com: https://www.pexels.com/photo/marketing-strategy-6229/ comun3
+Photo by Kaboompics .com: https://www.pexels.com/photo/customers-users-color-wheel-6231/ comun4
+Photo by DSD: https://www.pexels.com/photo/men-s-black-jacket-1822608/ comun5
+Photo by Pixabay: https://www.pexels.com/photo/blue-master-card-on-denim-pocket-164571/ fin5
+Photo by Miguel Á. Padriñán: https://www.pexels.com/photo/black-and-white-photography-of-a-mother-board-3520692/ comun6
+Photo by <a href="https://unsplash.com/@alexbemore?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Alexander Shatov</a> on <a href="https://unsplash.com/s/photos/social-media?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> comun7
+Photo by <a href="https://unsplash.com/@camstejim?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">camilo jimenez</a> on <a href="https://unsplash.com/s/photos/social-media?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> comun8
+Photo by <a href="https://unsplash.com/@pinho?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Pinho .</a> on <a href="https://unsplash.com/s/photos/media?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> comun9
+Photo by Mike B: https://www.pexels.com/photo/elvis-presley-digital-wallpaper-114820/ comun10
