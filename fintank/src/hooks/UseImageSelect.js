@@ -26,7 +26,7 @@ import commodImages from "@data/commodities.json";
 
 
 const imagesForConsumers = consumerImages.consumerImages.concat(econImages.econImages[2]);
-const imagesForMaterials = materialImages.materialImages.concat(commodityImages.commodityImages[7], commodityImages.commodityImages[4])
+const imagesForMaterials = materialImages.marketImages.concat(commodityImages.commodityImages[7], commodityImages.commodityImages[4])
 const imagesForTechnology = techImages.techImages;
 const imagesForFinance = financeImages.financeImages.concat(consumerImages.consumerImages[1], marketImages.marketImages[6], marketImages.marketImages[7]);
 const imagesForEconomy = econImages.econImages.concat(extraImages.homeImages);

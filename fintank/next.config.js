@@ -31,6 +31,7 @@ module.exports = withPlugins(
       domains:[
         "thetradingfloor.s3.amazonaws.com",
         "www.bing.com",
+        'res.cloudinary.com',
       ]
     },
     env: {

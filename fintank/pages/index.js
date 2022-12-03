@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useMemo, useState} from "react"
 import Link from "next/link"
 import Image from "@components/CustomImage"
 import axios from 'axios'
@@ -10,6 +10,7 @@ import LastMinute from "@components/LastMinute"
 import Guides from "@components/Guides"
 import Instagram from "@components/Instagram"
 import CardPost from "@components/CardPost"
+import NewsPost from "@components/NewsPost"
 import SwiperTestimonial from "@components/SwiperTestimonial"
 import data from "@data/index.json"
 import blog from "@data/blog.json"
@@ -19,7 +20,7 @@ import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
 import { useHomeIndex } from "@hooks/useHomeIndex"
 import { useSectorReturnTS } from "@hooks/UseSectorTS"
 import { useSectorData } from "@hooks/UseSectorData"
-
+import { connect } from "react-redux"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -54,6 +55,9 @@ export async function getStaticProps() {
 
   const URL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/movers/`;
   const moverData = await fetcher(URL);
+  const fmpRes = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/fmp`);
+  const responseNews = fmpRes.data;
+
   
   return {
     props: {
@@ -64,7 +68,8 @@ export async function getStaticProps() {
       },
       title: "Fintank",
       data,
-      moverData
+      moverData,
+      responseNews
     },
   }
 }
@@ -78,8 +83,15 @@ const Index = (props) => {
   const [sectorReturnOptions, setSectorReturnOptions] = useState({})
   const [sectorVolTS, setSectorVolTs] = useState({})
   const [loading, setLoading] = useState(false)
+  const [fmpData, setFmpData] = useState([])
   const [cleanFrequencyName, setCleanFrequencyName] = useState('')
   const {data:sectorData} = useSectorData()
+
+  let fmpNewsArticles = props.responseNews.data
+
+  console.log(fmpNewsArticles)
+
+  console.log("Reducer Data", props.fmpData)
 
   const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
 
@@ -124,6 +136,7 @@ const Index = (props) => {
 
   
   console.log('Mover Stuff', sectorData)
+  // console.log(parseFloat(sectorData[0].changesPercentage).toFixed(2) > 0)
 
   return (
     <React.Fragment>
@@ -195,17 +208,17 @@ const Index = (props) => {
           <Container fluid>
             <div className="text-center pb-lg-4">
               <p className="h2">
-                Sector Performance
+                Sector Performance: {sectorData.sector_message}
               </p>
             </div>
             <Row>
-              {sectorData.map((sector, index) => (
+              {sectorData.sector_data.map((sector, index) => (
                 <Col
                   xs="6"
                   lg="4"
-                  xl="3"
+                  xl="2"
                   className={`px-0 ${
-                    index === sectorData.length - 1
+                    index === sectorData.sector_data.length - 1
                       ? "d-none d-lg-block d-xl-none"
                       : ""
                   }`}
@@ -215,7 +228,7 @@ const Index = (props) => {
                     style={{ minHeight: "400px" }}
                     className="d-flex align-items-center dark-overlay hover-scale-bg-image"
                   >
-                    {parseInt(sector.changesPercentage) > 0 ?
+                    {parseFloat(sector.changesPercentage) > 0 ?
                       <Image
                         src={`/images/stockPerformance/stock-up.jpg`}
                         alt={sector.sector}
@@ -356,12 +369,12 @@ const Index = (props) => {
       )}
       {/* <Guides /> */}
       {/* <LastMinute greyBackground /> */}
-      {/* {blog.posts && (
+      {blog.posts && (
         <section className="py-6 bg-gray-100">
           <Container>
             <Row className="mb-5">
               <Col md="8">
-                <p className="subtitle text-secondary">
+                <p className="subtitle text-primary">
                   {data.blogPosts.subTitle}
                 </p>
                 <h2>{data.blogPosts.title}</h2>
@@ -381,16 +394,39 @@ const Index = (props) => {
                 </Link>
               </Col>
             </Row>
+            <Row>
+              {fmpNewsArticles.map((post, index) => {
+                if (index <= 60)
+                  return (
+                    <Col
+                      key={post.title}
+                      lg="3"
+                      sm="6"
+                      className="mb-4 hover-animate"
+                    >
+                      <NewsPost data={post} />
+                    </Col>
+                  )
+              })}
+            </Row>
           </Container>
         </section>
-      )} */}
+      )}
 
     </React.Fragment>
   )
 }
 
-export default Index
+function mapStateToProps(state){
+  return{
+    fmpData: state.fmp
+  }
+}
 
+
+// export default Index
+
+export default connect(mapStateToProps)(Index);
 
 
 // export async function getServerSideProps(){

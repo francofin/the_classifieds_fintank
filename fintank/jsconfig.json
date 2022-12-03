@@ -13,6 +13,7 @@
             "@data/*": ["src/data/*"],
             "@common/*": ["src/components/common/*"],
             "@styles/*": ["styles/*"],
+            "@src/*": ["src/*"],
         }
     }
 }

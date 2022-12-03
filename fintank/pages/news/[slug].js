@@ -12,6 +12,7 @@ import Image from "@components/CustomImage"
 import axios from 'axios';
 import { useRouter } from "next/router"
 import bannerImages from "@data/banner.json"
+import { useImagesSelector } from "@hooks/UseImageSelect"
 
 export async function getServerSideProps({query}) {
 
@@ -31,6 +32,7 @@ export async function getServerSideProps({query}) {
         },
         title: "News",
         responseNews,
+        topic
         },
     }
 }
@@ -44,6 +46,9 @@ const News = (props) => {
 
     const [randomImage, setRandomImage] = useState(0)
 
+    const topicImages = useImagesSelector(props.topic)
+
+    console.log(topicImages)
 
     useEffect(() => {
       let randomIndex = Math.floor(Math.random()*imagesForBanner.length)
