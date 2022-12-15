@@ -35,20 +35,20 @@ const NewsPost = (props) => {
           href="#"
           className="text-uppercase text-muted text-sm letter-spacing-2"
         >
-          {post.site}: {adjustTimeStamp(post.publishedDate)}
+          {post.site}
         </a>
         <h5 className="my-2">
           <Link href={`${post.url}`}>
-            <a className="text-dark">{post.title}</a>
+            <a className="text-dark" target="_blank">{post.title}</a>
           </Link>
         </h5>
         <p className="text-gray-500 text-sm my-3">
           <FontAwesomeIcon icon={faClock} className="me-2" />
-          {post.date}
+          {adjustTimeStamp(post.publishedDate)}
         </p>
         <p className="my-2 text-muted text-sm">{post.text.substring(0, 115) + "..."}</p>
         <Link href={`${post.url}`} passHref>
-          <Button className="ps-0" variant="link">
+          <Button className="ps-0" variant="link" target="_blank">
             Read more <FontAwesomeIcon icon={faLongArrowAltRight} />
           </Button>
         </Link>

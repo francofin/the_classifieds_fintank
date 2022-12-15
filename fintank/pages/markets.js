@@ -96,7 +96,7 @@ const KnowledgeBase = (props) => {
                         }
                     </div>
                     <h5 className="h5">{block.name}</h5>
-                    <p className="text-muted text-sm mb-0">Price: ${block.price}</p>
+                    <p className="text-muted text-sm mb-0">Price: ${(block.price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                     {block.changesPercentage > 0 ?
                         <p className="flex-grow-1 mb-0 text-md" style={{color:"green"}}>
                         {(block.changesPercentage).toFixed(2)}% 
@@ -105,8 +105,8 @@ const KnowledgeBase = (props) => {
                     {(block.changesPercentage).toFixed(2)}% 
                     </p>
                     }
-                    <p className="text-muted text-sm mb-0">50 Day Average: ${block.priceAvg50}</p>
-                    <p className="text-muted text-sm mb-0">200 Day Average: ${block.priceAvg200}</p>
+                    <p className="text-muted text-sm mb-0">50 Day Average: ${(block.priceAvg50).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                    <p className="text-muted text-sm mb-0">200 Day Average: ${(block.priceAvg200).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                   </Card.Body>
                 </Card>
               </Col>

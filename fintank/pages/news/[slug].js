@@ -16,9 +16,7 @@ import { useImagesSelector } from "@hooks/UseImageSelect"
 
 export async function getServerSideProps({query}) {
 
-    const topic = query.slug
-
-    console.log("Topic", topic)
+    let topic = query.slug
 
     const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${topic}`);
     const responseNews = res.data;
@@ -48,20 +46,12 @@ const News = (props) => {
 
     const topicImages = useImagesSelector(props.topic)
 
-    console.log(topicImages)
-
     useEffect(() => {
       let randomIndex = Math.floor(Math.random()*imagesForBanner.length)
       setRandomImage(randomIndex)
 
     }, [])
 
-
-
-
-    console.log("images", imagesForBanner)
-
-   
 
     const adjustTimeStamp = (date) => {
         const options = { year: "numeric", month: "long", day: "numeric"}
@@ -94,19 +84,13 @@ const News = (props) => {
         </section>
       )}
       <Container>
-        <SearchBar
-          options={data.searchOptions}
-          className="rounded p-3 p-lg-4 position-relative mt-n5 z-index-20"
-          halfInputs
-          id="index-2-searchbar"
-          btnMb="0"
-        />
       </Container>
       {data.popularCities && (
         <PopularCities
           title={data.popularCities.title}
           subTitle={newsData.tag}
           blockStories={newsData.data.splice(0,5)}
+          topicImage = {topicImages}
         />
       )}
       {data.popular && (

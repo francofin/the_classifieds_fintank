@@ -9,7 +9,15 @@ import marketImages from "@data/markets.json"
 
 const PopularCities = (props) => {
   console.log("stories", props.blockStories)
-  console.log("images", marketImages)
+  console.log("images", props.topicImage)
+
+  const getRandomIndexNumber = () => {
+    let imageDataLength = props.topicImage.length;
+    let randomIndex = Math.floor(Math.random() * imageDataLength)
+    return randomIndex
+  }
+
+
   return (
     <section className={`py-6 ${props.greyBackground ? "bg-gray-100" : ""}`}>
       <Container>
@@ -43,7 +51,7 @@ const PopularCities = (props) => {
               >
                 <Card className="shadow-lg border-0 w-100 border-0 hover-animate overflow-hidden">
                   <Image
-                    src={`/images/${marketImages.marketImages[index].img}`}
+                    src={`/images/${props?.topicImage[getRandomIndexNumber()]?.img}`}
                     layout="fill"
                     alt="Card image"
                     className="bg-image"
@@ -53,10 +61,10 @@ const PopularCities = (props) => {
                   </Link>
                     <Card.Header className="mt-3 border-0 py-0 position-relative d-flex align-items-center text-white justify-content-center h-50" style={{background:"rgba(78,78,78,0.5)"}}>
                         <div>
-                          <h6 className="mb-0" dangerouslySetInnerHTML ={{__html: `${story.description.slice(0,100)}....}`}} />
+                          <h6 className="mb-0" dangerouslySetInnerHTML ={{__html: `${story.description.slice(0,100)}....`}} />
                         </div>
                     </Card.Header>
-                    <div className="d-flex align-items-center text-white justify-content-center py-6 py-lg-7 position-relative">
+                    <div className="d-flex align-items-center text-white bold justify-content-center py-6 py-lg-7 position-relative">
                         <p className="text-uppercase mb-0" dangerouslySetInnerHTML={{__html: `Source: ${story.provider[0].name}`}} />
                     </div>
                 </Card>

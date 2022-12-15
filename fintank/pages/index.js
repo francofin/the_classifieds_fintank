@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, {useEffect, useMemo, useState, useContext} from "react"
 import Link from "next/link"
 import Image from "@components/CustomImage"
 import axios from 'axios'
@@ -21,6 +21,7 @@ import { useHomeIndex } from "@hooks/useHomeIndex"
 import { useSectorReturnTS } from "@hooks/UseSectorTS"
 import { useSectorData } from "@hooks/UseSectorData"
 import { connect } from "react-redux"
+import { DjangoScreenerContext } from "@context/screenerContext";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -88,11 +89,7 @@ const Index = (props) => {
   const {data:sectorData} = useSectorData()
 
   let fmpNewsArticles = props.responseNews.data
-
-  console.log(fmpNewsArticles)
-
-  console.log("Reducer Data", props.fmpData)
-
+  const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
   const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
 
   const adjustFrequencyName = (frequency) => {
@@ -124,19 +121,10 @@ const Index = (props) => {
 
 
   const handleFrequencyChange = (e) => {
-    console.log(e)
     setFrequency(e)
   }
 
-  console.log(sectorReturnTS)
 
-  console.log(newFreq);
-
-
-
-  
-  console.log('Mover Stuff', sectorData)
-  // console.log(parseFloat(sectorData[0].changesPercentage).toFixed(2) > 0)
 
   return (
     <React.Fragment>
@@ -384,7 +372,7 @@ const Index = (props) => {
                 className="d-md-flex align-items-center justify-content-end"
               >
                 <Link href={data.blogPosts.buttonLink}>
-                  <a className="text-muted text-sm">
+                  <a className="text-muted text-sm" target="_blank">
                     {data.blogPosts.button}
                     <FontAwesomeIcon
                       icon={faAngleDoubleRight}
@@ -395,8 +383,8 @@ const Index = (props) => {
               </Col>
             </Row>
             <Row>
-              {fmpNewsArticles.map((post, index) => {
-                if (index <= 60)
+              {noNewsLanesArticles.map((post, index) => {
+                if (index <= 63)
                   return (
                     <Col
                       key={post.title}
@@ -419,7 +407,7 @@ const Index = (props) => {
 
 function mapStateToProps(state){
   return{
-    fmpData: state.fmp
+    screenerData: state.screener
   }
 }
 

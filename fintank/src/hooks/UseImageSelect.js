@@ -29,8 +29,8 @@ const imagesForConsumers = consumerImages.consumerImages.concat(econImages.econI
 const imagesForMaterials = materialImages.marketImages.concat(commodityImages.commodityImages[7], commodityImages.commodityImages[4])
 const imagesForTechnology = techImages.techImages;
 const imagesForFinance = financeImages.financeImages.concat(consumerImages.consumerImages[1], marketImages.marketImages[6], marketImages.marketImages[7]);
-const imagesForEconomy = econImages.econImages.concat(extraImages.homeImages);
-const imagesforMarkets = marketImages.marketImages.concat(extraImages.homeImages);
+const imagesForEconomy = econImages.econImages.concat(extraImages.extraImages);
+const imagesforMarkets = marketImages.marketImages.concat(extraImages.extraImages);
 const imagesForPolitics = politicImages.politicImages;
 const imagesForWar = conflictImages.conflictImages;
 const imagesForHealthCare = hcImages.hcImages;
@@ -53,54 +53,78 @@ export const useImagesSelector= (newsType) => {
 
     //first param is passed into the funtion i.e. URL
     //econd param is function that calls the param
-    const [images, setImages] = useState()
+    const [images, setImages] = useState([])
 
     useEffect(() => {
         switch(newsType){
             case "markets":
                 setImages(imagesforMarkets)
+                break;
             case "economy":
                 setImages(imagesForEconomy)
+                break;
             case "politics":
                 setImages(imagesForPolitics)
+                break;
             case "inflation":
                 setImages(imagesForEconomy)
+                break;
             case "war":
                 setImages(imagesForWar)
+                break;
             case "etaunido":
                 setImages(imagesForUS)
+                break;
             case "china":
                 setImages(imagesForChina)
+                break;
             case "russia":
                 setImages(imagesForRussia)
+                break;
             case "mediooeste":
                 setImages(imagesForMiddleEast)
+                break;
             case "aleman":
                 setImages(imagesForAleman)
+                break;
             case "japon":
                 setImages(imagesForJapan)
+                break;
             case "africa":
                 setImages(imagesForAfrica)
+                break;
             case "suram":
                 setImages(imagesForLatam)
+                break;
             case "tech":
                 setImages(imagesForTechnology)
+                break;
             case "energy":
                 setImages(imagesForEnergy)
+                break;
             case "health":
                 setImages(imagesForHealthCare)
+                break;
             case "finance":
                 setImages(imagesForFinance)
+                break;
             case "cons":
                 setImages(imagesForConsumers)
+                break;
             case "materials":
                 setImages(imagesForMaterials)
+                break;
             case "comm":
                 setImages(imagesForCommunications)
+                break;
             case "indus":
                 setImages(imagesForIndus)
+                break;
             case "oil":
                 setImages(imagesForComodities)
+                break;
+            default:
+                break
     }
     }, [newsType])
 

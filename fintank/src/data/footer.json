@@ -1,6 +1,7 @@
 [
     {
         "title": "Fintank",
+        "lowerImage":"homepageImages/fintank7.jpg",
         "content": "We Make Investing an even playing ground.",
         "social": [
             {
@@ -31,50 +32,54 @@
         "links": [
             {
                 "title": "US Equities",
-                "link": "/"
+                "link": "/universe/sp500"
             },
             {
                 "title": "Canadian Equities",
-                "link": "/category-rooms"
+                "link": "/universe/sptsx"
             },
             {
                 "title": "Global Equities",
-                "link": "/category-2-rooms"
+                "link": "/universe/eurostocks"
             },
             {
                 "title": "Commodities",
-                "link": "/category-3-rooms"
+                "link": "/universe/commodities"
             },
             {
                 "title": "Crypto",
-                "link": "/detail-rooms"
+                "link": "/universe/cryptos"
+            },
+            {
+                "title": "Index Performance",
+                "link": "/markets"
             }
         ],
         "lg": "2",
         "md": "6"
     },
     {
-        "title": "Pages",
+        "title": "News",
         "links": [
             {
-                "title": "Comparison",
-                "link": "/compare"
+                "title": "Market news",
+                "link": "/news/markets"
             },
             {
-                "title": "Team",
-                "link": "/team"
+                "title": "US News",
+                "link": "/news/etaunido"
             },
             {
-                "title": "Contact",
-                "link": "/contact"
+                "title": "Technology",
+                "link": "/news/tech"
             }
         ],
         "lg": "2",
         "md": "6"
     },
     {
-        "title": "Daily Offers & Discounts",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. At itaque temporibus.",
+        "title": "Join The Fintank Community",
+        "content": "Fintank is here to serve the investment community, constantly observing, testing, understanding and evolving with markets. Our goal is to eliminate noise, one reduction at a time.",
         "contentBottomMargin": "3",
         "form": {
             "placeholder": "Your Email Address"

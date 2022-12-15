@@ -58,7 +58,7 @@ const MarketReturns = (props) => {
             </p>
           </Card.Subtitle>
           <Card.Text className="text-muted">
-            <span className="h4 text-primary">${(props.data.price).toFixed(2)}</span>
+            <span className="h4 text-primary">${(props.data.price).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
           </Card.Text>
         </div>
       </Card.Body>

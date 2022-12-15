@@ -202,12 +202,12 @@
         "title": "All Stocks",
         "link": "/universe/allstocks",
         "new": true
+      },
+      {
+        "title": "Equity Screener",
+        "link": "/universe/commodities"
       }
     ]
-  },
-  {
-    "title": "Equity Screener",
-    "link": "/universe/commodities"
   },
   {
     "title": "Commodities",

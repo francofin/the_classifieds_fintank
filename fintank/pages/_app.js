@@ -1,8 +1,11 @@
 import React from "react"
 import Layout from "@components/Layout"
 import { DjangoAuthProvider} from '@context/authContext';
+import { DjangoScreenerProvider } from "@context/screenerContext"
 import { Provider } from "react-redux";
-import { wrapper, theStore } from "@src/store";
+import { wrapper, theStore, persistor } from "@src/store";
+import { PersistGate } from 'redux-persist/integration/react'
+
 import "swiper/css/bundle"
 // swiper core styles
 import "swiper/css"
@@ -16,13 +19,15 @@ import "../src/scss/style.default.scss"
 
 const App = ({ Component, pageProps }) => {
   return (
-    <Provider store={theStore}>
-      <DjangoAuthProvider>
-        <Layout {...pageProps}>
-          <Component {...pageProps} />
-        </Layout>
-      </DjangoAuthProvider>
-    </Provider>
+    <DjangoAuthProvider>
+      <Provider store={theStore}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Layout {...pageProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </PersistGate>
+      </Provider>
+    </DjangoAuthProvider>
   )
 }
 

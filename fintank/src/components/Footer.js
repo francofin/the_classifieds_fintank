@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import Image from "@components/CustomImage"
 import {
   Container,
   Row,
@@ -24,7 +25,7 @@ import {
 const Footer = () => {
   return (
     <footer className="position-relative z-index-10 d-print-none">
-      <div className="py-6 bg-gray-200 text-muted">
+      <div className="py-5 bg-gray-200 text-muted">
         <Container>
           <Row>
             {footerContent &&
@@ -49,7 +50,7 @@ const Footer = () => {
                       {item.content}
                     </p>
                   )}
-                  {/* {item.social && (
+                  {item.social && (
                     <ul className="list-inline">
                       {item.social.map((socialIcon, index) => {
                         let socialIconFA
@@ -86,8 +87,18 @@ const Footer = () => {
                           </li>
                         )
                       })}
+                      <li>
+                        <Image
+                            src={`/images/${item.lowerImage}`}
+                            layout="intrinsic"
+                            className="bg-image"
+                            width={150}
+                            height={90}
+                            alt={`Fintank Technology Finance Research`}
+                          />
+                        </li>
                     </ul>
-                  )} */}
+                  )}
                   {item.links && (
                     <ul className="list-unstyled">
                       {item.links.map((link) => (
