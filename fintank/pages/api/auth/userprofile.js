@@ -2,7 +2,7 @@ import axios from 'axios';
 import cookie from 'cookie';
 
 export default async (req, res) => {
-    console.log(req)
+    // console.log(req)
     if (req.method === 'GET'){
         const cookies = cookie.parse(req.headers.cookie || '')
 
@@ -29,7 +29,7 @@ export default async (req, res) => {
                 })
               }
         } catch(error){
-            console.log(error);
+            // console.log(error);
             res.status(error?.response.status).json({
                 error: 'Something Went Wrong while getting your details, Please try to log in again'
             })

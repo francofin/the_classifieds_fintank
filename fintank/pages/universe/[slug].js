@@ -1,97 +1,80 @@
-import React, {useEffect, useState, useContext} from "react"
+import React, {useEffect, useState} from "react"
 import Link from "next/link"
-import {Container, Button, ListGroup, Form, InputGroup, Row, Col, Badge, Breadcrumb, Pagination, Modal} from "react-bootstrap"
 import Select from "react-select"
-import data from "@data/user-list.json"
-import Avatar from "@components/Avatar"
 import sector from "@data/sectors-subsectors.json"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faTimes, faDownload, faSearch, faAngleLeft, faAngleRight  } from "@fortawesome/free-solid-svg-icons"
+import {Container, Button, ListGroup, Form, InputGroup, Row, Col, Badge, Breadcrumb, Pagination, Modal} from "react-bootstrap"
 import universe from "@data/universe.json"
 import axios from 'axios';
 import { useRouter } from "next/router"
-import { DjangoScreenerContext, DjangoScreenerProvider } from "@context/screenerContext"
 import {connect} from 'react-redux';
 import screenerAction from '@src/actions/screenerAction'
 import { bindActionCreators } from "redux"
 
 export function getAllPostIds() {
-    return universe.posts.map((post) => ({
-      params: {
-        slug: post.slug,
-      },
-    }))
-  }
+  return universe.posts.map((post) => ({
+    params: {
+      slug: post.slug,
+    },
+  }))
+}
   
-  export async function getPostData(slug) {
-    for (var i = 0; i < universe.posts.length; i++) {
-      if (universe.posts[i].slug == slug) {
-        return {
-          stockItem: universe.posts[i],
-          slug
-        }
+export async function getPostData(slug) {
+  for (var i = 0; i < universe.posts.length; i++) {
+    if (universe.posts[i].slug == slug) {
+      return {
+        stockItem: universe.posts[i],
+        slug
       }
     }
   }
-
-
-
-// export async function getStaticPaths() {
-//     return {
-//       paths: getAllPostIds(),
-//       fallback: false,
-//     }
-//   }
-  
+}
 
 export async function getServerSideProps({ params, query }) {
-  const parameters= getAllPostIds()
+  // const parameters= getAllPostIds()
   const postData =await getPostData(query.slug)
-  const slug = params.slug
+  let slug = params.slug
+  
 
-  // const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/universe/${postData.slug}`);
-  // console.log(res)
-  // const data = res.data;
-
-  const page = query.page || 1;
+  let page = query.page || 1;
   let queryStr;
   if(page){
-    queryStr = `?page=${page}`;
+    queryStr =`?page=${page}`;
   }
   else {
-    queryStr = ''
-  }
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/universe/${postData.slug}${queryStr}`);
-  const data = res.data;
+    queryStr ='';
+}
 
-  const totalStocks = data.count
-  const resultsPerPage = 20
-  
-  
-  const numberOfPages = data.count/data.results_per_page
+const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/universe/${postData.slug}${queryStr}`);
+const data = res.data;
 
-  return {
-    props: {
-      nav: {
-        light: true,
-        classes: "shadow",
-        color: "white",
-      },
-      loggedUser: false,
-      title: "Fintank Stock Screener",
-      data,
-      postData,
-      numberOfPages,
-      totalStocks,
-      resultsPerPage,
-      slug
+const totalStocks = data.count
+const resultsPerPage = 20
+
+
+const numberOfPages = data.count/data.results_per_page
+
+return {
+  props: {
+    nav: {
+      light: true,
+      classes: "shadow",
+      color: "white",
     },
-  }
+    loggedUser: false,
+    title: "Fintank Stock Screener",
+    data,
+    postData,
+    numberOfPages,
+    totalStocks,
+    resultsPerPage,
+    slug
+  },
+}
 }
 
 const Universe = (props) => {
-
-  console.log(props.screenerAction)
 
   const [modal, setModal] = useState(false)
 
@@ -102,36 +85,37 @@ const Universe = (props) => {
   const univerData = props.data.items
 
 
-  const [keyWord, setKeyWord] = useState('')
-  const [ticker, setTicker] = useState('')
-  const [minMarketCap, setMinMarketCap] = useState(0)
-  const [maxMarketCap, setMaxMarketCap] = useState()
-  const [minPrice, setMinPrice] = useState()
-  const [maxPrice, setMaxPrice] = useState()
-  const [showPriceFilter, setShowPriceFilter] = useState(true)
-  const [maxBeta, setMaxBeta] = useState(0)
-  const [minBeta, setMinBeta] = useState(0)
-  const [showBetaFilter, setShowBetaFilter] = useState(true)
-  const [maxVolume, setMaxVolume] = useState()
-  const [minVolume, setMinVolume] = useState()
-  const [minDividend, setMinDividend] = useState()
-  const [country, setCountry] = useState('')
-  const [sectorScreener, setSectorScreener] = useState('')
-  const [subSectorScreener, setSubSectorScreener] = useState('')
-  const [searchParam, setSearchParam] = useState('')
-  const [activePage, setActivePage] = useState(1)
-  const [sectorFilter, setSectorFilter] = useState('')
-  const [subSectorFilter, setSubSectorFilter] = useState('')
-  const [stockData, setStockData] = useState(univerData)
-  const [startIndex, setStartIndex] = useState(0)
-  const [limitIndex, setLimitIndex] = useState(props.resultsPerPage)
-  const [numberOfPages, setNumberOfPages] = useState(Math.round(props.totalStocks/props.resultsPerPage))
-  const [createLink, setCreateLink] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [keyWord, setKeyWord] = useState('');
+  const [ticker, setTicker] = useState('');
+  const [minMarketCap, setMinMarketCap] = useState(0);
+  const [maxMarketCap, setMaxMarketCap] = useState();
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
+  const [showPriceFilter, setShowPriceFilter] = useState(true);
+  const [maxBeta, setMaxBeta] = useState(0);
+  const [minBeta, setMinBeta] = useState(0);
+  const [showBetaFilter, setShowBetaFilter] = useState(true);
+  const [maxVolume, setMaxVolume] = useState();
+  const [minVolume, setMinVolume] = useState();
+  const [minDividend, setMinDividend] = useState();
+  const [country, setCountry] = useState('');
+  const [sectorScreener, setSectorScreener] = useState('');
+  const [subSectorScreener, setSubSectorScreener] = useState('');
+  const [searchParam, setSearchParam] = useState('');
+  const [activePage, setActivePage] = useState(1);
+  const [sectorFilter, setSectorFilter] = useState('');
+  const [subSectorFilter, setSubSectorFilter] = useState('');
+  const [stockData, setStockData] = useState(univerData);
+  const [startIndex, setStartIndex] = useState(0);
+  const [limitIndex, setLimitIndex] = useState(props.resultsPerPage);
+  const [numberOfPages, setNumberOfPages] = useState(Math.round(props.totalStocks/props.resultsPerPage));
+  const [createLink, setCreateLink] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isEquityRelated, setIsEquityRelated] = useState(true);
   const router = useRouter();
 
+  console.log(router);
 
-  
 
   const submitFilterHandler = (e) => {
     e.preventDefault();
@@ -154,33 +138,30 @@ const Universe = (props) => {
     }
   }
 
-  const handlePageClick = (currentPage) => {
-
-    setActivePage(currentPage)
-  
-    if(router.query.page){
-      router.query.page = activePage;
-      setStartIndex(limitIndex+1)
-      setLimitIndex(limitIndex+props.resultsPerPage)
-      console.log("Page Exisit")
-    }
-    else {
-      setStartIndex(limitIndex+1)
-      setLimitIndex(limitIndex+props.resultsPerPage)
-      router.query.page = currentPage;
-      console.log("Page Added")
-    }
-
-    router.push(router)
+  let queryParams;
+  if(typeof window !== 'undefined'){
+    queryParams = new URLSearchParams(window.location.search)
   }
 
+  const handlePageRoute = (currentPage) => {
+    setActivePage(currentPage)
+    if(queryParams.has('page')){
+      queryParams.set('page', currentPage)
+    } else {
+      queryParams.append('page', currentPage)
+    }
+
+    router.push({
+      pathname:props.slug,
+      search:queryParams.toString()
+    });
+  }
 
   const handleScreenSubmit = async(e) => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData();
-        
+    const formData = new FormData();      
     formData.append("market_cap_max", maxMarketCap ? maxMarketCap : undefined);
     formData.append("market_cap_min", minMarketCap? minMarketCap : 0);
     formData.append("beta_max", maxBeta ? maxBeta : undefined);
@@ -191,22 +172,29 @@ const Universe = (props) => {
     formData.append("country", country ? country : undefined);
     formData.append("price_max", maxPrice ? maxPrice : undefined);
     formData.append("price_min", minPrice ? minPrice : undefined);
-    
-
     const screenedItems = await props.screenerActionRun(formData);
     setLoading(false)
-
-
     !loading && window.open("/screener","_blank")
   }
 
 
   const getPages = (allPages) => {
     const items = []
-    for(let i=1; i <= allPages; i++){
-      items.push(
-      <Pagination.Item key={i} active={i==activePage} onClick={handlePageClick.bind(null,i)}>{i}</Pagination.Item> 
-      )
+    if(allPages <= 11){
+      for(let i=1; i <= allPages; i++){
+        items.push(
+        <Pagination.Item key={i} active={i===activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
+        )
+      }
+    }
+    else{
+      for(let i=1; i <= 11; i++){
+        items.push(
+        <Pagination.Item key={i} active={i==activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
+        )
+      }
+      items.push(<Pagination.Ellipsis />)
+      items.push(<Pagination.Item key={allPages} active={allPages===activePage} onClick={() => handlePageRoute(allPages)}>{allPages}</Pagination.Item> )
     }
     return items
   }
@@ -218,8 +206,6 @@ const Universe = (props) => {
   }
 
   const handleSelect = (e) => {
-    console.log(e)
-    
     if(e.type === "sector"){
       if (e.value !== "All"){
         const sectorFilter = univerData.filter((p) => p.sector===e.value)
@@ -254,12 +240,17 @@ const Universe = (props) => {
     }
   }, [minDividend])
 
-
-
   useEffect(() => {
     setStockData(univerData)
     setNumberOfPages(Math.round(props.totalStocks/props.resultsPerPage))
   }, [univerData, props])
+
+
+  useEffect(() => {
+    if (['commodities', 'cryptos', 'etfs', ].indexOf(router.query.slug) >=0){
+      setIsEquityRelated(false)
+    }
+  }, [router])
   
 
   return (
@@ -348,7 +339,7 @@ const Universe = (props) => {
           </div>
         </div>
 
-        <section className="pb-3">
+        {isEquityRelated && <section className="pb-3">
         <Button onClick={onClickModal}>Launch Stock Screener</Button>
             <Modal show={modal} onHide={onClickModal}>
                 <Modal.Header closeButton>
@@ -554,7 +545,8 @@ const Universe = (props) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </section>
+        </section> 
+        }
         
 
         <ListGroup className="shadow mb-5">

@@ -21,7 +21,8 @@ import { useHomeIndex } from "@hooks/useHomeIndex"
 import { useSectorReturnTS } from "@hooks/UseSectorTS"
 import { useSectorData } from "@hooks/UseSectorData"
 import { connect } from "react-redux"
-import { DjangoScreenerContext } from "@context/screenerContext";
+import { useStockNames } from "@hooks/useStockNames"
+import { useRouter } from "next/router"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -87,10 +88,14 @@ const Index = (props) => {
   const [fmpData, setFmpData] = useState([])
   const [cleanFrequencyName, setCleanFrequencyName] = useState('')
   const {data:sectorData} = useSectorData()
+  const router = useRouter();
 
   let fmpNewsArticles = props.responseNews.data
   const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
   const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
+
+  const {data:stockNames} = useStockNames();
+  const allStocks = stockNames?.stocks
 
   const adjustFrequencyName = (frequency) => {
     switch(frequency){
@@ -122,6 +127,13 @@ const Index = (props) => {
 
   const handleFrequencyChange = (e) => {
     setFrequency(e)
+  }
+
+  const randomTickerSearch = () => {
+    let randomIndex = Math.floor(Math.random()*allStocks?.length)
+    let randomSymbol = allStocks[randomIndex].symbol
+    console.log(randomSymbol);
+    router.push(`/stock-data/${randomSymbol}`)
   }
 
 
@@ -156,11 +168,15 @@ const Index = (props) => {
                   </p>
                 </div>
               )}
-              <Button
-                  type="submit"
-                >
+              {allStocks ?
+                <Button onClick={randomTickerSearch}>
                   Random Ticker Search
-                </Button>
+                </Button> :
+                <Button onClick={randomTickerSearch} disabled={true}>
+                Random Ticker Search
+              </Button>
+              }
+              
             </Col>
           </Row>
         </Container>
@@ -334,29 +350,6 @@ const Index = (props) => {
           </Container>
         </section>
       )}
-
-      {data.jumbotron && (
-        <section className="py-7 position-relative dark-overlay">
-          <Image
-            src={`/images/${data.jumbotron.img}`}
-            alt=""
-            className="bg-image"
-            layout="fill"
-          />
-          <Container>
-            <div className="overlay-content text-white py-lg-5">
-              <h4 className="display-4 fw-bold text-serif text-shadow mb-5">
-                {data.jumbotron.title}
-              </h4>
-              <Link href={data.jumbotron.link} passHref>
-                <Button variant="light">{data.jumbotron.button}</Button>
-              </Link>
-            </div>
-          </Container>
-        </section>
-      )}
-      {/* <Guides /> */}
-      {/* <LastMinute greyBackground /> */}
       {blog.posts && (
         <section className="py-6 bg-gray-100">
           <Container>
@@ -387,7 +380,7 @@ const Index = (props) => {
                 if (index <= 63)
                   return (
                     <Col
-                      key={post.title}
+                      key={index}
                       lg="3"
                       sm="6"
                       className="mb-4 hover-animate"
@@ -400,6 +393,35 @@ const Index = (props) => {
           </Container>
         </section>
       )}
+
+      {data.jumbotron && (
+        <section className="py-7 position-relative dark-overlay">
+          <Image
+            src={`/images/${data.jumbotron.img}`}
+            alt=""
+            className="bg-image"
+            layout="fill"
+          />
+          <Container>
+            <div className="overlay-content text-white py-lg-5">
+              <h4 className="display-4 fw-bold text-serif text-shadow mb-5">
+                {data.jumbotron.title}
+              </h4>
+              {allStocks ?
+                <Button onClick={randomTickerSearch} variant="light">
+                  Discover A Company
+                </Button> :
+                <Button onClick={randomTickerSearch} disabled={true}>
+                Discover A Company
+              </Button>
+              }
+            </div>
+          </Container>
+        </section>
+      )}
+      {/* <Guides /> */}
+      {/* <LastMinute greyBackground /> */}
+      
 
     </React.Fragment>
   )

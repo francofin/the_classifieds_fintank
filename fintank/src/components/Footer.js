@@ -72,18 +72,10 @@ const Footer = () => {
                         }
                         return (
                           <li
-                            key={socialIcon.title}
+                            key={index}
                             className="list-inline-item"
                           >
-                            <Link
-                              href={socialIcon.link}
-                              target="_blank"
-                              // title={socialIcon.title}
-                              passHref
-                              className="text-muted text-hover-primary"
-                            >
-                              <FontAwesomeIcon icon={socialIconFA} />
-                            </Link>
+                            <FontAwesomeIcon icon={socialIconFA} />
                           </li>
                         )
                       })}
@@ -160,40 +152,48 @@ const Footer = () => {
             <Col md="6">
               <ul className="list-inline mb-0 mt-2 mt-md-0 text-center text-md-end">
                 <li className="list-inline-item">
-                  <img
-                    width="32"
-                    height="32"
-                    src="/content/svg/visa.svg"
-                    alt="..."
-                    className="w-2rem"
-                  />
+                <Image
+                      src={"/content/svg/visa.svg"}
+                      alt="..."
+                      width={35}
+                      height={35}
+                      layout="intrinsic"
+                      className="w-2rem"
+                      // loading={props.eager ? "eager" : "lazy"}
+                    />
                 </li>
                 <li className="list-inline-item">
-                  <img
-                    src="/content/svg/mastercard.svg"
-                    width="32"
-                    height="32"
-                    alt="..."
-                    className="w-2rem"
-                  />
+                <Image
+                      src={"/content/svg/mastercard.svg"}
+                      alt="..."
+                      width={35}
+                      height={35}
+                      layout="intrinsic"
+                      className="w-2rem"
+                      // loading={props.eager ? "eager" : "lazy"}
+                    />
                 </li>
                 <li className="list-inline-item">
-                  <img
-                    src="/content/svg/paypal.svg"
-                    width="32"
-                    height="32"
-                    alt="..."
-                    className="w-2rem"
-                  />
+                <Image
+                      src={"/content/svg/paypal.svg"}
+                      alt="..."
+                      width={35}
+                      height={35}
+                      layout="intrinsic"
+                      className="w-2rem"
+                      // loading={props.eager ? "eager" : "lazy"}
+                    />
                 </li>
                 <li className="list-inline-item">
-                  <img
-                    src="/content/svg/western-union.svg"
-                    width="32"
-                    height="32"
-                    alt="..."
-                    className="w-2rem"
-                  />
+                <Image
+                      src={"/content/svg/western-union.svg"}
+                      alt="..."
+                      width={35}
+                      height={35}
+                      layout="intrinsic"
+                      className="w-2rem"
+                      // loading={props.eager ? "eager" : "lazy"}
+                    />
                 </li>
               </ul>
             </Col>

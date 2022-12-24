@@ -2,7 +2,7 @@
     "hero": {
         "title": "FinTank",
         "subTitle": "Your Portfolio has Never Been Easier To Manage.",
-        "subtitle2":"Over 40,000 stocks to research."
+        "subtitle2":"Over 35,000 stocks to research."
     },
     "swiperPoster": "photo-1501621965065-c6e1cf6b53e2-lowres.jpg",
     "swiperImages": [
@@ -67,7 +67,7 @@
         "active":"Most Active Stocks"
     },
     "jumbotron": {
-        "title": "The Classifieds Finance Research Platform",
+        "title": "Fintank a Modern Finance Research Platform And Data Aggregator",
         "button": "Fintank Research",
         "link": "/category-rooms",
         "img": "homepageImages/explore.jpg"
@@ -111,7 +111,7 @@
     "blogPosts": {
         "title": "Breaking News Articles",
         "subTitle": "Stories from around the globe",
-        "button": "See all articles",
-        "buttonLink": "/blog"
+        "button": "See more stories",
+        "buttonLink": "/news/markets"
     }
 }

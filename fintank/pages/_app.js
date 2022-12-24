@@ -1,7 +1,6 @@
 import React from "react"
 import Layout from "@components/Layout"
 import { DjangoAuthProvider} from '@context/authContext';
-import { DjangoScreenerProvider } from "@context/screenerContext"
 import { Provider } from "react-redux";
 import { wrapper, theStore, persistor } from "@src/store";
 import { PersistGate } from 'redux-persist/integration/react'

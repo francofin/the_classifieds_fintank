@@ -1,34 +1,39 @@
-import React, { useEffect, useRef, useState, useMemo } from "react"
-import Link from "next/link"
-import { DayPicker } from "react-day-picker"
-import "react-day-picker/dist/style.css"
-import {Container,Row,Col,Form,Button, Badge, Overlay} from "react-bootstrap"
-import UseWindowSize from "@hooks/UseWindowSize"
-import roomData from "@data/stock-research.json"
-import blog from "@data/blog.json"
-import SwiperGallery from "@components/SwiperGallery"
-import Gallery from "@components/Gallery"
-import Map from "@components/Map"
-import { useStockData } from "@hooks/useStockData"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import Link from "next/link";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import {Container,Row,Col,Form,Button, ToggleButton, Badge, Overlay} from "react-bootstrap";
+import UseWindowSize from "@hooks/UseWindowSize";
+import roomData from "@data/stock-research.json";
+import blog from "@data/blog.json";
+import SwiperGallery from "@components/SwiperGallery";
+import Image from "@components/CustomImage";
+import Gallery from "@components/Gallery";
+import Map from "@components/Map";
+import { useStockData } from "@hooks/useStockData";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
+import { useStockReturns } from "@hooks/useStockReturns";
+import { useStockChart } from "@hooks/useStockCharts";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
+  BarElement,
   LineElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -54,6 +59,25 @@ export function getPostData(slug) {
   }
 }
 
+export const barOptions = {
+  indexAxis: 'y',
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+    },
+    title: {
+      display: true,
+      text: 'Comparative Exposures',
+    },
+  },
+};
+
 
 export const options = {
   responsive: true,
@@ -76,12 +100,7 @@ export const options = {
     }
   }
 };
-// export async function getStaticPaths() {
-//   return {
-//     paths: getAllPostIds(),
-//     fallback: false,
-//   }
-// }
+
 
 export async function getServerSideProps({query }) {
 
@@ -90,26 +109,22 @@ export async function getServerSideProps({query }) {
     const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/stock-data/${ticker}`);
     const data = stockRequested.data
 
-    // const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`)
-    // const dailyData = dailyStockData.data
+    const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`);
+    const dailyData = dailyStockData.data;
+    const labels = dailyData.dates;
+    const prices = dailyData.prices;
 
     let universe;
+    
 
     try{
       const universeData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getpeerlist/${ticker}/${data.stock[0]['universe']}`)
       universe = universeData.data
       
     } catch(e){
-      console.log("No Universe Data Found")
+      console.log("No Universe Data Found", e)
     }
     
-
-    // const labels = dailyData.dates;
-    // const prices = dailyData.prices;
-
-    
-
-    console.log(data)
 
     if (universe) {
       console.log(universe)
@@ -126,46 +141,45 @@ export async function getServerSideProps({query }) {
         // title: postData.title,
         postData,
         data,
-        // dailyData,
-        // labels,
-        // prices
+        dailyData,
+        labels,
+        prices
         },
     }
 }
 const StockDetail = (props) => {
   const stockData = props.data.stock[0]
   const requestedData = useStockData(stockData.symbol)
-  // const dailyData = props.dailyData;
+  const dailyData = props.dailyData;
 
-  // console.log("Daily", dailyData);
+  const chartData = {
+    type:'line',
+    labels:props.labels,
+    datasets: [{
+      label: stockData.symbol,
+      data:props.prices,
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      pointRadius: 1
+    }]
+  }
 
-  // const chartData = {
-  //   type:'line',
-  //   labels:props.labels,
-  //   datasets: [{
-  //     label: stockData.symbol,
-  //     data:props.prices,
-  //     borderColor: 'rgb(255, 99, 132)',
-  //     backgroundColor: 'rgba(255, 99, 132, 0.5)',
-  //     pointRadius: 1
-  //   }]
-  // }
+  const [dataForStock, setDataForStock] = useState(null);
+  const [position, setPosition] = useState(null);
+  const [frequency, setFrequency] = useState('30d');
+  const [buttonClass, setButtonClass] = useState('outline-primary')
 
-
-
-  const [dataForStock, setDataForStock] = useState(null)
-  const [position, setPosition] = useState(null)
+  const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
+  const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
+  console.log(useStockChart(frequency, chartLabels,chartReturns))
 
   useEffect(() => {
-    
     setDataForStock(requestedData ? requestedData[0] : "")
   }, [requestedData])
 
-  
 
 
   useMemo(() => {
-
     const fetcher = async (url) => {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getgeocode/${dataForStock?.city}${" "}${dataForStock?.state}`)
       const resData = res.data
@@ -207,6 +221,11 @@ const StockDetail = (props) => {
   }, [range])
 
 
+  const changeFrequency = (frequency) => {
+    setFrequency(frequency);
+  }
+
+
 
   return (
     <React.Fragment>
@@ -235,36 +254,41 @@ const StockDetail = (props) => {
                   {dataForStock?.description && dataForStock?.description}.{" "}
                 </p>
               </div>
-              {roomData.amenities && (
+              {roomData.frequencies && (
                 <React.Fragment>
                   <div className="text-block">
-                    <h4 className="mb-4">Stock Data</h4>
+                    <h4 className="mb-4">Stock Price Movements</h4>
                     <Row>
-                      {/* <Line options={options} data={chartData} style={{height:'100px'}}/> */}
+                      <Line options={options} data={chartData} style={{height:'100px'}}/>
                     </Row>
                   </div>
                   <div className="text-block">
-                    <h4 className="mb-0">Amenities alternative</h4>
-                    <p className="subtitle text-sm text-primary mb-4">
-                      Alternative amenities display
-                    </p>
+                    <h4 className="mb-1">Adjust Frequency</h4>
                     <ul className="list-inline">
-                      {roomData.amenities.map((amenity) => (
+                      {roomData.frequencies.map((freq, index) => (
                         <li
-                          key={amenity.value}
+                          key={index}
                           className="list-inline-item mb-2"
                         >
-                          <Badge
-                            pill
+                          <ToggleButton 
+                            type="radio"
                             bg="light"
-                            className="p-3 text-muted fw-normal"
+                            value={freq.value}
+                            variant={freq.value === frequency ? 'primary' : buttonClass}
+                            onClick = {() => changeFrequency(freq.value)}
                           >
-                            {amenity.value}
-                          </Badge>
+                            {freq.label}
+                          </ToggleButton >
                         </li>
                       ))}
                     </ul>
                   </div>
+                  {chartCreated && <div className="text-block">
+                    <h4 className="mb-4">Rolling Returns: {stockData.symbol}</h4>
+                    <Row>
+                      <Line options={options} data={createChart} style={{height:'100px'}}/>
+                    </Row>
+                  </div>}
                 </React.Fragment>
               )}
               {roomData.author && (
@@ -272,13 +296,15 @@ const StockDetail = (props) => {
                   <div className="d-flex">
                     <div className={`avatar avatar-lg "me-4"`}>
                       <div className="position-relative overflow-hidden rounded-circle h-100 d-flex align-items-center justify-content-center">
-                        <img
-                            src={dataForStock?.image}
-                            alt={stockData.name}
-                            width="72px"
-                            height="72px"
-                            className={`rounded-circle`}
-                          />
+                          <Image
+                              src={`https://res.cloudinary.com/dkekvnsiy/image/fetch/${dataForStock?.image}`}
+                              alt={stockData.name}
+                              width={72}
+                              height={72}
+                              layout="intrinsic"
+                              className={`rounded-circle`}
+                              loading={props.eager ? "eager" : "lazy"}
+                            />
                       </div>
                     </div>
                     <div>

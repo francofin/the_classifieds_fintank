@@ -7,7 +7,7 @@ import { FormProvider } from "@components/FormContext"
 import { BookingProvider } from "@components/BookingContext"
 import SvgIcons from "@components/SvgIcons"
 import SSRProvider from "react-bootstrap/SSRProvider"
-
+import footerContent from "@data/footer.json"
 const Layout = (pageProps) => {
   const headerProps = {
     nav: {
@@ -28,7 +28,7 @@ const Layout = (pageProps) => {
       >
         <Head>
           <title>{pageProps.title} - Portfolio Manager</title>
-          <link rel="icon" href="/favicon.png" />
+          <link rel="icon" href={`/images/${footerContent[0].lowerImage}`} />
           <meta charset="UTF-8" />
         </Head>
         <NextNProgress color="#4E66F8" options={{ showSpinner: false }} />

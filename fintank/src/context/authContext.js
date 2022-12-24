@@ -134,7 +134,7 @@ const DjangoAuthProvider = ({children}) => {
             const res = await axios.post(`${process.env.FINTANK_API_URL}/register/`, 
             {first_name:firstName, last_name:lastName, email, password, password2:confirmPassword});
 
-            console.log(res)
+            // console.log(res)
             setLoading(true);
             
             if(res.data.message){
@@ -155,12 +155,12 @@ const DjangoAuthProvider = ({children}) => {
                 let {data} = await axios.post('/api/auth/uploadImages', {
                     image: uri,
                 });
-                console.log(data)
+                // console.log(data)
                 //set image in state.and loading to false.
                 setAvatar(await data.Location);
                 setImageData(data);
             }catch(err){
-                console.log(err);
+                // console.log(err);
                 swal({
                     title:`Failed to Upload Image ${err}`,
                     icon: "error"
@@ -175,10 +175,10 @@ const DjangoAuthProvider = ({children}) => {
             const imageKey = user.profile_picture_cs.split("/")[3]
             await axios.post('/api/auth/removeImages', {imageKey});
             // console.log(res)
-            console.log(imageKey[3])
+            // console.log(imageKey[3])
             
         }catch(err){
-            console.log(err);
+            // console.log(err);
             swal({
                 title:`Failed to Upload Image ${err}`,
                 icon: "error"
