@@ -114,8 +114,6 @@ const Universe = (props) => {
   const [isEquityRelated, setIsEquityRelated] = useState(true);
   const router = useRouter();
 
-  console.log(router);
-
 
   const submitFilterHandler = (e) => {
     e.preventDefault();

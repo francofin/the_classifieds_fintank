@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
 import { useStockChart } from "@hooks/useStockCharts";
+import swal from 'sweetalert';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,6 +28,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
+import { useBarChart } from "@hooks/useBarCharts";
 
 ChartJS.register(
   CategoryScale,
@@ -72,7 +74,7 @@ export const barOptions = {
       position: 'bottom',
     },
     title: {
-      display: true,
+      display: false,
       text: 'Comparative Exposures',
     },
   },
@@ -143,7 +145,8 @@ export async function getServerSideProps({query }) {
         data,
         dailyData,
         labels,
-        prices
+        prices,
+        universe
         },
     }
 }
@@ -151,6 +154,8 @@ const StockDetail = (props) => {
   const stockData = props.data.stock[0]
   const requestedData = useStockData(stockData.symbol)
   const dailyData = props.dailyData;
+  const symbolPeers = props.universe?.raw_data;
+  const chartMappings = props.universe?.mappings;
 
   const chartData = {
     type:'line',
@@ -158,8 +163,8 @@ const StockDetail = (props) => {
     datasets: [{
       label: stockData.symbol,
       data:props.prices,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      borderColor: 'rgb(50, 166, 168)',
+      backgroundColor: 'rgba(50, 166, 168, 0.5)',
       pointRadius: 1
     }]
   }
@@ -171,6 +176,23 @@ const StockDetail = (props) => {
 
   const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
   const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
+  
+
+  const {barChartCreated:peBarChart, createChart:peChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.pe, chartMappings?.peRatioTTM)
+  const {barChartCreated:psBarChart, createChart:psChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.psales, chartMappings?.priceToSalesRatioTTM)
+  const {barChartCreated:pcfBarChart, createChart:pcfChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.pcf, chartMappings?.pfcfRatioTTM)
+  const {barChartCreated:pbBarChart, createChart:pbChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.pb, chartMappings?.pbRatioTTM)
+  const {barChartCreated:deBarChart, createChart:deChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.de, chartMappings?.debtToEquityTTM)
+  const {barChartCreated:roeBarChart, createChart:roeChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.roe, chartMappings?.roeTTM)
+  const {barChartCreated:roicBarChart, createChart:roicChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.roic, chartMappings?.roicTTM)
+  const {barChartCreated:divBarChart, createChart:divChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.div, chartMappings?.dividendYieldPercentageTTM)
+  const {barChartCreated:intCovBarChart, createChart:intCovChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.int_cov, chartMappings?.interestCoverageTTM)
+  const {barChartCreated:fcfYldBarChart, createChart:fcfYldChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.fcfyld, chartMappings?.freeCashFlowYieldTTM)
+  const {barChartCreated:eyldBarChart, createChart:eyldChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.eyld, chartMappings?.earningsYieldTTM)
+  const {barChartCreated:fcfBarChart, createChart:fcfChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.fcf, chartMappings?.freeCashFlowPerShareTTM)
+  
+ 
+
   console.log(useStockChart(frequency, chartLabels,chartReturns))
 
   useEffect(() => {
@@ -263,7 +285,7 @@ const StockDetail = (props) => {
                     </Row>
                   </div>
                   <div className="text-block">
-                    <h4 className="mb-1">Adjust Frequency</h4>
+                    <h4 className="mb-2">Return Frequency</h4>
                     <ul className="list-inline">
                       {roomData.frequencies.map((freq, index) => (
                         <li
@@ -291,6 +313,68 @@ const StockDetail = (props) => {
                   </div>}
                 </React.Fragment>
               )}
+              <React.Fragment>
+                  {peBarChart && 
+                    <Row className="pt-3">
+                      <Col lg="6">
+                        <Bar options={barOptions} data={peChartCreated} height={200}/>
+                      </Col>
+                      <Col lg="6">
+                        <Bar options={barOptions} data={psChartCreated} height={200}/>
+                      </Col>
+                    </Row>
+                  }
+                  {pcfBarChart && 
+                    <Row className="pt-3">
+                      <Col lg="6">
+                        <Bar options={barOptions} data={pcfChartCreated} height={200}/>
+                      </Col>
+                      <Col lg="6">
+                        <Bar options={barOptions} data={pbChartCreated} height={200}/>
+                      </Col>
+                    </Row>
+                  }
+                  {roeBarChart && 
+                    <Row className="pt-3">
+                      <Col lg="6">
+                        <Bar options={barOptions} data={roeChartCreated} height={200}/>
+                      </Col>
+                      <Col lg="6">
+                        <Bar options={barOptions} data={roicChartCreated} height={200}/>
+                      </Col>
+                    </Row>
+                  }
+                  {fcfYldBarChart && 
+                    <Row className="pt-3">
+                      <Col lg="6">
+                        <Bar options={barOptions} data={fcfYldChartCreated} height={200}/>
+                      </Col>
+                      <Col lg="6">
+                        <Bar options={barOptions} data={fcfChartCreated} height={200}/>
+                      </Col>
+                    </Row>
+                  }
+                  {eyldBarChart && 
+                    <Row className="pt-3">
+                      <Col lg="6">
+                        <Bar options={barOptions} data={eyldChartCreated} height={200}/>
+                      </Col>
+                      <Col lg="6">
+                        <Bar options={barOptions} data={intCovChartCreated} height={200}/>
+                      </Col>
+                    </Row>
+                  }
+                  {deBarChart && 
+                    <Row className="pt-3">
+                      <Col lg="6">
+                        <Bar options={barOptions} data={deChartCreated} height={200}/>
+                      </Col>
+                      <Col lg="6">
+                        <Bar options={barOptions} data={divChartCreated} height={200}/>
+                      </Col>
+                    </Row>
+                  }
+              </React.Fragment>
               {roomData.author && (
                 <div className="text-block">
                   <div className="d-flex">

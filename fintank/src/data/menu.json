@@ -4,6 +4,19 @@
     "link":"/"
   },
   {
+    "title":"About",
+    "dropdown": [
+      {
+        "title": "About Fintank",
+        "link": "/about"
+      },
+      {
+        "title": "FAQ",
+        "link": "/faq"
+      }
+    ]
+  },
+  {
     "title": "Major Indexes",
     "link": "/markets"
   },

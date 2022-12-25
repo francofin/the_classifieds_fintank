@@ -34,6 +34,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { useIndexData } from "@hooks/useIndexReturns"
 
 ChartJS.register(
   CategoryScale,
@@ -59,6 +60,12 @@ export async function getStaticProps() {
   const moverData = await fetcher(URL);
   const fmpRes = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/fmp`);
   const responseNews = fmpRes.data;
+  const sp500 = 'GSPC';
+  const nasdaq = 'IXIC';
+  const tsx = 'GSPTSE';
+  const ftse = 'FTSE';
+  const r2000 = 'RUT';
+  const dji ='DJI';
 
   
   return {
@@ -71,7 +78,13 @@ export async function getStaticProps() {
       title: "Fintank",
       data,
       moverData,
-      responseNews
+      responseNews,
+      sp500,
+      nasdaq,
+      tsx,
+      ftse,
+      r2000,
+      dji
     },
   }
 }
@@ -89,6 +102,12 @@ const Index = (props) => {
   const [cleanFrequencyName, setCleanFrequencyName] = useState('')
   const {data:sectorData} = useSectorData()
   const router = useRouter();
+  const sp500Data = useIndexData(props.sp500);
+  const nasData = useIndexData(props.nasdaq);
+  const tsxData = useIndexData(props.tsx);
+  const r2Data = useIndexData(props.r2000);
+  const djiData = useIndexData(props.dji);
+  const ftseData = useIndexData(props.ftse);
 
   let fmpNewsArticles = props.responseNews.data
   const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
@@ -259,7 +278,7 @@ const Index = (props) => {
           </Container>
         }   
       </section>
-      {loading && sectorReturnTS ? 
+      {/* {loading && sectorReturnTS ? 
         <section className="pt-3 pb-6">
           <div className="text-center pb-lg-4">
               <p className="h2">
@@ -287,7 +306,7 @@ const Index = (props) => {
               </Col>
             </Row>
       </section> : ""
-      }
+      } */}
       
       {props.moverData && (
         <section className="py-6 bg-gray-100">
