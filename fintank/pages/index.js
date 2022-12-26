@@ -35,6 +35,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useIndexData } from "@hooks/useIndexReturns"
+import { useIndexCharter } from "@hooks/useIndexChart"
 
 ChartJS.register(
   CategoryScale,
@@ -53,6 +54,28 @@ const fetcher = async (url) => {
   const resData = res.data
   return resData
 }
+
+export const indexLineOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+    },
+    title: {
+      display: false,
+      text: 'Time Series Data',
+    },
+  },
+  animations: {
+    tension: {
+      duration: 1000,
+      easing: 'linear',
+      from: 1,
+      to: 0,
+      loop: false
+    }
+  }
+};
 
 export async function getStaticProps() {
 
@@ -109,44 +132,54 @@ const Index = (props) => {
   const djiData = useIndexData(props.dji);
   const ftseData = useIndexData(props.ftse);
 
+
+
+
+  const {indexChartCreated:sp500ChartCreated, createIndexChart:sp500IndexChart, indexName:sp500Name} = useIndexCharter(props.sp500, sp500Data?.index_dates, sp500Data?.index_prices)
+  const {indexChartCreated:nasdaqChartCreated, createIndexChart:nasdaqIndexChart, indexName:nasdaqName} = useIndexCharter(props.nasdaq, nasData?.index_dates, nasData?.index_prices)
+  const {indexChartCreated:dowJonesChartCreated, createIndexChart:dowJonesIndexChart, indexName:dowJonesName} = useIndexCharter(props.dji, djiData?.index_dates, djiData?.index_prices)
+  const {indexChartCreated:russellChartCreated, createIndexChart:russellIndexChart, indexName:russellName} = useIndexCharter(props.r2000, r2Data?.index_dates, r2Data?.index_prices)
+  const {indexChartCreated:tsxChartCreated, createIndexChart:tsxIndexChart, indexName:tsxName} = useIndexCharter(props.tsx, tsxData?.index_dates, tsxData?.index_prices)
+  const {indexChartCreated:ftseChartCreated, createIndexChart:ftseIndexChart, indexName:ftseName} = useIndexCharter(props.ftse, ftseData?.index_dates, ftseData?.index_prices)
+
   let fmpNewsArticles = props.responseNews.data
   const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
-  const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
+  // const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
 
   const {data:stockNames} = useStockNames();
   const allStocks = stockNames?.stocks
 
-  const adjustFrequencyName = (frequency) => {
-    switch(frequency){
-      case 'fifteen':
-        setCleanFrequencyName('15')
-        break;
-      case 'thirty':
-        setCleanFrequencyName('30')
-        break;
-      case 'sixty':
-        setCleanFrequencyName('60')
-        break;
-      case 'ninety':
-        setCleanFrequencyName('90')
-        break;
+  // const adjustFrequencyName = (frequency) => {
+  //   switch(frequency){
+  //     case 'fifteen':
+  //       setCleanFrequencyName('15')
+  //       break;
+  //     case 'thirty':
+  //       setCleanFrequencyName('30')
+  //       break;
+  //     case 'sixty':
+  //       setCleanFrequencyName('60')
+  //       break;
+  //     case 'ninety':
+  //       setCleanFrequencyName('90')
+  //       break;
 
-    }
-  }
-
-
-  useEffect(() => {
-    setSectorReturnTs(exportedData)
-    setSectorReturnOptions(options)
-    setLoading(true)
-    adjustFrequencyName(frequency)
-
-  }, [frequency])
+  //   }
+  // }
 
 
-  const handleFrequencyChange = (e) => {
-    setFrequency(e)
-  }
+  // useEffect(() => {
+  //   setSectorReturnTs(exportedData)
+  //   setSectorReturnOptions(options)
+  //   setLoading(true)
+  //   adjustFrequencyName(frequency)
+
+  // }, [frequency])
+
+
+  // const handleFrequencyChange = (e) => {
+  //   setFrequency(e)
+  // }
 
   const randomTickerSearch = () => {
     let randomIndex = Math.floor(Math.random()*allStocks?.length)
@@ -225,6 +258,40 @@ const Index = (props) => {
           </Container>
         </section>
       )}
+    <section className="py-0 bg-gray-100">
+      <Container>
+        {(sp500ChartCreated && nasdaqChartCreated) && 
+            <Row className="pt-3">
+              <Col lg="6">
+                <Line options={indexLineOptions} data={sp500IndexChart} height={100} width={200}/>
+              </Col>
+              <Col lg="6">
+                <Line options={indexLineOptions} data={nasdaqIndexChart} height={100} width={200}/>
+              </Col>
+            </Row>
+          }
+          {(dowJonesChartCreated && russellChartCreated) && 
+            <Row className="pt-3">
+              <Col lg="6">
+                <Line options={indexLineOptions} data={dowJonesIndexChart} height={100} width={200}/>
+              </Col>
+              <Col lg="6">
+                <Line options={indexLineOptions} data={russellIndexChart} height={100} width={200}/>
+              </Col>
+            </Row>
+          }
+          {(tsxChartCreated && ftseChartCreated) && 
+            <Row className="pt-3">
+              <Col lg="6">
+                <Line options={indexLineOptions} data={tsxIndexChart} height={100} width={200}/>
+              </Col>
+              <Col lg="6">
+                <Line options={indexLineOptions} data={ftseIndexChart} height={100} width={200}/>
+              </Col>
+            </Row>
+          }
+        </Container>
+      </section>
       
       <section className="pt-6 pb-6">
         {sectorData &&
@@ -278,6 +345,7 @@ const Index = (props) => {
           </Container>
         }   
       </section>
+      
       {/* {loading && sectorReturnTS ? 
         <section className="pt-3 pb-6">
           <div className="text-center pb-lg-4">

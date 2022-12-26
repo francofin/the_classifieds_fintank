@@ -8,53 +8,49 @@
             "questions": [
                 {
                     "title": "Where Does Fintank Get Its Data From?",
-                    "content": "Fintank was created with the retail investor in mind, providing them with tools and the equipment for the investment world. Our data is sourced from Financial Modelling Prep, link found at https://site.financialmodelingprep.com/."
+                    "content": "Fintank was created with the retail investor in mind, providing them with tools and the equipment for the investment world. Our data is sourced from Financial Modelling Prep, link found at <a>https://site.financialmodelingprep.com/</a>."
                 },
                 {
                     "title": "How Does Fintank Verify Its Data ?",
                     "content": "While There are many different data sources for financial data all with different methodologies for measuring and calculating many of the metrics available, Fintank compares its data from its providers with other data sources to ensure that data is in line with estimates of the wider investment community. "
                 },
                 {
-                    "title": "One of my items is missing",
-                    "content": "Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame."
+                    "title": "Raw Data Source",
+                    "content": "Fintank gets its raw data from financialmodellingprep. Data cleaned, scrubbed and organized by the sole operator of Fintank. As a local enterprise, we are continuously expanding our resources to better serve you."
                 },
                 {
-                    "title": "Remote areas - delivery",
-                    "content": "He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before."
+                    "title": "Missing Data Sources",
+                    "content": "Fintank does its best to ensure its data sources are up to date. We run weekly tasks to ensure that data is continuously updated and refreshed to ensure you consitently have accurate resources. In our experience, Equities in EMEA and Emerging Markets may be slightly inconsistent and constantly changing as markets conditions change."
                 }
             ]
         },
         {
-            "title": "Payment",
+            "title": "News and Media Sources",
             "questions": [
                 {
-                    "title": "Can I pay COD - cash on delivery?",
-                    "content": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections</p>"
+                    "title": "News and Updates",
+                    "content": "Finatnk sources its news from two different Application Programming Interfaces (APIs). News is sourced from the Bing search engine for the presented topics as well as from Financial Modelling Prep for stock and market updates."
                 },
                 {
-                    "title": "Payment methods accepted",
-                    "content": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections"
+                    "title": "Does Fintank Post Any Opinion Articles",
+                    "content": "As Fintank continues to grow, Research articles, knowledge topics and opinion pieces will be posted to enhance and support the broad investment community. Currently, Fintank only maintains our proprietary quantitative analysi tools and continues to develop these."
                 },
                 {
-                    "title": "What is Paypal?",
-                    "content": "The bedding was hardly able to cover it and seemed ready to slide off any moment. His many legs, pitifully thin compared with the size of the rest of him, waved about helplessly as he looked. &quot;What's happened to me?&quot; he thought. It wasn't a dream."
-                },
-                {
-                    "title": "How do the conversion rates work",
-                    "content": "His room, a proper human room although a little too small, lay peacefully between its four familiar walls. A collection of textile samples lay spread out on the table."
+                    "title": "Does Fintank Allow Advertisers?",
+                    "content": "Please feel free to inquire as to using our platform as a tool to advertise, Fintank currently has limited online real estate for advertisers as we prefer to take an investor and market first approach to use our platform for stock and market news and analysis. As we continue to grow, we encourage advertisers and sponsors, this is a crucial part of the market whcih spreads the messag eof the latest technilogies, innovations for Small and Medium enterprises alike."
                 }
             ]
         },
         {
-            "title": "Warranty and return",
+            "title": "Use of user related data",
             "questions": [
                 {
-                    "title": "My product has a problem what should I do?",
-                    "content": "Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame."
+                    "title": "Does Fintank track any user related information?",
+                    "content": "Fintank's stock user model, does not track data at the individuals user level, but aggregate user level and will publish stock and ownership reports quarterly and annually, as to stock count ownership, viewership and average length of time in a users portfolio. Diligence is a community wide effort."
                 },
                 {
-                    "title": "What if the product is broken?",
-                    "content": "He must have tried it a hundred times, shut his eyes so that he wouldn't have to look at the floundering legs, and only stopped when he began to feel a mild, dull pain there that he had never felt before."
+                    "title": "Does Fintank provide a trading platform for individuals to place buy, sell or hold orders>",
+                    "content": "Fintank is not an online trading platform, We are working tirelesly to create an all encompasing digitel platform, that allows you to fully manage your portfolio, but currently we provide purely research and quantitative tools to discover new equities for your portfolio."
                 },
                 {
                     "title": "Why should I buy insurance at the checkout?",
