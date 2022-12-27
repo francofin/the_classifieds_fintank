@@ -80,7 +80,9 @@ export const indexLineOptions = {
 export async function getStaticProps() {
 
   const URL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/movers/`;
+  const UPGRADEURL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getmarketupgradesdowngrades/`;
   const moverData = await fetcher(URL);
+  const upgradeData = await fetcher(UPGRADEURL);
   const fmpRes = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/fmp`);
   const responseNews = fmpRes.data;
   const sp500 = 'GSPC';
@@ -101,6 +103,7 @@ export async function getStaticProps() {
       title: "Fintank",
       data,
       moverData,
+      upgradeData,
       responseNews,
       sp500,
       nasdaq,
@@ -427,6 +430,24 @@ const Index = (props) => {
                 moverReturns
                 perView={6}
                 data={props.moverData?.most_active}
+                loop
+                speed={1000}
+                pagination
+                autoplay={{
+                  delay: 5000,
+                }}
+              />
+          </Container>
+          <Container>
+            <div className="text-center pb-lg-4">
+              <h2 className="mb-5">{data.movers.sentiment}</h2>
+            </div>
+            <Swiper
+                className="swiper-container-mx-negative pt-1 pb-5"
+                wrapperClasses="dark-overlay"
+                sentimentScores
+                perView={4}
+                data={props.upgradeData?.sentiment}
                 loop
                 speed={1000}
                 pagination

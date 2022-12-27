@@ -64,7 +64,8 @@
         "subTitle":"Days Top Movers, Losers and Most Active",
         "gainers": "Top Gainers in Markets",
         "losers": "Biggest Losers today",
-        "active":"Most Active Stocks"
+        "active":"Most Active Stocks",
+        "sentiment":"Stock Upgrades and Downgrades"
     },
     "jumbotron": {
         "title": "Fintank a Modern Finance Research Platform And Data Aggregator",

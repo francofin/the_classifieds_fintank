@@ -5,6 +5,7 @@ import CardPoster from "./CardPoster"
 import CardProperty from "./CardProperty"
 import CardNews from "./CardNews"
 import MarketReturns from "./MarketReturns"
+import Sentiments from './Sentiments'
 import { Navigation, Pagination, Autoplay, EffectFade, Grid } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import Image from "./CustomImage";
@@ -92,6 +93,11 @@ const SwiperComponent = (props) => {
             {props.moverReturns && (
               <div className="w-100 h-100 hover-animate">
                 <MoverReturns data={slide} />
+            </div>
+            )}
+            {props.sentimentScores && (
+              <div className="w-100 h-100 hover-animate">
+                <Sentiments data={slide} />
             </div>
             )}
             {props.propertyCards && (
