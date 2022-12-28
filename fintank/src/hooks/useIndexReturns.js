@@ -14,7 +14,7 @@ export const useIndexData = (index) => {
         `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailyindexdata/${index}/`,
         fetcher,
         {
-            refreshInterval: 500000
+            refreshInterval: 5000000
         }
     )
 

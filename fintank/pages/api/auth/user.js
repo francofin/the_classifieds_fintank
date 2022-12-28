@@ -1,8 +1,8 @@
 import axios from 'axios';
 import cookie from 'cookie';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
-    // console.log(req)
     if (req.method === 'GET'){
         const cookies = cookie.parse(req.headers.cookie || '')
         const access = cookies.access || false;

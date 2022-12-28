@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 const AWS = require('aws-sdk');
 import { nanoid } from 'nanoid';
 

@@ -127,11 +127,6 @@ export async function getServerSideProps({query }) {
       console.log("No Universe Data Found", e)
     }
     
-
-    if (universe) {
-      console.log(universe)
-    }
-    
     const postData = getPostData("escape-city-today")
     return {
         props: {
@@ -154,8 +149,8 @@ const StockDetail = (props) => {
   const stockData = props.data.stock[0]
   const requestedData = useStockData(stockData.symbol)
   const dailyData = props.dailyData;
-  const symbolPeers = props.universe?.raw_data;
-  const chartMappings = props.universe?.mappings;
+  const symbolPeers = props.universe?.raw_data || null;
+  const chartMappings = props.universe?.mappings || null;
 
   const chartData = {
     type:'line',

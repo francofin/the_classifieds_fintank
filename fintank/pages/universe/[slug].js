@@ -112,7 +112,11 @@ const Universe = (props) => {
   const [createLink, setCreateLink] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isEquityRelated, setIsEquityRelated] = useState(true);
+  const [analysisLink, setAnalysisLink] = useState("/stock-data/[ticker]");
+  const [linkAs, setLinkAs] = useState(`/stock-data/`)
+
   const router = useRouter();
+  console.log(router)
 
 
   const submitFilterHandler = (e) => {
@@ -249,6 +253,27 @@ const Universe = (props) => {
       setIsEquityRelated(false)
     }
   }, [router])
+
+
+  useEffect(() => {
+      switch(router.query.slug){
+        case "commodities":
+          setAnalysisLink("/comm-data/[ticker]")
+          setLinkAs(`/comm-data/`)
+          break;
+        case "cryptos":
+          setAnalysisLink("/crypto-data/[ticker]")
+          setLinkAs(`/crypto-data/`)
+          break;
+        case "etfs":
+          setAnalysisLink("/etf-data/[ticker]")
+          setLinkAs(`/etf-data/`)
+          break;
+        default:
+          break;
+      }
+
+  }, [router.query.slug])
   
 
   return (
@@ -549,7 +574,7 @@ const Universe = (props) => {
 
         <ListGroup className="shadow mb-5">
           {stockData.slice(startIndex, limitIndex).map((stock, index) => (
-            <Link href="/stock-data/[ticker]" as={`/stock-data/${stock.symbol}`} passHref key={index}>
+            <Link href={analysisLink} as={`${linkAs}/${stock.symbol}`} passHref key={index}>
               <ListGroup.Item action className="p4" as="a">
                 <Row>
                   <Col lg="4" className="align-self-center mb-4 mb-lg-0">

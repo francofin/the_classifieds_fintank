@@ -91,6 +91,12 @@ export async function getStaticProps() {
   const ftse = 'FTSE';
   const r2000 = 'RUT';
   const dji ='DJI';
+  const vix = 'VIX';
+  const japan = 'N225';
+  const hongkong = 'HSI';
+  const bill = 'IRX';
+  const ten = 'TNX';
+  const thirty = 'TYX';
 
   
   return {
@@ -110,7 +116,13 @@ export async function getStaticProps() {
       tsx,
       ftse,
       r2000,
-      dji
+      dji,
+      vix,
+      japan,
+      hongkong, 
+      bill, 
+      ten,
+      thirty
     },
   }
 }
@@ -134,6 +146,12 @@ const Index = (props) => {
   const r2Data = useIndexData(props.r2000);
   const djiData = useIndexData(props.dji);
   const ftseData = useIndexData(props.ftse);
+  const vixData = useIndexData(props.vix);
+  const japanData = useIndexData(props.japan);
+  const hongkongData = useIndexData(props.hongkong);
+  const billData = useIndexData(props.bill);
+  const tenData = useIndexData(props.ten);
+  const thirtyData = useIndexData(props.thirty);
 
 
 
@@ -144,6 +162,12 @@ const Index = (props) => {
   const {indexChartCreated:russellChartCreated, createIndexChart:russellIndexChart, indexName:russellName} = useIndexCharter(props.r2000, r2Data?.index_dates, r2Data?.index_prices)
   const {indexChartCreated:tsxChartCreated, createIndexChart:tsxIndexChart, indexName:tsxName} = useIndexCharter(props.tsx, tsxData?.index_dates, tsxData?.index_prices)
   const {indexChartCreated:ftseChartCreated, createIndexChart:ftseIndexChart, indexName:ftseName} = useIndexCharter(props.ftse, ftseData?.index_dates, ftseData?.index_prices)
+  const {indexChartCreated:vixChartCreated, createIndexChart:vixIndexChart, indexName:vixName} = useIndexCharter(props.vix, vixData?.index_dates, vixData?.index_prices)
+  const {indexChartCreated:japanChartCreated, createIndexChart:japanIndexChart, indexName:japanName} = useIndexCharter(props.japan, japanData?.index_dates, japanData?.index_prices)
+  const {indexChartCreated:hkChartCreated, createIndexChart:hkIndexChart, indexName:hkName} = useIndexCharter(props.hongkong, hongkongData?.index_dates, hongkongData?.index_prices)
+  const {indexChartCreated:billChartCreated, createIndexChart:billIndexChart, indexName:billName} = useIndexCharter(props.bill, billData?.index_dates, billData?.index_prices)
+  const {indexChartCreated:tenChartCreated, createIndexChart:tenIndexChart, indexName:tenName} = useIndexCharter(props.ten, tenData?.index_dates, tenData?.index_prices)
+  const {indexChartCreated:thirtyChartCreated, createIndexChart:thirtyIndexChart, indexName:thirtyName} = useIndexCharter(props.thirty, thirtyData?.index_dates, thirtyData?.index_prices)
 
   let fmpNewsArticles = props.responseNews.data
   const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
@@ -290,6 +314,36 @@ const Index = (props) => {
               </Col>
               <Col lg="6">
                 <Line options={indexLineOptions} data={ftseIndexChart} height={100} width={200}/>
+              </Col>
+            </Row>
+          }
+          {(japanChartCreated && hkChartCreated) && 
+            <Row className="pt-3">
+              <Col lg="6">
+                <Line options={indexLineOptions} data={japanIndexChart} height={100} width={200}/>
+              </Col>
+              <Col lg="6">
+                <Line options={indexLineOptions} data={hkIndexChart} height={100} width={200}/>
+              </Col>
+            </Row>
+          }
+          {(tenChartCreated && thirtyChartCreated) && 
+            <Row className="pt-3">
+              <Col lg="6">
+                <Line options={indexLineOptions} data={tenIndexChart} height={100} width={200}/>
+              </Col>
+              <Col lg="6">
+                <Line options={indexLineOptions} data={thirtyIndexChart} height={100} width={200}/>
+              </Col>
+            </Row>
+          }
+          {(vixChartCreated && billChartCreated) && 
+            <Row className="pt-3">
+              <Col lg="6">
+                <Line options={indexLineOptions} data={vixIndexChart} height={100} width={200}/>
+              </Col>
+              <Col lg="6">
+                <Line options={indexLineOptions} data={billIndexChart} height={100} width={200}/>
               </Col>
             </Row>
           }

@@ -43,6 +43,30 @@ export const useIndexCharter = (index, indexLabels, indexData) => {
                 setIndexName("S&P/TSX Composite Index")
                 setChartColor('rgba(78, 78, 78)')
                 break;
+            case 'VIX':
+                setIndexName("CBOE Volatility Index")
+                setChartColor('rgba(179, 61, 32)')
+                break;
+            case 'N225':
+                setIndexName("Nikkei 225")
+                setChartColor('rgba(115, 113, 10)')
+                break;
+            case 'HSI':
+                setIndexName("Hang Seng Index")
+                setChartColor('rgba(18, 97, 56)')
+                break;
+            case 'IRX':
+                setIndexName("13 Week Treasury Bill")
+                setChartColor('rgba(21, 47, 54)')
+                break;
+            case 'TNX':
+                setIndexName("U.S. 10 Year Treasury")
+                setChartColor('rgba(82, 26, 82)')
+                break;
+            case 'TYX':
+                setIndexName("U.S. 30 Year Treasury")
+                setChartColor('rgba(44, 160, 168)')
+                break;
             default:
                 break
         }
