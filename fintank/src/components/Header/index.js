@@ -25,6 +25,7 @@ const Header = (props) => {
   }
 
   const {user, loading, state} = useContext(DjangoAuthContext);
+
  
   // highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
   const highlightDropdownParent = () => {
@@ -163,7 +164,7 @@ const Header = (props) => {
                   )
                 )}
               {/* USER MENU */}
-              {state.user ? <UserMenu onLinkClick={onLinkClick}/> : ""}
+              {user ? <UserMenu onLinkClick={onLinkClick}/> : ""}
               {/* USER MENU */}
             </Nav>
             {/* END MENU */}

@@ -38,6 +38,8 @@ const DjangoAuthProvider = ({children}) => {
     const [avatar, setAvatar] = useState("")
     const [userProfile, setUserProfile] = useState(null)
     const [imageData, setImageData] = useState({})
+    const [userWatchList, setuserWatchList] = useState([])
+    const [addedStockToWatchlist, setAddedStockToWatchlist] = useState(false)
     const [state, dispatch] = useReducer(firebaseReducer, initialState);
     const router = useRouter();
 
@@ -45,6 +47,10 @@ const DjangoAuthProvider = ({children}) => {
     useEffect(() => {
         if(!user){
             getCurrentUser()
+            dispatch({
+                type:'LOGGED_IN_USER',
+                payload:null
+            });
             getCurrentProfile()
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -223,6 +229,70 @@ const DjangoAuthProvider = ({children}) => {
         setError(null);
     }
 
+    const addToWatchlist = async (ticker, access_token) => {
+        try{
+            setLoading(true)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/addtowatchlist/${ticker}/`, 
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            });
+            if(res.data.added === true){
+                setLoading(false)
+                setAddedStockToWatchlist(true)
+                swal({
+                    title: `Stock Added To Watch List`,
+                    icon: "success",
+                });
+            }
+        } catch(error) {
+            setLoading(false)
+            setError(error.response && (error.response.data.detail || error.response.data.error))
+        }
+    }
+
+    const checkStockOnWatchlist = async (ticker, access_token) => {
+        try{
+            setLoading(true)
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/stockonwatchlist/${ticker}/verify/`, 
+            {
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            })
+
+            if(res.data){
+                setLoading(false)
+                setAddedStockToWatchlist(res.data)
+            }
+        } catch(error) {
+            setLoading(false)
+            setError(error.response && (error.response.data.detail || error.response.data.error))
+        }
+    }
+
+
+    const getUserWatchlist = async(access_token) => {
+        try{
+            setLoading(true)
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/get_portfolio/`, 
+            {
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            });
+            if(res.data){
+                const stocks =  await res.data
+                return stocks
+            }
+        } catch(error){
+            setLoading(false)
+            setError(error.response && (error.response.data.detail || error.response.data.error))
+        }
+    }
+
     
     
     useEffect(() => {
@@ -264,6 +334,10 @@ const DjangoAuthProvider = ({children}) => {
             updateUser,
             setUpdated,
             getCurrentProfile,
+            getUserWatchlist,
+            addToWatchlist,
+            checkStockOnWatchlist,
+            addedStockToWatchlist,
             userProfile,
             updated
         }}>

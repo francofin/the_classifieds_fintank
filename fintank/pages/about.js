@@ -22,8 +22,8 @@ const Team = () => {
   const Team = (data) => {
     return (
       <Row>
-        {data.map((item) => (
-          <Col key={item.title} sm={12 / data.length} className="mb-3 mb-lg-0">
+        {data.map((item, i) => (
+          <Col key={i} sm={12 / data.length} className="mb-3 mb-lg-0">
             <CardTeam data={item} />
           </Col>
         ))}

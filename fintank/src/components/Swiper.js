@@ -74,7 +74,7 @@ const SwiperComponent = (props) => {
               src={`/images/homeImages/${slide}`}
               layout="fill"
               className="bg-image"
-              alt="Hero image"
+              alt="Stocks to Outperform"
               loading="eager"
             />
           </SwiperSlide>

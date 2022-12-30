@@ -4,15 +4,11 @@
   "title": "Fintank User",
   "dropdown": [
     {
-      "title": "Profile",
-      "link": "/accoutsettings"
-    },
-    {
       "title": "Portfolio",
-      "link": "/user-grid"
+      "link": "/profile"
     },
     {
-      "title": "Account Settings",
+      "title": "Account",
       "link": "/account"
     },
     {

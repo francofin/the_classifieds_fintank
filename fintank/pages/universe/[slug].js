@@ -116,7 +116,7 @@ const Universe = (props) => {
   const [linkAs, setLinkAs] = useState(`/stock-data/`)
 
   const router = useRouter();
-  console.log(router)
+
 
 
   const submitFilterHandler = (e) => {
@@ -195,7 +195,7 @@ const Universe = (props) => {
         <Pagination.Item key={i} active={i==activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
         )
       }
-      items.push(<Pagination.Ellipsis />)
+      items.push(<Pagination.Ellipsis key={`Elipse`}/>)
       items.push(<Pagination.Item key={allPages} active={allPages===activePage} onClick={() => handlePageRoute(allPages)}>{allPages}</Pagination.Item> )
     }
     return items
@@ -210,7 +210,7 @@ const Universe = (props) => {
   const handleSelect = (e) => {
     if(e.type === "sector"){
       if (e.value !== "All"){
-        const sectorFilter = univerData.filter((p) => p.sector===e.value)
+        const sectorFilter = univerData?.filter((p) => p.sector===e.value)
         setStockData(sectorFilter)
       } else {
         setStockData(univerData)
@@ -218,7 +218,7 @@ const Universe = (props) => {
       
     } else if(e.type === "subsector"){
       if (e.value !== "All"){
-        const subSectorFilter = univerData.filter((p) => p.sub_sector===e.value)
+        const subSectorFilter = univerData?.filter((p) => p.sub_sector===e.value)
         setStockData(subSectorFilter)
       } else {
         setStockData(univerData)
@@ -337,8 +337,8 @@ const Universe = (props) => {
             <Select
               id="sector"
               options={sector.sectors}
-              defaultValue={sectorFilter}
-              onChange = {handleSelect}
+              value={sectorFilter}
+              onChange = {(e) => handleSelect(e)}
               className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
               classNamePrefix="selectpicker"
             />
@@ -346,7 +346,7 @@ const Universe = (props) => {
             <Select
               id="subsector"
               options={sector.subSectors}
-              defaultValue={subSectorFilter}
+              value={subSectorFilter}
               className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
               onChange = {(e) => handleSelect(e)}
               classNamePrefix="selectpicker"
@@ -355,7 +355,7 @@ const Universe = (props) => {
             <Select
               id="currency"
               // options={data.sortby}
-              // defaultValue={data.sortby[0]}
+              // value={data.sortby[0]}
               className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
               classNamePrefix="selectpicker"
             />
@@ -574,7 +574,7 @@ const Universe = (props) => {
 
         <ListGroup className="shadow mb-5">
           {stockData.slice(startIndex, limitIndex).map((stock, index) => (
-            <Link href={analysisLink} as={`${linkAs}/${stock.symbol}`} passHref key={index}>
+            <Link href={analysisLink} as={`${linkAs}${stock.symbol}`} passHref key={index}>
               <ListGroup.Item action className="p4" as="a">
                 <Row>
                   <Col lg="4" className="align-self-center mb-4 mb-lg-0">

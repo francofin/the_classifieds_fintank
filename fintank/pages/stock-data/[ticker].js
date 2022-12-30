@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState, useMemo, useContext } from "react";
 import Link from "next/link";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -10,12 +11,14 @@ import SwiperGallery from "@components/SwiperGallery";
 import Image from "@components/CustomImage";
 import Gallery from "@components/Gallery";
 import Map from "@components/Map";
+import { DjangoAuthContext } from '@context/authContext';
 import { useStockData } from "@hooks/useStockData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
 import { useStockChart } from "@hooks/useStockCharts";
 import swal from 'sweetalert';
+import { isAuthenticatedUser } from '@utils/isAuthenticated';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -104,7 +107,7 @@ export const options = {
 };
 
 
-export async function getServerSideProps({query }) {
+export async function getServerSideProps({query, req }) {
 
     const ticker = query.ticker
     console.log(ticker)
@@ -115,6 +118,14 @@ export async function getServerSideProps({query }) {
     const dailyData = dailyStockData.data;
     const labels = dailyData.dates;
     const prices = dailyData.prices;
+
+    let userIsAuthenticated
+
+    const access_token = req.cookies.access || '';
+    if(access_token){
+      userIsAuthenticated = await isAuthenticatedUser(access_token);
+    } 
+    
 
     let universe;
     
@@ -141,7 +152,9 @@ export async function getServerSideProps({query }) {
         dailyData,
         labels,
         prices,
-        universe
+        universe,
+        access_token,
+        userIsAuthenticated
         },
     }
 }
@@ -164,6 +177,8 @@ const StockDetail = (props) => {
     }]
   }
 
+  const {user, loading, addToWatchlist, error, clearErrors, checkStockOnWatchlist, addedStockToWatchlist} = useContext(DjangoAuthContext);
+
   const [dataForStock, setDataForStock] = useState(null);
   const [position, setPosition] = useState(null);
   const [frequency, setFrequency] = useState('30d');
@@ -171,7 +186,7 @@ const StockDetail = (props) => {
 
   const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
   const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
-  
+
 
   const {barChartCreated:peBarChart, createChart:peChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.pe, chartMappings?.peRatioTTM)
   const {barChartCreated:psBarChart, createChart:psChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.psales, chartMappings?.priceToSalesRatioTTM)
@@ -189,7 +204,10 @@ const StockDetail = (props) => {
  
   useEffect(() => {
     setDataForStock(requestedData ? requestedData[0] : "")
+    checkStockOnWatchlist(stockData.symbol, props.access_token)
   }, [requestedData])
+
+  
 
 
 
@@ -202,37 +220,51 @@ const StockDetail = (props) => {
     }
 
     fetcher()
+    
 
   }, [dataForStock])
 
 
-  const size = UseWindowSize()
-  const [range, setRange] = useState({
-    from: false,
-    to: false,
-  })
-
-  const groupByN = (n, data) => {
-    let result = []
-    for (let i = 0; i < data.length; i += n) result.push(data.slice(i, i + n))
-    return result
+  const addStockToWatchList = () => {
+    if(props.userIsAuthenticated){
+      addToWatchlist(stockData.symbol, props.access_token)
+    } else {
+      swal({
+        title: `You Must Create An Account In Order To Track Your Watch List. Thank You`,
+        icon: "warning",
+    });
+    }
+    
   }
+
+
+  // const size = UseWindowSize()
+  // const [range, setRange] = useState({
+  //   from: false,
+  //   to: false,
+  // })
+
+  // const groupByN = (n, data) => {
+  //   let result = []
+  //   for (let i = 0; i < data.length; i += n) result.push(data.slice(i, i + n))
+  //   return result
+  // }
 
   const adjustTimeStamp = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric"}
     return new Date(date).toLocaleDateString(undefined, options)
   }
 
-  const groupedAmenities = roomData.amenities && groupByN(4, roomData.amenities)
-  const [showDatePicker, setShowDatePicker] = useState(false)
-  const fromRef = useRef()
-  const toRef = useRef()
-  useEffect(() => {
-    if (range?.from && (!range?.to || range.to !== range.from)) {
-      const timer = setTimeout(() => setShowDatePicker(false), 200)
-      return () => clearTimeout(timer)
-    }
-  }, [range])
+  // const groupedAmenities = roomData.amenities && groupByN(4, roomData.amenities)
+  // const [showDatePicker, setShowDatePicker] = useState(false)
+  // const fromRef = useRef()
+  // const toRef = useRef()
+  // useEffect(() => {
+  //   if (range?.from && (!range?.to || range.to !== range.from)) {
+  //     const timer = setTimeout(() => setShowDatePicker(false), 200)
+  //     return () => clearTimeout(timer)
+  //   }
+  // }, [range])
 
 
   const changeFrequency = (frequency) => {
@@ -411,13 +443,23 @@ const StockDetail = (props) => {
               }
               
               <div className="py-5">
+                {addedStockToWatchlist ?
+                  <Button
+                  type="button"
+                  variant="outline-primary"
+                  disabled
+                >
+                  Stock Already Added To Your Watchlist 
+                </Button>
+                :
               <Button
                   type="button"
                   variant="outline-primary"
-                  // onClick={() => setReviewCollapse(!reviewCollapse)}
+                  onClick={addStockToWatchList}
                 >
-                  Add Stock to Profile
+                  Add Stock to WatchList
                 </Button>
+                }
               </div>
             </Col>
             <Col lg="4">
