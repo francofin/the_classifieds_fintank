@@ -1,5 +1,7 @@
-import React from "react"
+import React, {useContext} from "react"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { DjangoAuthContext } from '@context/authContext';
 import {
   Container,
   Row,
@@ -31,6 +33,33 @@ export async function getStaticProps() {
 
 const UserSecurity = () => {
   const [loginCollapse, setLoginCollapse] = React.useState(false)
+
+  const {logout, dispatch} = useContext(DjangoAuthContext);
+  const router = useRouter();
+
+  const logOutHandler = async() => {
+    const auth = fireBaseAuth;
+    await signOut(auth);
+
+    dispatch({
+      type:'LOGGED_IN_USER', 
+      payload: null
+    })
+
+    logout();
+    router.push('/login');
+  }
+
+  const adjustTimeStamp = (date) => {
+    const options = { year: "numeric", month: "long", day: "numeric"}
+    return new Date(date).toLocaleDateString(undefined, options)
+  }
+
+  const successCallBack = (position) => {
+    console.log(position)
+  }
+  console.log(navigator.geolocation.getCurrentPosition(successCallBack))
+  console.log(navigator)
 
   return (
     <section className="py-5">
@@ -110,24 +139,13 @@ const UserSecurity = () => {
               <h3 className="mb-4">Social accounts</h3>
               <Row>
                 <Col sm="8">
-                  <h6>Facebook</h6>
-                  <p className="text-sm text-muted">Not connected</p>
-                </Col>
-                <Col className="text-end">
-                  <Button variant="link" className="ps-0 text-primary">
-                    Connect
-                  </Button>
-                </Col>
-              </Row>
-              <Row>
-                <Col sm="8">
                   <h6>Google</h6>
                   <p className="text-sm text-muted">Connected</p>
                 </Col>
                 <Col className="text-end">
-                  <Button variant="link" className="ps-0 text-primary">
+                  {/* <Button variant="link" className="ps-0 text-primary">
                     Disconnect
-                  </Button>
+                  </Button> */}
                 </Col>
               </Row>
             </div>
@@ -141,7 +159,7 @@ const UserSecurity = () => {
                   />
                 </div>
                 <div className="pt-2 ms-3" body>
-                  <strong>Windows 10.0 </strong>· Chrome&nbsp;
+                  <strong>{navigator?.userAgent.slice(13,28)} </strong>{navigator?.userAgentData.brands[2].brand}&nbsp;
                   <Badge
                     bg="secondary-light"
                     text="secondary"
@@ -150,10 +168,10 @@ const UserSecurity = () => {
                     Current Session
                   </Badge>
                   <p className="text-sm text-muted">
-                    Ostrava, Moravskoslezsky kraj · April 6, 2020 at 01:51pm
+                    Ostrava, Moravskoslezsky kraj · {adjustTimeStamp(new Date())} {new Date().toLocaleTimeString()}
                   </p>
-                  <Button variant="text" className="text-primary ps-0">
-                    Log out device
+                  <Button variant="text" className="text-primary ps-0" type="submit" onClick={logOutHandler}>
+                    Log out
                   </Button>
                 </div>
               </div>

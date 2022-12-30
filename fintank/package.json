@@ -27,6 +27,7 @@
     "date-fns": "^2.28.0",
     "dotenv": "^16.0.2",
     "firebase": "^9.9.4",
+    "firebase-admin": "^11.4.1",
     "http-status-codes": "^2.2.0",
     "jquery": "^3.6.1",
     "leaflet": "^1.7.1",

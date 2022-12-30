@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
 import { useStockChart } from "@hooks/useStockCharts";
-import swal from 'sweetalert';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -30,6 +30,7 @@ import {
 import { Line, Bar } from 'react-chartjs-2';
 import { useBarChart } from "@hooks/useBarCharts";
 import { useETFData } from "@hooks/useETFData";
+import { useSectorBarChart } from "@hooks/useSectorExposure";
 
 ChartJS.register(
   CategoryScale,
@@ -109,8 +110,9 @@ export async function getServerSideProps({query }) {
 
     const ticker = query.ticker
     console.log(ticker)
-    const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/stock-data/${ticker}`);
+    const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/etf-data/${ticker}`);
     const data = stockRequested.data
+
 
     const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`);
     const dailyData = dailyStockData.data;
@@ -178,24 +180,10 @@ const StockDetail = (props) => {
 
   }, [requestedETFData])
 
-  console.log(etfData)
 
-//   const drawChart = () => {
-//     let chart= {
-//         labels:myChartLabels,
-//         datasets: [
-//             {
-//                 label: factor,
-//                 data:myChartData,
-//                 borderColor:customBorderColor,
-//                 backgroundColor:customBackgroundColor
-//             }
-//         ]
-//     }
-//     setBarChartCreated(true)
-//     return chart
-//   }
+  console.log(useSectorBarChart(etfData?.sectorsList, stockData.name))
 
+  const {barChartCreated:sectorBarChart, createChart:sectorChartCreated} = useSectorBarChart(etfData?.sectorsList, stockData.name);
 
 
   const size = UseWindowSize()
@@ -290,17 +278,14 @@ const StockDetail = (props) => {
                 </React.Fragment>
               )}
               <React.Fragment>
-                  {/* {peBarChart && 
+                  {sectorBarChart && 
                     <Row className="pt-3">
-                      <Col lg="6">
-                        <Bar options={barOptions} data={peChartCreated} height={200}/>
-                      </Col>
-                      <Col lg="6">
-                        <Bar options={barOptions} data={psChartCreated} height={200}/>
+                      <Col lg="12">
+                      <h4 className="mb-4">Sector Exposures: {stockData.symbol}</h4>
+                        <Bar options={barOptions} data={sectorChartCreated} height={200}/>
                       </Col>
                     </Row>
                   }
-    */}
               </React.Fragment>
               {roomData.author && (
                 <div className="text-block">
@@ -317,15 +302,6 @@ const StockDetail = (props) => {
                               loading={props.eager ? "eager" : "lazy"}
                             />
                       </div>
-                    </div>
-                    <div>
-                      <p>
-                        <span className="text-muted text-uppercase text-sm">
-                          CEO:
-                        </span>
-                        <br />
-                        <strong>{dataForStock?.ceo && dataForStock?.ceo}</strong>
-                      </p>
                     </div>
                   </div>
                 </div>

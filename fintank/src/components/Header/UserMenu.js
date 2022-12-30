@@ -4,14 +4,28 @@ import ActiveLink from "@components/ActiveLink"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons"
 import userMenu from "@data/user-menu.json"
+import { getAuth, signOut  } from "firebase/auth";
+import {fireBaseAuth} from '@utils/fireBaseUtility';
 import Avatar from "@components/Avatar"
 import { DjangoAuthContext } from '@context/authContext';
+import { useRouter } from "next/router"
+
 export default function UserMenu({ onLinkClick }) {
 
-  const {user, loading, logout} = useContext(DjangoAuthContext);
+  const {logout, dispatch} = useContext(DjangoAuthContext);
+  const router = useRouter();
 
-  const logOutHandler = () => {
+  const logOutHandler = async() => {
+    const auth = fireBaseAuth;
+    await signOut(auth);
+
+    dispatch({
+      type:'LOGGED_IN_USER', 
+      payload: null
+    })
+
     logout();
+    router.push('/login');
   }
   
 

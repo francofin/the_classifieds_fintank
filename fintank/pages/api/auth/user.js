@@ -1,6 +1,7 @@
 import axios from 'axios';
 import cookie from 'cookie';
 
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
     if (req.method === 'GET'){
@@ -14,9 +15,9 @@ export default async (req, res) => {
         
           
         try{
-            const response = await axios.get(`${process.env.FINTANK_API_URL}/userprofile/`, {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/userprofile/`, {
                 headers: {
-                  Authorization: `Bearer ${access}`,
+                  'Authorization': `Bearer ${access}`,
                 },
               });
               if (response.data) {

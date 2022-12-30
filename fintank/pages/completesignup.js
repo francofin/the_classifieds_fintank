@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, {useState, useEffect, useContext} from "react"
 import Link from "next/link"
 import swal from 'sweetalert';
@@ -31,11 +32,11 @@ const CompleteSignup = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const {loading:djangoLoader, user, isAuthenticated, error, clearErrors, register, dispatch} = useContext(DjangoAuthContext);
+    const {loading:djangoLoader, isAuthenticated, error, clearErrors, register, dispatch} = useContext(DjangoAuthContext);
     const router = useRouter();
 
     useEffect(() => {
-        const userEmail = window.localStorage.getItem("clasifiedSignInEmail");
+        const userEmail = window.localStorage.getItem("fintankSignInEmail");
         setEmail(userEmail);
       }, []);
 
@@ -53,6 +54,7 @@ const CompleteSignup = () => {
     // if(isAuthenticated && !loading){
     //   router.push("/");
     // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated, error, loading]);
 
 
@@ -80,21 +82,16 @@ const CompleteSignup = () => {
           }
          
           if(result.user.emailVerified){
-              window.localStorage.removeItem('clasifiedSignInEmail');
+              window.localStorage.removeItem('fintankSignInEmail');
               let user = fireBaseAuth.currentUser;
-              console.log("User", user);
               await updatePassword(user, password);
-              console.log(password);
-          
               const idTokenResult = await getIdTokenResult(user);
-              console.log("Token", idTokenResult);
               dispatch({
                   type:'LOGGED_IN_USER',
                   payload:{email: user.email, token:idTokenResult.token}
               });
   
               register({firstName, lastName, email, password, confirmPassword}); 
-              router.push("/")
           }
       } catch (err){
           console.log("Error with registering your information", err);
@@ -196,17 +193,8 @@ const CompleteSignup = () => {
                 <Button size="lg" type="submit">{loading && djangoLoader ? 'Loading': 'Complete Sign Up'}</Button>
               </div>
             </Form>
-            <hr data-content="OR" className="my-3 hr-text letter-spacing-2" />
-            <div className="d-grid gap-2">
-              <Button variant="outline-primary" className="btn-social">
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  size="2x"
-                  className="btn-social-icon"
-                />
-                Connect{" "}
-                <span className="d-none d-sm-inline">with Facebook</span>
-              </Button>
+            <hr data-content="Thank You For Trusting Fintank For Your Investing Needs" className="my-3 hr-text letter-spacing-2" />
+            {/* <div className="d-grid gap-2">
               <Button variant="outline-muted" className="btn-social">
                 <FontAwesomeIcon
                   icon={faGoogle}
@@ -215,10 +203,10 @@ const CompleteSignup = () => {
                 />
                 Connect <span className="d-none d-sm-inline">with Google</span>
               </Button>
-            </div>
+            </div> */}
             <hr className="my-4" />
             <p className="text-sm text-muted">
-              {`By signing up you agree to Directory's`}{" "}
+              {`By signing up you agree to Fintank's`}{" "}
               <a href="#">Terms and Conditions</a> and{" "}
               <a href="#">Privacy Policy</a>.
             </p>

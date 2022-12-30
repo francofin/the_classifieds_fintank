@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState, useContext } from "react"
 import Link from "next/link"
 import Router from "next/router"
@@ -23,8 +24,7 @@ const Header = (props) => {
     setParentName(parent)
   }
 
-  const {user, loading, logout} = useContext(DjangoAuthContext);
-  // console.log(useContext(DjangoAuthContext))
+  const {user, loading, state} = useContext(DjangoAuthContext);
  
   // highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
   const highlightDropdownParent = () => {
@@ -163,7 +163,7 @@ const Header = (props) => {
                   )
                 )}
               {/* USER MENU */}
-              {user ? <UserMenu onLinkClick={onLinkClick}/> : ""}
+              {state.user ? <UserMenu onLinkClick={onLinkClick}/> : ""}
               {/* USER MENU */}
             </Nav>
             {/* END MENU */}

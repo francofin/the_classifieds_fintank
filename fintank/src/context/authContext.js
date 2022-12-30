@@ -30,7 +30,7 @@ const DjangoAuthContext = createContext();
 
 
 const DjangoAuthProvider = ({children}) => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null)
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [error, setError] = useState(null)
@@ -38,6 +38,7 @@ const DjangoAuthProvider = ({children}) => {
     const [avatar, setAvatar] = useState("")
     const [userProfile, setUserProfile] = useState(null)
     const [imageData, setImageData] = useState({})
+    const [state, dispatch] = useReducer(firebaseReducer, initialState);
     const router = useRouter();
 
 
@@ -46,6 +47,7 @@ const DjangoAuthProvider = ({children}) => {
             getCurrentUser()
             getCurrentProfile()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
 
     const login = async ({username, password}) => {
@@ -93,7 +95,7 @@ const DjangoAuthProvider = ({children}) => {
             setLoading(true);
             const res = await axios.get('/api/auth/userprofile');
             if(res.data.user_profile){
-                setIsAuthenticated(true);
+                // setIsAuthenticated(true);
                 setLoading(false);
                 setUserProfile(res.data.user_profile);
             }
@@ -117,7 +119,7 @@ const DjangoAuthProvider = ({children}) => {
                     icon: "success",
                 });
             
-                router.push("/")
+                router.push("/login")
                   
             }
         } catch(error){
@@ -131,7 +133,7 @@ const DjangoAuthProvider = ({children}) => {
     
     const register = async ({firstName, lastName, password, email, confirmPassword}) => {
         try {
-            const res = await axios.post(`${process.env.FINTANK_API_URL}/register/`, 
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/register/`, 
             {first_name:firstName, last_name:lastName, email, password, password2:confirmPassword});
 
             // console.log(res)
@@ -139,7 +141,7 @@ const DjangoAuthProvider = ({children}) => {
             
             if(res.data.message){
                 setLoading(false);
-                router.push("/login");
+                router.push("/");
             }
         } catch(error){
             setLoading(false);
@@ -191,7 +193,7 @@ const DjangoAuthProvider = ({children}) => {
         try {
             setLoading(true);
 
-            const res = await axios.put(`${process.env.API_URL}/updateprofile/`, 
+            const res = await axios.put(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/updateprofile/`, 
                 formData
             , {
                 headers: {
@@ -221,7 +223,7 @@ const DjangoAuthProvider = ({children}) => {
         setError(null);
     }
 
-    const[state, dispatch] = useReducer(firebaseReducer, initialState);
+    
     
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(fireBaseAuth, async (user) => {

@@ -38,10 +38,14 @@ export async function getStaticProps() {
 }
 
 const UserPersonal = () => {
+  const {user, userProfile} = useContext(DjangoAuthContext);
   const [personalCollapse, setPersonalCollapse] = React.useState(false)
   const [addressCollapse, setAddressCollapse] = React.useState(false)
+  const [name, setName] = useState(user?.first_name)
+  const [birthdate, setBirthDate] = useState("06/22/1980")
+  const [phoneNumber, setPhoneNumber] = useState("+42055544466")
 
-  const {user, loading, logout, userProfile} = useContext(DjangoAuthContext);
+
   console.log(userProfile)
 
   return (
@@ -51,7 +55,7 @@ const UserPersonal = () => {
           <Link href="/" passHref>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
           </Link>
-          <Link href="/user-acccount" passHref>
+          <Link href="/account" passHref>
             <Breadcrumb.Item>Account</Breadcrumb.Item>
           </Link>
           <Breadcrumb.Item active>Personal info</Breadcrumb.Item>
@@ -102,7 +106,7 @@ const UserPersonal = () => {
                         type="text"
                         name="name"
                         id="name"
-                        defaultValue="John Doe"
+                        defaultValue={name}
                       />
                     </Col>
                     <Col md="6" className="mb-4">
@@ -111,7 +115,7 @@ const UserPersonal = () => {
                         type="text"
                         name="date"
                         id="date"
-                        defaultValue="06/22/1980"
+                        defaultValue={birthdate}
                       />
                     </Col>
                     <Col md="6" className="mb-4">
@@ -120,7 +124,7 @@ const UserPersonal = () => {
                         type="email"
                         name="email"
                         id="email"
-                        defaultValue="john.doe@directory.com"
+                        defaultValue={user?.email}
                       />
                     </Col>
                     <Col md="6" className="mb-4">
@@ -129,7 +133,7 @@ const UserPersonal = () => {
                         type="text"
                         name="phone"
                         id="phone"
-                        defaultValue="+42055544466"
+                        defaultValue= {phoneNumber}
                       />
                     </Col>
                   </Row>
@@ -143,7 +147,7 @@ const UserPersonal = () => {
                 </Form>
               </Collapse>
             </div>
-            <div className="text-block">
+            {/* <div className="text-block">
               <Row className="mb-3">
                 <Col sm="9">
                   <h5>Address</h5>
@@ -226,7 +230,7 @@ const UserPersonal = () => {
                   </Button>
                 </Form>
               </Collapse>
-            </div>
+            </div> */}
           </Col>
           <Col md="6" lg="4" className="ms-lg-auto">
             <Card className="border-0 shadow">

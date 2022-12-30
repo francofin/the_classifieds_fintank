@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import { DjangoAuthContext } from '@context/authContext';
 import React, {useState, useEffect, useContext} from 'react';
@@ -9,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons"
 import swal from 'sweetalert';
 import {fireBaseAuth, googleAuthProvider, facebookAuthProvider} from '@utils/fireBaseUtility';
-import { signInWithEmailAndPassword, signInWithPopup, getIdTokenResult, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, getIdTokenResult } from "firebase/auth";
 
 export async function getStaticProps() {
   return {
@@ -29,7 +30,7 @@ const Login = () => {
 
   const router = useRouter();
   const auth = fireBaseAuth;
-  const {loading:DjangoLoader, user, isAuthenticated, error, login, clearErrors, dispatch} = useContext(DjangoAuthContext);
+  const {loading:DjangoLoader, isAuthenticated, error, login, clearErrors, dispatch} = useContext(DjangoAuthContext);
 
   useEffect(() => {
     if(error){
@@ -41,10 +42,11 @@ const Login = () => {
       clearErrors();
     }
 
-    // if(isAuthenticated && !loading){
-    //   router.push("/");
-    // }
-  }, [isAuthenticated, error, loading])
+    if(isAuthenticated && DjangoLoader){
+      router.push("/");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, error, DjangoLoader])
 
 
   const handleOnSubmit = async (e) => {
@@ -53,7 +55,7 @@ const Login = () => {
     
     try{
       await signInWithEmailAndPassword(auth, email, password)
-        .then( async (result) => {
+        .then(async (result) => {
           const {user} = result;
           const idTokenResult = await getIdTokenResult(user);
           dispatch({
@@ -62,6 +64,9 @@ const Login = () => {
         });   
       });
 
+      setLoading(false);
+      
+
     } catch (err){
       console.log(err)
       swal({
@@ -69,9 +74,38 @@ const Login = () => {
         icon: "error"
       })
     }
-
+    
     login({username:email, password});
-     
+  }
+
+
+  const logInWithGoogle = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try{
+      await signInWithPopup(auth, googleAuthProvider)
+      .then( async (result) => {
+        console.log("Google Auth", result);
+        const {user} = result;
+        const idTokenResult = await getIdTokenResult(user);
+        dispatch({
+          type:'LOGGED_IN_USER',
+          payload:{email: user.email, token:idTokenResult.token}
+      });
+
+      login({username:email, password});
+      router.push('/');
+      })
+
+    }
+    catch(err){
+      swal({
+        title:`Please review your Google login Credentials. ${err}`,
+        icon: "error"
+      })
+    }
+    
   }
 
   return (
@@ -126,7 +160,7 @@ const Login = () => {
                   required
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <Form.Check
                   name="loginRemember"
                   id="loginRemember"
@@ -136,23 +170,14 @@ const Login = () => {
                     <span className="text-sm">Remember me for 30 days</span>
                   }
                 />
-              </div>
+              </div> */}
               <div className="d-grid">
                 <Button size="lg" type="submit">Sign in</Button>
               </div>
             </Form>
-            <hr data-content="OR" className="my-3 hr-text letter-spacing-2" />
+            <hr data-content="Thank You For Trusting Fintank For Your Investing Needs" className="my-3 hr-text letter-spacing-2" />
             <div className="d-grid gap-2">
-              <Button variant="outline-primary" className="btn-social">
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  size="2x"
-                  className="btn-social-icon"
-                />
-                Connect{" "}
-                <span className="d-none d-sm-inline">with Facebook</span>
-              </Button>
-              <Button variant="outline-muted" className="btn-social">
+              <Button variant="outline-muted" className="btn-social"  type="submit" onClick={logInWithGoogle}>
                 <FontAwesomeIcon
                   icon={faGoogle}
                   size="2x"

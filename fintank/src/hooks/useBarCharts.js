@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import swal from 'sweetalert';
 
 export const useBarChart = (ticker, chartTickers, chartData, myFactor) => {
     const [myChartLabels, setMyChartLabels] = useState(chartTickers);

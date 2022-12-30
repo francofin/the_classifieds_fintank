@@ -6,10 +6,8 @@ export default async (req, res) => {
     console.log(req)
     if (req.method === 'POST'){
         const {username, password} = req.body;
-        
-
         try{
-            const response = await axios.post(`${process.env.FINTANK_API_URL}/token/`, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/token/`, {
                 username, 
                 password
             },  {
@@ -25,7 +23,7 @@ export default async (req, res) => {
                         httpOnly:true, secure:process.env.NODE_ENV !== 'development',
                         maxAge: 60*60*24*5,
                         sameSite:'Lax',
-                        path:'/'
+                        path:'/',
                     })
                 ]);
 
@@ -33,7 +31,7 @@ export default async (req, res) => {
 
             } else {
                 res.status(response.status).json({
-                    error:'Error Autehnticating User.'
+                    error:'Error Authenticating User.'
                 })
             }
 

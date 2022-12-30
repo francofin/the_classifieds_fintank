@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, {useEffect, useState} from "react"
 import Link from "next/link"
 import {fireBaseAuth} from '@utils/fireBaseUtility';
@@ -35,13 +36,19 @@ const Signup = () => {
           handleCodeInApp: true
         }
       await sendSignInLinkToEmail(auth, email, config);
-      window.localStorage.setItem('clasifiedSignInEmail', email);
+      window.localStorage.setItem('fintankSignInEmail', email);
       swal({
         title: `Success, Email sent to ${email}, Please check your email to complete your registration!`,
         icon: "success",
       });
       setEmail("");
+      setConfirmEmail("");
       setLoading(false);  
+    } else {
+        swal({
+          title:"Your Emails do no match, please check these values again.",
+          icon:"error"
+      });
     }
       
    }
@@ -96,17 +103,8 @@ const Signup = () => {
                 <Button type="submit" size="lg" disabled={!email || loading}>Sign up</Button>
               </div>
             </Form>
-            <hr data-content="OR" className="my-3 hr-text letter-spacing-2" />
-            <div className="d-grid gap-2">
-              <Button variant="outline-primary" className="btn-social">
-                <FontAwesomeIcon
-                  icon={faFacebookF}
-                  size="2x"
-                  className="btn-social-icon"
-                />
-                Connect{" "}
-                <span className="d-none d-sm-inline">with Facebook</span>
-              </Button>
+            <hr data-content="Thank You For Trusting Fintank For Your Investing Needs" className="my-3 hr-text letter-spacing-2" />
+            {/* <div className="d-grid gap-2">
               <Button variant="outline-muted" className="btn-social">
                 <FontAwesomeIcon
                   icon={faGoogle}
@@ -115,10 +113,10 @@ const Signup = () => {
                 />
                 Connect <span className="d-none d-sm-inline">with Google</span>
               </Button>
-            </div>
+            </div> */}
             <hr className="my-4" />
             <p className="text-sm text-muted">
-              {`By signing up you agree to Directory's`}{" "}
+              {`By signing up you agree to Fintank's`}{" "}
               <a href="#">Terms and Conditions</a> and{" "}
               <a href="#">Privacy Policy</a>.
             </p>

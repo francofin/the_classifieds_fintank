@@ -18,7 +18,7 @@ export default async (req, res) => {
         
           
         try{
-            const userProfile = await axios.get(`${process.env.FINTANK_API_URL}/myprofile/`, {
+            const userProfile = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/myprofile/`, {
                 headers: {
                   Authorization: `Bearer ${access}`,
                 },

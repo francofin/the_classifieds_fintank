@@ -187,9 +187,6 @@ const StockDetail = (props) => {
   const {barChartCreated:fcfBarChart, createChart:fcfChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.fcf, chartMappings?.freeCashFlowPerShareTTM)
   
  
-
-  console.log(useStockChart(frequency, chartLabels,chartReturns))
-
   useEffect(() => {
     setDataForStock(requestedData ? requestedData[0] : "")
   }, [requestedData])
