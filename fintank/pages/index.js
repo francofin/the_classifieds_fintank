@@ -273,7 +273,10 @@ const Index = (props) => {
                 className="swiper-container-mx-negative pt-3 pb-5"
                 wrapperClasses="dark-overlay"
                 indexReturns
-                perView={4}
+                perView={1}
+                md={2}
+                lg={3}
+                xl={4}
                 data={indexData.data}
                 loop
                 speed={1000}
@@ -446,7 +449,10 @@ const Index = (props) => {
                 className="swiper-container-mx-negative pt-1 pb-5"
                 wrapperClasses="dark-overlay"
                 moverReturns
-                perView={6}
+                perView={1}
+                md={2}
+                lg={3}
+                xl={4}
                 data={props.moverData?.most_gainer}
                 loop
                 speed={1000}
@@ -464,7 +470,10 @@ const Index = (props) => {
                 className="swiper-container-mx-negative pt-1 pb-5"
                 wrapperClasses="dark-overlay"
                 moverReturns
-                perView={6}
+                perView={1}
+                md={2}
+                lg={3}
+                xl={4}
                 data={props.moverData?.most_loser}
                 loop
                 speed={1000}
@@ -482,7 +491,10 @@ const Index = (props) => {
                 className="swiper-container-mx-negative pt-1 pb-5"
                 wrapperClasses="dark-overlay"
                 moverReturns
-                perView={6}
+                perView={1}
+                md={2}
+                lg={3}
+                xl={4}
                 data={props.moverData?.most_active}
                 loop
                 speed={1000}
@@ -500,7 +512,10 @@ const Index = (props) => {
                 className="swiper-container-mx-negative pt-1 pb-5"
                 wrapperClasses="dark-overlay"
                 sentimentScores
-                perView={4}
+                perView={1}
+                md={2}
+                lg={3}
+                xl={4}
                 data={props.upgradeData?.sentiment}
                 loop
                 speed={1000}
