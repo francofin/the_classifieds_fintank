@@ -16,10 +16,12 @@ import "swiper/css/navigation"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import "../src/scss/style.default.scss"
 
-const App = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps, ...rest }) => {
+  const { store, props } = wrapper.useWrappedStore(rest);
+
   return (
     <DjangoAuthProvider>
-      <Provider store={theStore}>
+      <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Layout {...pageProps}>
             <Component {...pageProps} />
@@ -31,4 +33,5 @@ const App = ({ Component, pageProps }) => {
 }
 
 // This default export is required in a new `pages/_app.js` file.
-export default wrapper.withRedux(App);
+// export default wrapper.withRedux(App);
+export default App;
