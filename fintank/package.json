@@ -1,6 +1,7 @@
 {
   "name": "fintank",
   "version": "0.1.0",
+  "author": "francois_Jack",
   "private": true,
   "scripts": {
     "dev": "next dev -p 8020",
@@ -83,7 +84,7 @@
     "not Explorer <= 11"
   ],
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "eslint": "8.16.0",
     "eslint-config-next": "12.3.0"
   },
   "prettier": {
