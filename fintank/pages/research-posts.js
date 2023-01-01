@@ -20,7 +20,8 @@ import { faFile } from "@fortawesome/free-regular-svg-icons"
 import axios from 'axios';
 import Image from "@components/CustomImage"
 import CardPost from "@components/CardPost"
-export async function getStaticProps() {
+
+export async function getServerSideProps() {
 
     const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/journals/`);
 //   console.log(res)
