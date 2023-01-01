@@ -1,5 +1,5 @@
 import Image from "./CustomImage"
-import React from "react"
+import React, {useEffect, useState, useRef, useCallback} from "react"
 
 import { Swiper, SwiperSlide } from "swiper/react"
 import Lightbox from "react-image-lightbox"
@@ -7,20 +7,20 @@ import "react-image-lightbox/style.css"
 import { Navigation, Autoplay, Pagination } from "swiper"
 const SwiperGallery = (props) => {
   const data = props.data
-  const [lightBoxOpen, setLightBoxOpen] = React.useState(false)
-  const [activeImage, setActiveImage] = React.useState(0)
-  const navigationPrevRef = React.useRef(null)
-  const navigationNextRef = React.useRef(null)
+  const [lightBoxOpen, setLightBoxOpen] = useState(false)
+  const [activeImage, setActiveImage] = useState(0)
+  const navigationPrevRef = useRef(null)
+  const navigationNextRef = useRef(null)
   const onClick = (index) => {
     setActiveImage(index)
     setLightBoxOpen(!lightBoxOpen)
   }
 
-  const edgeSlidesClick = React.useCallback((index) => {
+  const edgeSlidesClick = useCallback((index) => {
     onClick(index)
   }, [])
 
-  React.useEffect(() => {
+useEffect(() => {
     const firstSlide = document.querySelector(".swiper-slide-prev")
     const lastSlide = document.querySelector(".swiper-slide-duplicate-next")
 
