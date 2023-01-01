@@ -21,10 +21,10 @@ import axios from 'axios';
 import Image from "@components/CustomImage"
 import CardPost from "@components/CardPost"
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
 
     const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/journals/`);
-//   console.log(res)
+  // console.log(res)
     const data = res.data;
   return {
     props: {
