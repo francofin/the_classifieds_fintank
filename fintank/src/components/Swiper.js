@@ -7,8 +7,7 @@ import CardNews from "./CardNews"
 import MarketReturns from "./MarketReturns"
 import Sentiments from './Sentiments'
 import { Navigation, Pagination, Autoplay, EffectFade, Grid } from "swiper"
-import  Swiper from "swiper/react" 
-import SwiperSlide  from "swiper/react"
+import { Swiper, SwiperSlide } from "swiper/react"
 import Image from "./CustomImage";
 import MoverReturns from "./MoverReturns"
 
