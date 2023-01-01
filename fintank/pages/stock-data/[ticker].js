@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState, useMemo, useContext } from "react";
+import React, { useEffect, useState, useMemo, useContext } from "react";
 import Link from "next/link";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -238,33 +237,12 @@ const StockDetail = (props) => {
   }
 
 
-  // const size = UseWindowSize()
-  // const [range, setRange] = useState({
-  //   from: false,
-  //   to: false,
-  // })
-
-  // const groupByN = (n, data) => {
-  //   let result = []
-  //   for (let i = 0; i < data.length; i += n) result.push(data.slice(i, i + n))
-  //   return result
-  // }
 
   const adjustTimeStamp = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric"}
     return new Date(date).toLocaleDateString(undefined, options)
   }
 
-  // const groupedAmenities = roomData.amenities && groupByN(4, roomData.amenities)
-  // const [showDatePicker, setShowDatePicker] = useState(false)
-  // const fromRef = useRef()
-  // const toRef = useRef()
-  // useEffect(() => {
-  //   if (range?.from && (!range?.to || range.to !== range.from)) {
-  //     const timer = setTimeout(() => setShowDatePicker(false), 200)
-  //     return () => clearTimeout(timer)
-  //   }
-  // }, [range])
 
 
   const changeFrequency = (frequency) => {
@@ -525,29 +503,6 @@ const StockDetail = (props) => {
         </Container>
       </section>
 
-      {/* {roomData.similar && (
-        <section className="py-6 bg-gray-100">
-          <Container>
-            <h5 className="mb-0">{roomData.similar.title}</h5>
-            <p className="subtitle text-sm text-primary mb-4">
-              {roomData.similar.subtitle}
-            </p>
-            <Swiper
-              className="swiper-container-mx-negative items-slider pb-5"
-              perView={1}
-              spaceBetween={20}
-              loop={true}
-              roundLengths={true}
-              md={2}
-              lg={3}
-              xl={4}
-              data={roomData.similar.items}
-              cards
-              pagination
-            />
-          </Container>
-        </section>
-      )} */}
     </React.Fragment>
   )
 }

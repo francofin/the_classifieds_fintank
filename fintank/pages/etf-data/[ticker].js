@@ -114,10 +114,10 @@ export async function getServerSideProps({query }) {
     const data = stockRequested.data
 
 
-    const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`);
-    const dailyData = dailyStockData.data;
-    const labels = dailyData.dates;
-    const prices = dailyData.prices;
+    // const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`);
+    // const dailyData = dailyStockData.data;
+    // const labels = dailyData.dates;
+    // const prices = dailyData.prices;
 
 
     
@@ -132,9 +132,9 @@ export async function getServerSideProps({query }) {
         // title: postData.title,
         postData,
         data,
-        dailyData,
-        labels,
-        prices,
+        // dailyData,
+        // labels,
+        // prices,
         },
     }
 }
@@ -143,17 +143,17 @@ const StockDetail = (props) => {
   const requestedData = useStockData(stockData.symbol);
   const requestedETFData = useETFData(stockData.symbol)
 
-  const chartData = {
-    type:'line',
-    labels:props.labels,
-    datasets: [{
-      label: stockData.symbol,
-      data:props.prices,
-      borderColor: 'rgb(50, 166, 168)',
-      backgroundColor: 'rgba(50, 166, 168, 0.5)',
-      pointRadius: 1
-    }]
-  }
+  // const chartData = {
+  //   type:'line',
+  //   labels:props.labels,
+  //   datasets: [{
+  //     label: stockData.symbol,
+  //     data:props.prices,
+  //     borderColor: 'rgb(50, 166, 168)',
+  //     backgroundColor: 'rgba(50, 166, 168, 0.5)',
+  //     pointRadius: 1
+  //   }]
+  // }
 
   const [dataForStock, setDataForStock] = useState(null);
 
@@ -164,8 +164,8 @@ const StockDetail = (props) => {
   const [sectorExposure, setSectorExposure] = useState([])
   const [sectorName, setSectorName] = useState([])
 
-  const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
-  const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
+  // const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
+  // const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
   
 
 
@@ -181,38 +181,38 @@ const StockDetail = (props) => {
   }, [requestedETFData])
 
 
-  console.log(useSectorBarChart(etfData?.sectorsList, stockData.name))
-
-  const {barChartCreated:sectorBarChart, createChart:sectorChartCreated} = useSectorBarChart(etfData?.sectorsList, stockData.name);
 
 
-  const size = UseWindowSize()
-  const [range, setRange] = useState({
-    from: false,
-    to: false,
-  })
+  // const {barChartCreated:sectorBarChart, createChart:sectorChartCreated} = useSectorBarChart(etfData?.sectorsList, stockData.name);
 
-  const groupByN = (n, data) => {
-    let result = []
-    for (let i = 0; i < data.length; i += n) result.push(data.slice(i, i + n))
-    return result
-  }
+
+  // const size = UseWindowSize()
+  // const [range, setRange] = useState({
+  //   from: false,
+  //   to: false,
+  // })
+
+  // const groupByN = (n, data) => {
+  //   let result = []
+  //   for (let i = 0; i < data.length; i += n) result.push(data.slice(i, i + n))
+  //   return result
+  // }
 
   const adjustTimeStamp = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric"}
     return new Date(date).toLocaleDateString(undefined, options)
   }
 
-  const groupedAmenities = roomData.amenities && groupByN(4, roomData.amenities)
-  const [showDatePicker, setShowDatePicker] = useState(false)
-  const fromRef = useRef()
-  const toRef = useRef()
-  useEffect(() => {
-    if (range?.from && (!range?.to || range.to !== range.from)) {
-      const timer = setTimeout(() => setShowDatePicker(false), 200)
-      return () => clearTimeout(timer)
-    }
-  }, [range])
+  // const groupedAmenities = roomData.amenities && groupByN(4, roomData.amenities)
+  // const [showDatePicker, setShowDatePicker] = useState(false)
+  // const fromRef = useRef()
+  // const toRef = useRef()
+  // useEffect(() => {
+  //   if (range?.from && (!range?.to || range.to !== range.from)) {
+  //     const timer = setTimeout(() => setShowDatePicker(false), 200)
+  //     return () => clearTimeout(timer)
+  //   }
+  // }, [range])
 
 
   const changeFrequency = (frequency) => {
@@ -240,7 +240,7 @@ const StockDetail = (props) => {
                   {dataForStock?.description && dataForStock?.description}.{" "}
                 </p>
               </div>
-              {roomData.frequencies && (
+              {/* {roomData.frequencies && (
                 <React.Fragment>
                   <div className="text-block">
                     <h4 className="mb-4">Stock Price Movements</h4>
@@ -276,8 +276,8 @@ const StockDetail = (props) => {
                     </Row>
                   </div>}
                 </React.Fragment>
-              )}
-              <React.Fragment>
+              )} */}
+              {/* <React.Fragment>
                   {sectorBarChart && 
                     <Row className="pt-3">
                       <Col lg="12">
@@ -286,7 +286,7 @@ const StockDetail = (props) => {
                       </Col>
                     </Row>
                   }
-              </React.Fragment>
+              </React.Fragment> */}
               {roomData.author && (
                 <div className="text-block">
                   <div className="d-flex">
