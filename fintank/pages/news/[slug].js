@@ -9,19 +9,41 @@ import Brands from "@components/Brands"
 import data from "@data/news.json"
 import geoJSON from "@data/restaurants-geojson.json"
 import Image from "@components/CustomImage"
+import topics from "@data/topic.json"
 import axios from 'axios';
 import { useRouter } from "next/router"
 import bannerImages from "@data/banner.json"
 import { useImagesSelector } from "@hooks/UseImageSelect"
 import { useNewsGenerator } from "@hooks/useNewsGenerator"
 
-export async function getServerSideProps({query}) {
 
+export function getAllTopicIds() {
+  return topics.posts.map((post) => ({
+    params: {
+      slug: post.slug,
+    },
+  }))
+}
+
+export async function getTopicData(slug) {
+  for (var i = 0; i < topics.posts.length; i++) {
+    if (topics.posts[i].slug == slug) {
+      return {
+        stockItem: topics.posts[i],
+        slug
+      }
+    }
+  }
+}
+
+export async function getServerSideProps({query}) {
+    const postData =await getTopicData(query.slug) 
     let topic = query.slug
 
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${postData.slug}`);
     // const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${topic}`);
-    // const responseNews = res.data;
-    // console.log(responseNews)
+    const responseNews = res.data;
+    console.log(responseNews)
     
     return {
         props: {
@@ -31,7 +53,7 @@ export async function getServerSideProps({query}) {
             color: "white",
         },
         title: "News",
-        // responseNews,
+        responseNews,
         topic
         },
     }
@@ -39,15 +61,15 @@ export async function getServerSideProps({query}) {
 
 const News = (props) => {
 
-    // const newsData = props.responseNews
-    const newsFromHook = useNewsGenerator(props.topic);
-    // const  newsDataWithImages = newsData.data.filter((news, i) => news.image)
-    const  newsDataWithImages = newsFromHook?.data.filter((news, i) => news.image)
-    // const newsNoImages = newsData.data.filter((news, i) => !news.image)
-    const newsNoImages = newsDataWithImages.data.filter((news, i) => !news.image)
+    const newsData = props.responseNews
+    // const newsFromHook = useNewsGenerator(props.topic);
+    const  newsDataWithImages = newsData.data.filter((news, i) => news.image)
+    // const  newsDataWithImages = newsFromHook?.data.filter((news, i) => news.image)
+    const newsNoImages = newsData.data.filter((news, i) => !news.image)
+    // const newsNoImages = newsDataWithImages.data.filter((news, i) => !news.image)
     const imagesForBanner = bannerImages.bannerImages
     
-    console.log(newsFromHook)
+    console.log(newsData)
     const [randomImage, setRandomImage] = useState(0)
 
     const topicImages = useImagesSelector(props.topic)
@@ -94,10 +116,10 @@ const News = (props) => {
       {data.popularCities && (
         <PopularCities
           title={data.popularCities.title}
-          subTitle={newsFromHook?.tag}
-          // subTitle={newsData.tag}
-          // blockStories={newsData.data.splice(0,5)}
-          blockStories={newsFromHook?.data.splice(0,5)}
+          // subTitle={newsFromHook?.tag}
+          subTitle={newsData.tag}
+          blockStories={newsData.data.splice(0,5)}
+          // blockStories={newsFromHook?.data.splice(0,5)}
           topicImage = {topicImages}
         />
       )}
