@@ -43,7 +43,6 @@ export async function getServerSideProps({query}) {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${postData.slug}`);
     // const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${topic}`);
     const responseNews = res.data;
-    console.log(responseNews)
     
     return {
         props: {
