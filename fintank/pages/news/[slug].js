@@ -20,6 +20,7 @@ export async function getServerSideProps({query}) {
 
     const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${topic}`);
     const responseNews = res.data;
+    console.log(responseNews)
     
     return {
         props: {
@@ -41,7 +42,7 @@ const News = (props) => {
     const  newsDataWithImages = newsData.data.filter((news, i) => news.image)
     const newsNoImages = newsData.data.filter((news, i) => !news.image)
     const imagesForBanner = bannerImages.bannerImages
-
+    console.log(newsData)
     const [randomImage, setRandomImage] = useState(0)
 
     const topicImages = useImagesSelector(props.topic)
