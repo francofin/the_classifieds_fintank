@@ -2,8 +2,9 @@ import Image from "./CustomImage"
 import React, {useEffect, useState, useRef, useCallback} from "react"
 
 import { Swiper, SwiperSlide } from "swiper/react"
-import Lightbox from "react-image-lightbox"
-import "react-image-lightbox/style.css"
+// import Lightbox from "react-image-lightbox"
+import Lightbox from "yet-another-react-lightbox"
+import "yet-another-react-lightbox/styles.css"
 import { Navigation, Autoplay, Pagination } from "swiper"
 const SwiperGallery = (props) => {
   const data = props.data

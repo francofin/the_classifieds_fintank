@@ -123,7 +123,9 @@ export async function getServerSideProps({query, req }) {
     const access_token = req.cookies.access || '';
     if(access_token){
       userIsAuthenticated = await isAuthenticatedUser(access_token);
-    } 
+    }else{
+      userIsAuthenticated =null
+    }
     
 
     let universe;

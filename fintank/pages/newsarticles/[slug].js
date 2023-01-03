@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import Link from "next/link"
 import { Container, Row, Col, Button, Badge } from "react-bootstrap"
+import Swiper from "@components/Swiper"
 import SearchBar from "@components/SearchBar"
 import PopularCities from "@components/PopularCities"
 import Discover from "@components/Discover"
@@ -67,7 +68,7 @@ const News = (props) => {
     // const newsNoImages = newsDataWithImages.data.filter((news, i) => !news.image)
     const imagesForBanner = bannerImages.bannerImages
     
-    console.log(newsData)
+    console.log(newsNoImages)
     const [randomImage, setRandomImage] = useState(0)
 
     const topicImages = useImagesSelector(props.topic)
@@ -130,7 +131,21 @@ const News = (props) => {
             </div>
           </Container>
           <Container fluid>
-
+            <Swiper
+              className="swiper-container-mx-negative items-slider-full px-lg-5 pt-3 pb-5"
+              perView={1}
+              spaceBetween={20}
+              loop
+              roundLengths
+              md={2}
+              lg={3}
+              xl={4}
+              xxl={5}
+              xxxl={6}
+              data={newsDataWithImages}
+              newsCards
+              pagination
+            />
 
           </Container>
         </section>
@@ -157,8 +172,6 @@ const News = (props) => {
           </Container>
         </section>
       )}
-
-      
 
       {data.bottomBlock && (
         <div className="list-group shadow mb-5">

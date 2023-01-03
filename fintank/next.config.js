@@ -14,15 +14,7 @@ const path = require("path")
 
 // module.exports = nextConfig
 
-module.exports = withPlugins(
-  [
-    [
-      reactSvg,
-      {
-        include: path.resolve(__dirname, "./src/assets/svg"),
-      },
-    ],
-  ],
+module.exports = (
   {
     images: {
       deviceSizes: [320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -40,8 +32,30 @@ module.exports = withPlugins(
       FINTANK_API_URL:"https://fintank.herokuapp.com",
       MAPBOX_ACCESS_TOKEN:'pk.eyJ1IjoiZnJhbmNvZmluIiwiYSI6ImNsNm9nNmIzYzBhbnIzaXRlNTJranJwankifQ.8EBtyLcfgqaQYIWn3y1pbA'
     },
-    reactStrictMode: true,
-    swcMinify: true,
+    webpack(config) {
+      config.module.rules.push({
+        test: /\.svg$/i,
+        use: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: "removeUselessDefs",
+                    active: false,
+                  },
+                ],
+              },
+            },
+          },
+        ],
+      })
+  
+      return config
+    },
+    // reactStrictMode: true,
+    // swcMinify: true,
     // trailingSlash: true, // Uncomment this line for STATIC EXPORT
   }
 )
