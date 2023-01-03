@@ -130,7 +130,7 @@ const News = (props) => {
               <h2 className="mb-5">{data.popular.title}</h2>
             </div>
           </Container>
-          {/* <Container fluid>
+          <Container fluid>
             <Swiper
               className="swiper-container-mx-negative items-slider-full px-lg-5 pt-3 pb-5"
               perView={1}
@@ -147,7 +147,7 @@ const News = (props) => {
               pagination
             />
 
-          </Container> */}
+          </Container>
         </section>
       )}
 

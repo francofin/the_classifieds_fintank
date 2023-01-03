@@ -30,28 +30,28 @@
           "links": [
             {
               "title": "Market News",
-              "link": "/news/markets",
+              "link": "/newsarticles/markets",
               "parent": "Home"
             },
             {
               "title": "Economy",
-              "link": "/news/economy",
+              "link": "/newsarticles/economy",
               "parent": "Home"
             },
             {
               "title": "Politics",
-              "link": "/news/politics",
+              "link": "/newsarticles/politics",
               "parent": "Home"
             },
             {
               "title": "Inflation",
-              "link": "/news/inflation",
+              "link": "/newsarticles/inflation",
               "parent": "Home",
               "new": true
             },
             {
               "title": "War",
-              "link": "/news/war",
+              "link": "/newsarticles/war",
               "parent": "Home",
               "new": true
             }
@@ -64,35 +64,35 @@
           "links": [
             {
               "title": "US News",
-              "link": "/news/etaunido"
+              "link": "/newsarticle/etaunido"
             },
             {
               "title": "China",
-              "link": "/news/china"
+              "link": "/newsarticle/china"
             },
             {
               "title": "Russia",
-              "link": "/news/russia"
+              "link": "/newsarticle/russia"
             },
             {
               "title": "Middle East",
-              "link": "/news/mediooeste"
+              "link": "/newsarticle/mediooeste"
             },
             {
               "title": "German",
-              "link": "/news/aleman"
+              "link": "/newsarticle/aleman"
             },
             {
               "title": "Japan",
-              "link": "/news/japon"
+              "link": "/newsarticle/japon"
             },
             {
               "title": "Africa",
-              "link": "/news/africa"
+              "link": "/newsarticle/africa"
             },
             {
               "title": "South America",
-              "link": "/news/suram"
+              "link": "/newsarticle/suram"
             }
           ]
         }
@@ -103,27 +103,27 @@
           "links": [
             {
               "title": "Technology",
-              "link": "/news/tech"
+              "link": "/newsarticle/tech"
             },
             {
               "title": "Energy",
-              "link": "/news/energy"
+              "link": "/newsarticle/energy"
             },
             {
               "title": "Oil",
-              "link": "/news/oil"
+              "link": "/newsarticle/oil"
             },
             {
               "title": "Real Estate",
-              "link": "/news/realestate"
+              "link": "/newsarticle/realestate"
             },
             {
               "title": "Financials",
-              "link": "/news/finance"
+              "link": "/newsarticle/finance"
             },
             {
               "title": "Health Care",
-              "link": "/news/health",
+              "link": "/newsarticle/health",
               "new": true
             }
           ]
@@ -135,27 +135,27 @@
           "links": [
             {
               "title": "Consumer",
-              "link": "/news/cons",
+              "link": "/newsarticle/cons",
               "new": true
             },
             {
               "title": "Materials",
-              "link": "/news/materials",
+              "link": "/newsarticle/materials",
               "new": true
             },
             {
               "title": "Communications",
-              "link": "/news/comm",
+              "link": "/newsarticle/comm",
               "new": true
             },
             {
               "title": "Utilities",
-              "link": "/news/util",
+              "link": "/newsarticle/util",
               "new": true
             },
             {
               "title": "Industrials",
-              "link": "/news/indus",
+              "link": "/newsarticle/indus",
               "new": true
             }
           ]
