@@ -64,35 +64,35 @@
           "links": [
             {
               "title": "US News",
-              "link": "/newsarticle/etaunido"
+              "link": "/newsarticles/etaunido"
             },
             {
               "title": "China",
-              "link": "/newsarticle/china"
+              "link": "/newsarticles/china"
             },
             {
               "title": "Russia",
-              "link": "/newsarticle/russia"
+              "link": "/newsarticles/russia"
             },
             {
               "title": "Middle East",
-              "link": "/newsarticle/mediooeste"
+              "link": "/newsarticles/mediooeste"
             },
             {
               "title": "German",
-              "link": "/newsarticle/aleman"
+              "link": "/newsarticles/aleman"
             },
             {
               "title": "Japan",
-              "link": "/newsarticle/japon"
+              "link": "/newsarticles/japon"
             },
             {
               "title": "Africa",
-              "link": "/newsarticle/africa"
+              "link": "/newsarticles/africa"
             },
             {
               "title": "South America",
-              "link": "/newsarticle/suram"
+              "link": "/newsarticles/suram"
             }
           ]
         }
@@ -103,27 +103,27 @@
           "links": [
             {
               "title": "Technology",
-              "link": "/newsarticle/tech"
+              "link": "/newsarticles/tech"
             },
             {
               "title": "Energy",
-              "link": "/newsarticle/energy"
+              "link": "/newsarticles/energy"
             },
             {
               "title": "Oil",
-              "link": "/newsarticle/oil"
+              "link": "/newsarticles/oil"
             },
             {
               "title": "Real Estate",
-              "link": "/newsarticle/realestate"
+              "link": "/newsarticles/realestate"
             },
             {
               "title": "Financials",
-              "link": "/newsarticle/finance"
+              "link": "/newsarticles/finance"
             },
             {
               "title": "Health Care",
-              "link": "/newsarticle/health",
+              "link": "/newsarticles/health",
               "new": true
             }
           ]
@@ -135,27 +135,27 @@
           "links": [
             {
               "title": "Consumer",
-              "link": "/newsarticle/cons",
+              "link": "/newsarticles/cons",
               "new": true
             },
             {
               "title": "Materials",
-              "link": "/newsarticle/materials",
+              "link": "/newsarticles/materials",
               "new": true
             },
             {
               "title": "Communications",
-              "link": "/newsarticle/comm",
+              "link": "/newsarticles/comm",
               "new": true
             },
             {
               "title": "Utilities",
-              "link": "/newsarticle/util",
+              "link": "/newsarticles/util",
               "new": true
             },
             {
               "title": "Industrials",
-              "link": "/newsarticle/indus",
+              "link": "/newsarticles/indus",
               "new": true
             }
           ]

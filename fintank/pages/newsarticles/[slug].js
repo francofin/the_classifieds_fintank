@@ -77,7 +77,7 @@ const News = (props) => {
       let randomIndex = Math.floor(Math.random()*imagesForBanner.length)
       setRandomImage(randomIndex)
 
-    }, [])
+    }, [imagesForBanner])
 
 
     const adjustTimeStamp = (date) => {
