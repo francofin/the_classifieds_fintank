@@ -16,18 +16,6 @@ import React, { useEffect, useState } from "react"
                 setChartLabels(labels)
                 setChartReturns(returns)
                 break;
-            case '60d':
-                labels = data.day_60_date_list;
-                returns = data.day_60_return_list;
-                setChartLabels(labels)
-                setChartReturns(returns)
-                break;
-            case '90d':
-                labels = data.day_90_date_list;
-                returns = data.day_90_return_list;
-                setChartLabels(labels)
-                setChartReturns(returns)
-                break;
             case '120d':
                 labels = data.day_120_date_list;
                 returns = data.day_120_return_list;

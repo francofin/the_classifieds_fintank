@@ -60,14 +60,6 @@
       "label":"30 Day Returns"
     },
     {
-      "value":"60d",
-      "label":"60 Day Returns"
-    },
-    {
-      "value":"90d",
-      "label":"90 Day Returns"
-    },
-    {
       "value":"120d",
       "label":"120 Day Returns"
     },
