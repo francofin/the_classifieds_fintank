@@ -12,7 +12,7 @@ const ActiveLink = ({ children, activeClassName, ...props }) => {
       ? `${childClassName} ${activeClassName}`.trim()
       : childClassName
 
-  console.log("Class Name", asPath)
+
   return (
     <Link {...props}>
       {React.cloneElement(child, {

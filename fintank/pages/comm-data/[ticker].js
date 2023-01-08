@@ -8,7 +8,6 @@ import roomData from "@data/stock-research.json";
 import blog from "@data/blog.json";
 import SwiperGallery from "@components/SwiperGallery";
 import Image from "@components/CustomImage";
-import Map from "@components/Map";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
@@ -26,8 +25,8 @@ import {
   Legend,
 } from 'chart.js';
 import { Line, Bar } from 'react-chartjs-2';
-import { useBarChart } from "@hooks/useBarCharts";
 import { useCommodData } from "@hooks/useCommodityData";
+
 
 ChartJS.register(
   CategoryScale,
@@ -138,6 +137,7 @@ export async function getServerSideProps({query }) {
 const StockDetail = (props) => {
   const stockData = props.data.stock[0]
   const requestedData = useCommodData(stockData.symbol)
+  
 
   const chartData = {
     type:'line',

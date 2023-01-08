@@ -115,5 +115,11 @@
         "subTitle": "Stories from around the globe",
         "button": "See more stories",
         "buttonLink": "/news/markets"
+    },
+    "stockArticlePosts": {
+        "title": "Breaking News Articles",
+        "subTitle": "Stories About",
+        "button": "See more stories",
+        "buttonLink": "/news/markets"
     }
 }

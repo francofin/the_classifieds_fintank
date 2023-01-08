@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useContext } from "react";
 import Link from "next/link";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import NewsPost from "@components/NewsPost"
 import {Container,Row,Col,Form,Button, ToggleButton, Badge, Overlay} from "react-bootstrap";
 import UseWindowSize from "@hooks/UseWindowSize";
 import roomData from "@data/stock-research.json";
@@ -13,11 +14,14 @@ import Map from "@components/Map";
 import { DjangoAuthContext } from '@context/authContext';
 import { useStockData } from "@hooks/useStockData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
 import { useStockChart } from "@hooks/useStockCharts";
 import swal from 'sweetalert';
 import { isAuthenticatedUser } from '@utils/isAuthenticated';
+import { useStockArticles } from "@hooks/useStockArticles";
+import headerNews from "@data/index.json"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -134,6 +138,7 @@ export async function getServerSideProps({query, req }) {
     try{
       const universeData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getpeerlist/${ticker}/${data.stock[0]['universe']}`)
       universe = universeData.data
+      console.log(universe)
       
     } catch(e){
       console.log("No Universe Data Found", e)
@@ -165,6 +170,11 @@ const StockDetail = (props) => {
   const dailyData = props.dailyData;
   const symbolPeers = props.universe?.raw_data || null;
   const chartMappings = props.universe?.mappings || null;
+
+
+
+  const stockNews = useStockArticles(stockData.symbol)
+  console.log(stockNews)
 
   const chartData = {
     type:'line',
@@ -407,6 +417,38 @@ const StockDetail = (props) => {
                   </div>
                 </div>
               )}
+              <section className="py-6 bg-gray-100">
+                  <Container>
+                    <Row className="mb-5">
+                      <Col md="8">
+                        <p className="subtitle text-primary">
+                          {headerNews.stockArticlePosts.subTitle} {stockData.name}
+                        </p>
+                        <h2>{headerNews.stockArticlePosts.title}</h2>
+                      </Col>
+                      <Col
+                        md="4"
+                        className="d-md-flex align-items-center justify-content-end"
+                      >
+                      </Col>
+                    </Row>
+                    <Row>
+                      {stockNews?.map((post, index) => {
+                        if (index <= 45)
+                          return (
+                            <Col
+                              key={index}
+                              lg="3"
+                              sm="6"
+                              className="mb-4 hover-animate"
+                            >
+                              <NewsPost data={post} />
+                            </Col>
+                          )
+                      })}
+                    </Row>
+                  </Container>
+                </section>
               {position && 
                 <div className="text-block">
                 <h3 className="mb-4">Location</h3>

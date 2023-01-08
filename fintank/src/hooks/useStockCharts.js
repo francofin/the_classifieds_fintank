@@ -7,15 +7,18 @@ export const useStockChart = (frequency, chartLabels, chartData) => {
     const [chartCreated, setChartCreated] = useState(false);
     const [createChart, setCreateChart] = useState(null);
 
+    // useEffect(() => {
+    //     setMyChartLabels(chartLabels);
+    //     setMyChartData(chartData)
+
+    // }, [frequency, chartData, chartLabels])
+
+    
+    
     useEffect(() => {
+
         setMyChartLabels(chartLabels);
         setMyChartData(chartData)
-
-    }, [frequency, chartData, chartLabels])
-
-    
-    
-    useEffect(() => {
         const drawChart = () => {
             let chart= {
                 type:'line',
@@ -34,7 +37,7 @@ export const useStockChart = (frequency, chartLabels, chartData) => {
 
         setCreateChart(drawChart())
         setChartCreated(true)
-    }, [myChartLabels, myChartData])
+    }, [myChartLabels, myChartData, frequency, chartData, chartLabels])
 
     return {
         chartCreated, 
