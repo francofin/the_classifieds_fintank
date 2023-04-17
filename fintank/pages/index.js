@@ -366,9 +366,9 @@ const Index = (props) => {
                 <Col
                   xs="6"
                   lg="4"
-                  xl="2"
+                  xl="3"
                   className={`px-0 ${
-                    index === sectorData.sector_data.length - 1
+                    index === sectorData.sector_data.length
                       ? "d-none d-lg-block d-xl-none"
                       : ""
                   }`}
@@ -405,36 +405,6 @@ const Index = (props) => {
           </Container>
         }   
       </section>
-      
-      {/* {loading && sectorReturnTS ? 
-        <section className="pt-3 pb-6">
-          <div className="text-center pb-lg-4">
-              <p className="h2">
-                {`Sector Performance Over Time: ${cleanFrequencyName} Day Rolling Returns and Volatility`}
-              </p>
-              <Dropdown drop="down" className="d-inline-block" variant="light" onSelect={(e) => {handleFrequencyChange(e)}}>
-                <Dropdown.Toggle variant="outline-primary">Adjust Frequency</Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Header className="fw-normal">
-                      Frequency
-                    </Dropdown.Header>
-                      <Dropdown.Item eventKey='fifteen'>15 Day</Dropdown.Item>
-                      <Dropdown.Item eventKey='thirty'>30 Day</Dropdown.Item>
-                      <Dropdown.Item eventKey='sixty'>60 Day</Dropdown.Item>
-                      <Dropdown.Item eventKey='ninety'>90 Day</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown >
-            </div>
-            <Row>
-              <Col lg="6">
-                <Line options={options} data={exportedData} />
-              </Col>
-              <Col lg="6">
-                <Line options={options} data={exportedVolData} />
-              </Col>
-            </Row>
-      </section> : ""
-      } */}
       
       {props.moverData && (
         <section className="py-6 bg-gray-100">

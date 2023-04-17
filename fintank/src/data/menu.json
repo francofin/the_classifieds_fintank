@@ -17,8 +17,33 @@
     ]
   },
   {
-    "title": "Major Indexes",
-    "link": "/markets"
+    "title":"Major Indexes",
+    "dropdown": [
+      {
+        "title": "Index Performance",
+        "link": "/markets"
+      },
+      {
+        "title": "S&P 500",
+        "link": "/indexes/sp500"
+      },
+      {
+        "title": "Dow Jones",
+        "link": "/indexes/dow"
+      },
+      {
+        "title": "Nasdaq",
+        "link": "/indexes/nasdaq"
+      },
+      {
+        "title": "Russell 2000",
+        "link": "/indexes/r2000"
+      },
+      {
+        "title": "TSX Composite",
+        "link": "/indexes/tsx"
+      }
+    ]
   },
   {
     "title": "News",
@@ -69,10 +94,6 @@
             {
               "title": "China",
               "link": "/newsarticles/china"
-            },
-            {
-              "title": "Russia",
-              "link": "/newsarticles/russia"
             },
             {
               "title": "Middle East",
@@ -198,7 +219,7 @@
         "link": "/universe/nasdaq"
       },
       {
-        "title": "S&P/TSX Composite",
+        "title": "Canadian Equities",
         "link": "/universe/sptsx"
       },
       {

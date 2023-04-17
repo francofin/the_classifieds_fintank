@@ -83,6 +83,7 @@ const Universe = (props) => {
     }
 
   const univerData = props.data.items
+  console.log(univerData)
 
 
   const [keyWord, setKeyWord] = useState('');
@@ -103,12 +104,16 @@ const Universe = (props) => {
   const [subSectorScreener, setSubSectorScreener] = useState('');
   const [searchParam, setSearchParam] = useState('');
   const [activePage, setActivePage] = useState(1);
-  const [sectorFilter, setSectorFilter] = useState('');
-  const [subSectorFilter, setSubSectorFilter] = useState('');
+  const [sectorFilter, setSectorFilter] = useState('All');
+  const [subSectorFilter, setSubSectorFilter] = useState('All');
   const [stockData, setStockData] = useState(univerData);
+  const [numberOfStocks, setNumberOfStocks] = useState(props.totalStocks);
   const [startIndex, setStartIndex] = useState(0);
   const [limitIndex, setLimitIndex] = useState(props.resultsPerPage);
-  const [numberOfPages, setNumberOfPages] = useState(Math.round(props.totalStocks/props.resultsPerPage));
+  const [numberOfPages, setNumberOfPages] = useState(Math.round(numberOfStocks/props.resultsPerPage));
+  const [initialPage, setInitialPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(2);
+  const [initialPageLimit, setInitialPageLimit] = useState(11);
   const [createLink, setCreateLink] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isEquityRelated, setIsEquityRelated] = useState(true);
@@ -148,9 +153,23 @@ const Universe = (props) => {
   const handlePageRoute = (currentPage) => {
     setActivePage(currentPage)
     if(queryParams.has('page')){
-      queryParams.set('page', currentPage)
+      queryParams.set('page', currentPage);
+      if((currentPage-1) > 0){
+        setInitialPage(currentPage-1);
+      }
+      setCurrentPage(currentPage);
+      if((currentPage+10)>numberOfPages){
+        setInitialPageLimit(numberOfPages)
+      }
+      else{
+        setInitialPageLimit(currentPage+10);
+      }
+      
+      console.log(currentPage);
     } else {
       queryParams.append('page', currentPage)
+      setCurrentPage(currentPage);
+      setInitialPageLimit(initialPageLimit+1);
     }
 
     router.push({
@@ -183,19 +202,25 @@ const Universe = (props) => {
   const getPages = (allPages) => {
     const items = []
     if(allPages <= 11){
-      for(let i=1; i <= allPages; i++){
+      for(let i=currentPage; i <= allPages; i++){
         items.push(
         <Pagination.Item key={i} active={i===activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
         )
       }
     }
     else{
-      for(let i=1; i <= 11; i++){
+      if(currentPage !== initialPage){
+        items.push(<Pagination.Item key={initialPage} active={initialPage===activePage} onClick={() => handlePageRoute(initialPage)}>{initialPage}</Pagination.Item> )
+      }
+      
+      for(let i=currentPage; i <= initialPageLimit; i++){
         items.push(
         <Pagination.Item key={i} active={i==activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
         )
       }
-      items.push(<Pagination.Ellipsis key={`Elipse`}/>)
+      if((allPages-initialPageLimit) % 11 != 0){
+        items.push(<Pagination.Ellipsis key={`Elipse`}/>)
+      }
       items.push(<Pagination.Item key={allPages} active={allPages===activePage} onClick={() => handlePageRoute(allPages)}>{allPages}</Pagination.Item> )
     }
     return items
@@ -210,16 +235,18 @@ const Universe = (props) => {
   const handleSelect = (e) => {
     if(e.type === "sector"){
       if (e.value !== "All"){
-        const sectorFilter = univerData?.filter((p) => p.sector===e.value)
-        setStockData(sectorFilter)
+        const sectorFilter = univerData?.filter((p) => p.sector===e.value);
+        setSectorFilter(e.value);
+        setStockData(sectorFilter);
       } else {
-        setStockData(univerData)
+        setStockData(univerData);
       }
       
     } else if(e.type === "subsector"){
       if (e.value !== "All"){
-        const subSectorFilter = univerData?.filter((p) => p.sub_sector===e.value)
-        setStockData(subSectorFilter)
+        const subSectorFilter = univerData?.filter((p) => p.sub_sector===e.value);
+        setSubSectorFilter(e.value);
+        setStockData(subSectorFilter);
       } else {
         setStockData(univerData)
       }
@@ -243,9 +270,9 @@ const Universe = (props) => {
   }, [minDividend])
 
   useEffect(() => {
-    setStockData(univerData)
-    setNumberOfPages(Math.round(props.totalStocks/props.resultsPerPage))
-  }, [univerData, props])
+    setStockData(stockData)
+    setNumberOfPages(Math.round(numberOfStocks/props.resultsPerPage))
+  }, [stockData, numberOfStocks, props])
 
 
   useEffect(() => {
@@ -338,6 +365,7 @@ const Universe = (props) => {
               id="sector"
               options={sector.sectors}
               value={sectorFilter}
+              placeholder = {sectorFilter}
               onChange = {(e) => handleSelect(e)}
               className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
               classNamePrefix="selectpicker"
@@ -349,14 +377,6 @@ const Universe = (props) => {
               value={subSectorFilter}
               className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
               onChange = {(e) => handleSelect(e)}
-              classNamePrefix="selectpicker"
-            />
-            <label className="form-label me-2">Currency</label>
-            <Select
-              id="currency"
-              // options={data.sortby}
-              // value={data.sortby[0]}
-              className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
               classNamePrefix="selectpicker"
             />
           </div>

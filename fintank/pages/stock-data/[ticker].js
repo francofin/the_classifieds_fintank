@@ -438,7 +438,7 @@ const StockDetail = (props) => {
                           return (
                             <Col
                               key={index}
-                              lg="3"
+                              lg="4"
                               sm="6"
                               className="mb-4 hover-animate"
                             >
