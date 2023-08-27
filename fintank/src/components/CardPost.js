@@ -19,7 +19,7 @@ const CardPost = (props) => {
       <Link href={`${post.url}`}>
         <a className="">
           <Image
-            src={post.file}
+            src={`https://thetradingfloor.s3.amazonaws.com/${post.file}`}
             alt="..."
             width={1080}
             height={720}

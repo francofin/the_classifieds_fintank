@@ -41,11 +41,11 @@ import { Line, Bar, Scatter } from 'react-chartjs-2';
 import { useBarChart } from "@hooks/useBarCharts";
 import { useIndexPagePrices } from "@hooks/useIndexPagePrices";
 import { useIndexCharter } from "@hooks/useIndexChart"
-const compEPOne = `${process.env.NEXT_PUBLIC_COMP_PACK_ONE}`
-const compEPTwo = `${process.env.NEXT_PUBLIC_COMP_PACK_TWO}`
-const compEPThree = `${process.env.NEXT_PUBLIC_COMP_PACK_THREE}`
-const compEPFour = `${process.env.NEXT_PUBLIC_COMP_PACK_FOUR}`
-const compEPFive = `${process.env.NEXT_PUBLIC_COMP_PACK_FIVE}`
+const compEPOne = `getcomparisondatapackone`
+const compEPTwo = `getcomparisondatapacktwo`
+const compEPThree = `getcomparisondatapackthree`
+const compEPFour = `getcomparisondatapackfour`
+const compEPFive = `getcomparisondatapackfive`
 
 
 ChartJS.register(

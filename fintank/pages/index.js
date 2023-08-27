@@ -215,7 +215,7 @@ const Index = (props) => {
     router.push(`/stock-data/${randomSymbol}`)
   }
 
-
+console.log(props)
 
   return (
     <React.Fragment>

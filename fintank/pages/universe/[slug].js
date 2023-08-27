@@ -4,13 +4,14 @@ import Select from "react-select"
 import sector from "@data/sectors-subsectors.json"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faTimes, faDownload, faSearch, faAngleLeft, faAngleRight  } from "@fortawesome/free-solid-svg-icons"
-import {Container, Button, ListGroup, Form, InputGroup, Row, Col, Badge, Breadcrumb, Pagination, Modal} from "react-bootstrap"
+import {Container, Button, ListGroup, Form, InputGroup, Row, Col, Badge, Breadcrumb, Modal} from "react-bootstrap"
 import universe from "@data/universe.json"
 import axios from 'axios';
 import { useRouter } from "next/router"
 import {connect} from 'react-redux';
 import screenerAction from '@src/actions/screenerAction'
 import { bindActionCreators } from "redux"
+import Pagination from 'react-js-pagination';
 
 export function getAllPostIds() {
   return universe.posts.map((post) => ({
@@ -38,16 +39,18 @@ export async function getServerSideProps({ params, query }) {
   
 
   let page = query.page || 1;
-  let queryStr;
-  if(page){
-    queryStr =`?page=${page}`;
-  }
-  else {
-    queryStr ='';
-}
+  const queryStr = `?page=${page}`
+//   let queryStr;
+//   if(page){
+//     queryStr =`?page=${page}`;
+//   }
+//   else {
+//     queryStr ='';
+// }
 
 const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/universe/${postData.slug}${queryStr}`);
-const data = res.data;
+let data = res.data;
+console.log(data);
 
 const totalStocks = data.count
 const resultsPerPage = 20
@@ -111,9 +114,9 @@ const Universe = (props) => {
   const [startIndex, setStartIndex] = useState(0);
   const [limitIndex, setLimitIndex] = useState(props.resultsPerPage);
   const [numberOfPages, setNumberOfPages] = useState(Math.round(numberOfStocks/props.resultsPerPage));
-  const [initialPage, setInitialPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(2);
-  const [initialPageLimit, setInitialPageLimit] = useState(11);
+  // const [initialPage, setInitialPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(2);
+  // const [initialPageLimit, setInitialPageLimit] = useState(11);
   const [createLink, setCreateLink] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isEquityRelated, setIsEquityRelated] = useState(true);
@@ -121,6 +124,9 @@ const Universe = (props) => {
   const [linkAs, setLinkAs] = useState(`/stock-data/`)
 
   const router = useRouter();
+
+  let {page =1, keyword} = router.query;
+
 
 
 
@@ -147,36 +153,46 @@ const Universe = (props) => {
 
   let queryParams;
   if(typeof window !== 'undefined'){
-    queryParams = new URLSearchParams(window.location.search)
+    queryParams = new URLSearchParams(window.location.search);
   }
 
-  const handlePageRoute = (currentPage) => {
-    setActivePage(currentPage)
+  const handlePageClick = (currentPage) => {
     if(queryParams.has('page')){
-      queryParams.set('page', currentPage);
-      if((currentPage-1) > 0){
-        setInitialPage(currentPage-1);
-      }
-      setCurrentPage(currentPage);
-      if((currentPage+10)>numberOfPages){
-        setInitialPageLimit(numberOfPages)
-      }
-      else{
-        setInitialPageLimit(currentPage+10);
-      }
-      
-      console.log(currentPage);
+      queryParams.set('page', currentPage)
     } else {
       queryParams.append('page', currentPage)
-      setCurrentPage(currentPage);
-      setInitialPageLimit(initialPageLimit+1);
     }
 
-    router.push({
-      pathname:props.slug,
-      search:queryParams.toString()
-    });
-  }
+    router.push({pathname:props.slug, search: queryParams.toString()})
+  };
+
+  // const handlePageRoute = (currentPage) => {
+  //   setActivePage(currentPage)
+  //   if(queryParams.has('page')){
+  //     queryParams.set('page', currentPage);
+  //     if((currentPage-1) > 0){
+  //       setInitialPage(currentPage-1);
+  //     }
+  //     setCurrentPage(currentPage);
+  //     if((currentPage+10)>numberOfPages){
+  //       setInitialPageLimit(numberOfPages)
+  //     }
+  //     else{
+  //       setInitialPageLimit(currentPage+10);
+  //     }
+      
+  //     console.log(currentPage);
+  //   } else {
+  //     queryParams.append('page', currentPage)
+  //     setCurrentPage(currentPage);
+  //     setInitialPageLimit(initialPageLimit+1);
+  //   }
+
+  //   router.push({
+  //     pathname:props.slug,
+  //     search:queryParams.toString()
+  //   });
+  // }
 
   const handleScreenSubmit = async(e) => {
     e.preventDefault();
@@ -199,32 +215,32 @@ const Universe = (props) => {
   }
 
 
-  const getPages = (allPages) => {
-    const items = []
-    if(allPages <= 11){
-      for(let i=currentPage; i <= allPages; i++){
-        items.push(
-        <Pagination.Item key={i} active={i===activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
-        )
-      }
-    }
-    else{
-      if(currentPage !== initialPage){
-        items.push(<Pagination.Item key={initialPage} active={initialPage===activePage} onClick={() => handlePageRoute(initialPage)}>{initialPage}</Pagination.Item> )
-      }
+  // const getPages = (allPages) => {
+  //   const items = []
+  //   if(allPages <= 11){
+  //     for(let i=currentPage; i <= allPages; i++){
+  //       items.push(
+  //       <Pagination.Item key={i} active={i===activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
+  //       )
+  //     }
+  //   }
+  //   else{
+  //     if(currentPage !== initialPage){
+  //       items.push(<Pagination.Item key={initialPage} active={initialPage===activePage} onClick={() => handlePageRoute(initialPage)}>{initialPage}</Pagination.Item> )
+  //     }
       
-      for(let i=currentPage; i <= initialPageLimit; i++){
-        items.push(
-        <Pagination.Item key={i} active={i==activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
-        )
-      }
-      if((allPages-initialPageLimit) % 11 != 0){
-        items.push(<Pagination.Ellipsis key={`Elipse`}/>)
-      }
-      items.push(<Pagination.Item key={allPages} active={allPages===activePage} onClick={() => handlePageRoute(allPages)}>{allPages}</Pagination.Item> )
-    }
-    return items
-  }
+  //     for(let i=currentPage; i <= initialPageLimit; i++){
+  //       items.push(
+  //       <Pagination.Item key={i} active={i==activePage} onClick={()=>handlePageRoute(i)}>{i}</Pagination.Item> 
+  //       )
+  //     }
+  //     if((allPages-initialPageLimit) % 11 != 0){
+  //       items.push(<Pagination.Ellipsis key={`Elipse`}/>)
+  //     }
+  //     items.push(<Pagination.Item key={allPages} active={allPages===activePage} onClick={() => handlePageRoute(allPages)}>{allPages}</Pagination.Item> )
+  //   }
+  //   return items
+  // }
 
 
   const adjustTimeStamp = (date) => {
@@ -398,8 +414,6 @@ const Universe = (props) => {
                     and Country. Screen excludes ETFs.{" "}
                     <a href="#">More Info on our Screener</a>
                     </p>
-
-                    
                       <div className="w-100 py-2 px-md-2 px-xxl-2 position-relative">
                      
                         <Form className="form-validate" onSubmit={handleScreenSubmit}>
@@ -663,19 +677,31 @@ const Universe = (props) => {
           ))}
         </ListGroup>
         {props.data.results_per_page < props.data.count && 
+        <div aria-label="Page navigation example"
+            className="d-flex justify-content-center">
           <Pagination
-              aria-label="Page navigation example"
-              className="d-flex justify-content-center"
-            >
-              <Pagination.First href="#">
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </Pagination.First>
-              {/* {getPages(Math.round(props.numberOfPages))} */}
-              {getPages(numberOfPages)}
-              <Pagination.Last href="#">
-                <FontAwesomeIcon icon={faAngleRight} />
-              </Pagination.Last>
-            </Pagination>
+              activePage={page}
+              itemsCountPerPage={props.data.results_per_page}
+              totalItemsCount={props.data.count}
+              onChange={handlePageClick}
+              nextPageText={"Next"}
+              prevPageText={"Prev"}
+              firstPageText={"First"}
+              lastPageText={"Last"}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
+        </div>
+          
+            //   <Pagination.First href="#">
+            //     <FontAwesomeIcon icon={faAngleLeft} />
+            //   </Pagination.First>
+            //   {/* {getPages(Math.round(props.numberOfPages))} */}
+            //   {getPages(numberOfPages)}
+            //   <Pagination.Last href="#">
+            //     <FontAwesomeIcon icon={faAngleRight} />
+            //   </Pagination.Last>
+            // </Pagination>
         }
         
       </Container>
