@@ -42,7 +42,7 @@ const MoverReturns = (props) => {
               </p>
               <hr />
               <p className="flex-grow-1 mb-0 text-md" style={{color:"green"}}>
-                Price when posted: ${(props.data.priceWhenPosted).toFixed(2)}
+                Price when posted: ${(props?.data?.priceWhenPosted)?.toFixed(2)}
               </p>
             </>:
             <>

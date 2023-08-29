@@ -20,7 +20,7 @@ const NewsPost = (props) => {
       <Link href={`${post.url}`}>
         <a className="">
           <Image
-            src={`https://res.cloudinary.com/dkekvnsiy/image/fetch/${post.image}`}
+            src={`/api/imagefetcher?url=${encodeURIComponent(post.image)}`}
             alt="..."
             width={1080}
             height={720}

@@ -1,4 +1,4 @@
-run_pool = celery -A theClassified worker --pool=solo -l info -scheduler django
+run_pool = celery -A theClassified worker --pool=solo -l info --scheduler django
 run_redis = docker run -it --rm -p 6379:6379 "cfe-redis"
 
  // {
