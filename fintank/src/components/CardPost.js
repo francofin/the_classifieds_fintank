@@ -14,12 +14,13 @@ const CardPost = (props) => {
   }
 
   const post = props.data
+  console.log(post)
   return (
     <Card className="border-0 h-100 shadow">
       <Link href={`${post.url}`}>
         <a className="">
           <Image
-            src={`https://thetradingfloor.s3.amazonaws.com/${post.file}`}
+            src={`${post?.image}`}
             alt="..."
             width={1080}
             height={720}

@@ -17,6 +17,7 @@ const path = require("path")
 module.exports = (
   {
     images: {
+      dangerouslyAllowSVG: true,
       deviceSizes: [320, 480, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
       // loader: "imgix", // Uncomment this line for STATIC EXPORT
       // path: "", // Uncomment this line for STATIC EXPORT

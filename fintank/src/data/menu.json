@@ -73,12 +73,6 @@
               "link": "/newsarticles/inflation",
               "parent": "Home",
               "new": true
-            },
-            {
-              "title": "War",
-              "link": "/newsarticles/war",
-              "parent": "Home",
-              "new": true
             }
           ]
         }
