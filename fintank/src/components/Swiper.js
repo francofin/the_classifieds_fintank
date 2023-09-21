@@ -4,6 +4,7 @@ import CardRoom from "./CardRoom"
 import CardPoster from "./CardPoster"
 import CardProperty from "./CardProperty"
 import CardNews from "./CardNews"
+import PriceTarget from "./PriceTarget"
 import MarketReturns from "./MarketReturns"
 import Sentiments from './Sentiments'
 import { Navigation, Pagination, Autoplay, EffectFade, Grid } from "swiper"
@@ -98,6 +99,11 @@ const SwiperComponent = (props) => {
             {props.sentimentScores && (
               <div className="w-100 h-100 hover-animate">
                 <Sentiments data={slide} />
+            </div>
+            )}
+            {props.priceTargetData && (
+              <div className="w-100 h-100 hover-animate">
+                <PriceTarget data={slide} />
             </div>
             )}
             {props.propertyCards && (

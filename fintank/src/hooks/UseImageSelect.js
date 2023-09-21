@@ -23,6 +23,7 @@ import alemanImages from "@data/aleman.json";
 import africaImages from "@data/africa.json";
 import latamImages from "@data/latam.json";
 import commodImages from "@data/commodities.json";
+import cryptoImages from "@data/crypto.json";
 
 
 const imagesForConsumers = consumerImages.consumerImages.concat(econImages.econImages[2]);
@@ -46,6 +47,7 @@ const imagesForIndus = industrialsImages.industrialsImages;
 const imagesForJapan = japanImages.japonImages;
 const imagesForEnergy = energyImages.energyImages;
 const imagesForComodities = commodImages.commodityImages;
+const imagesForCrypto = cryptoImages.cryptoImages;
 
 
 
@@ -122,6 +124,9 @@ export const useImagesSelector= (newsType) => {
                 break;
             case "oil":
                 setImages(imagesForComodities)
+                break;
+            case "crypto":
+                setImages(imagesForCrypto)
                 break;
             default:
                 break

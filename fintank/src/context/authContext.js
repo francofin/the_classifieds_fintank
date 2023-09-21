@@ -230,6 +230,7 @@ const DjangoAuthProvider = ({children}) => {
     }
 
     const addToWatchlist = async (ticker, access_token) => {
+        
         try{
             setLoading(true)
             const res = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/addtowatchlist/${ticker}/`, 
@@ -246,11 +247,14 @@ const DjangoAuthProvider = ({children}) => {
                     title: `Stock Added To Watch List`,
                     icon: "success",
                 });
+                
             }
+            
         } catch(error) {
             setLoading(false)
             setError(error.response && (error.response.data.detail || error.response.data.error))
         }
+        
     }
 
     const checkStockOnWatchlist = async (ticker, access_token) => {
@@ -262,10 +266,12 @@ const DjangoAuthProvider = ({children}) => {
                     Authorization: `Bearer ${access_token}`
                 },
             })
+            console.log(res.data)
 
             if(res.data){
                 setLoading(false)
                 setAddedStockToWatchlist(res.data)
+                return res.data
             }
         } catch(error) {
             setLoading(false)
@@ -338,6 +344,7 @@ const DjangoAuthProvider = ({children}) => {
             addToWatchlist,
             checkStockOnWatchlist,
             addedStockToWatchlist,
+            setAddedStockToWatchlist,
             userProfile,
             updated
         }}>

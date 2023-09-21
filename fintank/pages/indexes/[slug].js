@@ -11,6 +11,7 @@ import { useSingleMetric } from "@hooks/useSingleMetricCharts";
 import { useCovarChart } from "@hooks/useCovarChart";
 import { useTopPerformers } from "@hooks/useTopPerformer";
 import { useVixCharts } from "@hooks/useVixChart";
+import ValuationsTable from "@components/ValuationTable";
 import roomData from "@data/stock-research.json";
 import blog from "@data/blog.json";
 import indexMetaData from "@data/index-meta.json"
@@ -211,7 +212,9 @@ export const djComparisons = ['NSEI', 'TX60_TS', 'FCHI', 'NYITR', 'IBEX', 'BSESN
 
     let slug = query.slug
     console.log("My Slug", slug)
-  
+    const stockValuations = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getstockvaluations/${slug}`);
+    const valuationData = stockValuations.data;
+
     let userIsAuthenticated
 
     const access_token = req.cookies.access || '';
@@ -273,6 +276,7 @@ export const djComparisons = ['NSEI', 'TX60_TS', 'FCHI', 'NYITR', 'IBEX', 'BSESN
         indexMetaDescriptions,
         indexCode,
         indexList,
+        valuationData,
         // data,
         access_token,
         },
@@ -314,8 +318,8 @@ const IndexDetail = (props) => {
   const indexMetricsThree = useIndexMetric(props?.slug, compEPThree);
   const indexMetricsFour = useIndexMetric(props?.slug, compEPFour);
   const indexMetricsFive = useIndexMetric(props?.slug, compEPFive);
-
-  
+  const valuations = props.valuationData.universe_valuations || null;
+  // console.log(valuations)
   const adjustTimeStamp = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric"}
     return new Date(date).toLocaleDateString(undefined, options)
@@ -428,7 +432,7 @@ const IndexDetail = (props) => {
         <React.Fragment>
             <section>
               <SwiperGallery data={roomData.swiper} />
-                <Container className="py-5">
+                <Container className="py-6">
                   <Row>
                     <Col lg="8">
                     <div className="text-block">
@@ -523,10 +527,16 @@ const IndexDetail = (props) => {
                       <React.Fragment>
                         <Row className="pt-3">
                           <Col lg="6">
-                            <Bar options={barOptions} data={volChart} height={200} width={200}/>
+                              <div>
+                                <h4 className="mb-3">Contribution To Volatility: Top 20</h4>
+                              </div>
+                            <Bar options={barOptions} data={volChart} height={400} width={300}/>
                           </Col>
                           <Col lg="6">
-                            <Bar options={barOptions} data={retChart} height={200} width={200}/>
+                              <div>
+                                <h4 className="mb-3">90 Day Return: Top 20</h4>
+                              </div>
+                            <Bar options={barOptions} data={retChart} height={400} width={300}/>
                           </Col>
                         </Row>
                       </React.Fragment>}
@@ -773,6 +783,12 @@ const IndexDetail = (props) => {
                               </Col>
                               
                             </Row>
+                            {valuations && 
+                              <div className="text-block">
+                                <h4 className="mb-2">Stock Valuations</h4>
+                                <ValuationsTable valuations={valuations} />
+                              </div>
+                              }
                         </Container>
                       </section>}
                     </Col>

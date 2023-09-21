@@ -64,22 +64,8 @@ const KnowledgeBase = (props) => {
             <Breadcrumb.Item active>{props.title}</Breadcrumb.Item>
           </Breadcrumb>
 
-          <h1 className="hero-heading">Search a Specific Global Index</h1>
-          <Row>
-            <Col xl="8" className="mx-auto">
-              <Form>
-                <InputGroup>
-                  <Form.Control
-                    type="text"
-                    placeholder="Search Something ... "
-                  />
-                  <Button type="submit">
-                    <FontAwesomeIcon icon={faSearch} />
-                  </Button>
-                </InputGroup>
-              </Form>
-            </Col>
-          </Row>
+          <h1 className="hero-heading">Global Indexes</h1>
+
         </Container>
       </section>
       <section>

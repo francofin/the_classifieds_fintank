@@ -20,13 +20,13 @@
         "type": "sector"
       },
       {
-        "value": "Health Care",
-        "label": "health Care",
+        "value": "Healthcare",
+        "label": "Healthcare",
         "type": "sector"
       },
       {
-        "value": "Information Technology",
-        "label": "Information Technology",
+        "value": "Technology",
+        "label": "Technology",
         "type": "sector"
       },
       {
@@ -35,13 +35,13 @@
         "type": "sector"
       },
       {
-        "value": "Consumer Staples",
-        "label": "Consumer Staples",
+        "value": "Consumer Defensive",
+        "label": "Consumer Defensive",
         "type": "sector"
       },
       {
-        "value": "Consumer Discretionary",
-        "label": "Consumer Discretionary",
+        "value": "Consumer Cyclical",
+        "label": "Consumer Cyclical",
         "type": "sector"
       },
       {
@@ -50,13 +50,13 @@
         "type": "sector"
       },
       {
-        "value": "Financials",
-        "label": "Financials",
+        "value": "Financial Services",
+        "label": "Financial Services",
         "type": "sector"
       },
       {
-        "value": "Materials",
-        "label": "Materials",
+        "value": "Basic Materials",
+        "label": "Basic Materials",
         "type": "sector"
       },
       {

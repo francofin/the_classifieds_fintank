@@ -4,11 +4,13 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import NewsPost from "@components/NewsPost"
 import {Container,Row,Col,Form,Button, ToggleButton, Badge, Overlay} from "react-bootstrap";
+import Swiper from "@components/Swiper"
 import UseWindowSize from "@hooks/UseWindowSize";
 import roomData from "@data/stock-research.json";
 import blog from "@data/blog.json";
 import SwiperGallery from "@components/SwiperGallery";
 import Image from "@components/CustomImage";
+import MetricsTable from "@components/MetricsTable";
 import Gallery from "@components/Gallery";
 import Map from "@components/Map";
 import { DjangoAuthContext } from '@context/authContext';
@@ -113,9 +115,10 @@ export const options = {
 export async function getServerSideProps({query, req }) {
 
     const ticker = query.ticker
-    console.log(ticker)
     const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/stock-data/${ticker}`);
     const data = stockRequested.data
+
+
 
     const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailydata/${ticker}`);
     const dailyData = dailyStockData.data;
@@ -136,13 +139,32 @@ export async function getServerSideProps({query, req }) {
     
 
     try{
-      const universeData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getpeerlist/${ticker}/${data.stock[0]['universe']}`)
+      const universeData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getpeerlist/${ticker}`)
       universe = universeData.data
-      console.log(universe)
       
     } catch(e){
       console.log("No Universe Data Found", e)
     }
+
+    let metrics;
+
+    try{
+      const metricsData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getkeymetrics/${ticker}`)
+      metrics = metricsData.data
+      
+    } catch(e){
+      console.log("No Metrics Found", e)
+    }
+
+    let priceTargets;
+    try{
+      const targetsData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getpricetargets/${ticker}`)
+      priceTargets = targetsData.data
+      
+    } catch(e){
+      console.log("No Price Targets Found", e)
+    }
+
     
     const postData = getPostData("escape-city-today")
     return {
@@ -159,6 +181,8 @@ export async function getServerSideProps({query, req }) {
         labels,
         prices,
         universe,
+        metrics,
+        priceTargets,
         access_token,
         userIsAuthenticated
         },
@@ -166,15 +190,13 @@ export async function getServerSideProps({query, req }) {
 }
 const StockDetail = (props) => {
   const stockData = props.data.stock[0]
-  const requestedData = useStockData(stockData.symbol)
-  const dailyData = props.dailyData;
+  const requestedData = useStockData(stockData.symbol);
   const symbolPeers = props.universe?.raw_data || null;
   const chartMappings = props.universe?.mappings || null;
-
-
+  const metrics = props.metrics.metrics || null;
+  const priceTargets = props.priceTargets.price_targets || null;
 
   const stockNews = useStockArticles(stockData.symbol)
-  console.log(stockNews)
 
   const chartData = {
     type:'line',
@@ -188,15 +210,17 @@ const StockDetail = (props) => {
     }]
   }
 
-  const {user, loading, addToWatchlist, error, clearErrors, checkStockOnWatchlist, addedStockToWatchlist} = useContext(DjangoAuthContext);
+  const {user, loading, addToWatchlist, error, clearErrors, checkStockOnWatchlist, addedStockToWatchlist, setAddedStockToWatchlist} = useContext(DjangoAuthContext);
+  console.log(addedStockToWatchlist)
 
   const [dataForStock, setDataForStock] = useState(null);
-  const [position, setPosition] = useState(null);
   const [frequency, setFrequency] = useState('30d');
   const [buttonClass, setButtonClass] = useState('outline-primary')
 
   const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
   const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
+
+
 
 
   const {barChartCreated:peBarChart, createChart:peChartCreated} = useBarChart(stockData.symbol, symbolPeers?.symbols, symbolPeers?.pe, chartMappings?.peRatioTTM)
@@ -215,30 +239,24 @@ const StockDetail = (props) => {
  
   useEffect(() => {
     setDataForStock(requestedData ? requestedData[0] : "")
-    checkStockOnWatchlist(stockData.symbol, props.access_token)
-  }, [requestedData])
-
-  
-
-
-
-  useMemo(() => {
-    const fetcher = async (url) => {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getgeocode/${dataForStock?.city}${" "}${dataForStock?.state}`)
-      const resData = res.data
-      setPosition(resData)
-      return resData
+    const isOnProfileWatchlist = async() => {
+      let isOnWatchlist = await checkStockOnWatchlist(stockData.symbol, props.access_token)
+      await setAddedStockToWatchlist(isOnWatchlist)
     }
 
-    fetcher()
+    isOnProfileWatchlist()
     
 
-  }, [dataForStock])
+    
+  }, [requestedData, stockData])
+
+  
 
 
   const addStockToWatchList = () => {
     if(props.userIsAuthenticated){
       addToWatchlist(stockData.symbol, props.access_token)
+      
     } else {
       swal({
         title: `You Must Create An Account In Order To Track Your Watch List. Thank You`,
@@ -271,7 +289,7 @@ const StockDetail = (props) => {
           <Row>
             <Col lg="8">
               <div className="text-block">
-                {stockData.name && <h1>{stockData.name}: {stockData.symbol}</h1>}
+                {stockData.companyName && <h1>{stockData.companyName}: {stockData.symbol}</h1>}
                 {stockData.exchange && (
                   <div className="text-muted text-uppercase mb-4">
                     {stockData.exchange}
@@ -327,7 +345,15 @@ const StockDetail = (props) => {
                   </div>}
                 </React.Fragment>
               )}
+  
+                  {metrics && 
+                  <div className="text-block">
+                    <h4 className="mb-2">Key Metrics: {stockData.symbol}</h4>
+                    <MetricsTable metrics={metrics} />
+                  </div>
+                  }
               <React.Fragment>
+                <h4 className="mb-2">Fundamental Comparison Metrics: {stockData.symbol}</h4>
                   {peBarChart && 
                     <Row className="pt-3">
                       <Col lg="6">
@@ -388,6 +414,27 @@ const StockDetail = (props) => {
                       </Col>
                     </Row>
                   }
+                  <Container>
+                    <div className="text-center pb-lg-4">
+                      <h2 className="mb-5">Analyst Price Targets</h2>
+                    </div>
+                    <Swiper
+                        className="swiper-container-mx-negative pt-1 pb-5"
+                        wrapperClasses="dark-overlay"
+                        priceTargetData
+                        perView={1}
+                        md={2}
+                        lg={3}
+                        xl={4}
+                        data={priceTargets}
+                        loop
+                        speed={1000}
+                        pagination
+                        autoplay={{
+                          delay: 5000,
+                        }}
+                      />
+                  </Container>
               </React.Fragment>
               {roomData.author && (
                 <div className="text-block">
@@ -395,8 +442,8 @@ const StockDetail = (props) => {
                     <div className={`avatar avatar-lg "me-4"`}>
                       <div className="position-relative overflow-hidden rounded-circle h-100 d-flex align-items-center justify-content-center">
                           <Image
-                              src={`https://res.cloudinary.com/dkekvnsiy/image/fetch/${dataForStock?.image}`}
-                              alt={stockData.name}
+                              src={`/api/imagefetcher?url=${encodeURIComponent(dataForStock?.image)}`}
+                              alt={stockData.companyName}
                               width={72}
                               height={72}
                               layout="intrinsic"
@@ -422,7 +469,7 @@ const StockDetail = (props) => {
                     <Row className="mb-5">
                       <Col md="8">
                         <p className="subtitle text-primary">
-                          {headerNews.stockArticlePosts.subTitle} {stockData.name}
+                          {headerNews.stockArticlePosts.subTitle} {stockData.companyName}
                         </p>
                         <h2>{headerNews.stockArticlePosts.title}</h2>
                       </Col>
@@ -449,40 +496,8 @@ const StockDetail = (props) => {
                     </Row>
                   </Container>
                 </section>
-              {position && 
-                <div className="text-block">
-                <h3 className="mb-4">Location</h3>
-                <div className="map-wrapper-300 mb-3">
-                  <Map
-                    className="h-100"
-                    center={[position?.lat, position?.long]}
-                    circlePosition={[position?.lat, position?.long]}
-                    circleRadius={500}
-                    zoom={14}
-                  />
-                </div>
-              </div>
-              }
               
-              <div className="py-5">
-                {addedStockToWatchlist ?
-                  <Button
-                  type="button"
-                  variant="outline-primary"
-                  disabled
-                >
-                  Stock Already Added To Your Watchlist 
-                </Button>
-                :
-              <Button
-                  type="button"
-                  variant="outline-primary"
-                  onClick={addStockToWatchList}
-                >
-                  Add Stock to WatchList
-                </Button>
-                }
-              </div>
+              
             </Col>
             <Col lg="4">
               <div
@@ -541,6 +556,25 @@ const StockDetail = (props) => {
                 </h5>
                 
                 <hr className="my-4" />
+                <div className="py-1">
+                {addedStockToWatchlist ?
+                  <Button
+                  type="button"
+                  variant="outline-primary"
+                  disabled
+                >
+                  Stock Already Added To Your Watchlist 
+                </Button>
+                :
+              <Button
+                  type="button"
+                  variant="outline-primary"
+                  onClick={addStockToWatchList}
+                >
+                  Add Stock to WatchList
+                </Button>
+                }
+              </div>
               </div>
             </Col>
           </Row>

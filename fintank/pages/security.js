@@ -168,7 +168,7 @@ const UserSecurity = () => {
                     Current Session
                   </Badge>
                   <p className="text-sm text-muted">
-                    Ostrava, Moravskoslezsky kraj · {adjustTimeStamp(new Date())} {new Date().toLocaleTimeString()}
+                    {adjustTimeStamp(new Date())} {new Date().toLocaleTimeString()}
                   </p>
                   <Button variant="text" className="text-primary ps-0" type="submit" onClick={logOutHandler}>
                     Log out

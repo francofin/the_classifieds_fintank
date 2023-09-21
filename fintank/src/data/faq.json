@@ -8,7 +8,7 @@
             "questions": [
                 {
                     "title": "Where Does Fintank Get Its Data From?",
-                    "content": "Fintank was created with the retail investor in mind, providing them with tools and the equipment for the investment world. Our data is sourced from Financial Modelling Prep, link found at <a>https://site.financialmodelingprep.com/</a>."
+                    "content": "Fintank was created with the retail investor in mind, providing them with tools and the equipment for the investment world. Our data is sourced from Financial Modelling Prep, link found at <a href='https://site.financialmodelingprep.com/'>Financial Modelling Prep</a> ."
                 },
                 {
                     "title": "How Does Fintank Verify Its Data ?",
@@ -21,6 +21,10 @@
                 {
                     "title": "Missing Data Sources",
                     "content": "Fintank does its best to ensure its data sources are up to date. We run weekly tasks to ensure that data is continuously updated and refreshed to ensure you consitently have accurate resources. In our experience, Equities in EMEA and Emerging Markets may be slightly inconsistent and constantly changing as markets conditions change."
+                },
+                {
+                    "title": "Return Calculations",
+                    "content": "Fintank calculates its data for returns and spreads internally and is based on data provided through the Application Programming Interfaces (APIs)."
                 }
             ]
         },
@@ -51,10 +55,6 @@
                 {
                     "title": "Does Fintank provide a trading platform for individuals to place buy, sell or hold orders>",
                     "content": "Fintank is not an online trading platform, We are working tirelesly to create an all encompasing digitel platform, that allows you to fully manage your portfolio, but currently we provide purely research and quantitative tools to discover new equities for your portfolio."
-                },
-                {
-                    "title": "Why should I buy insurance at the checkout?",
-                    "content": "One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections"
                 }
             ]
         }

@@ -3,16 +3,16 @@ import Link from "next/link"
 import Select from "react-select"
 import sector from "@data/sectors-subsectors.json"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCheck, faTimes, faDownload, faSearch, faAngleLeft, faAngleRight  } from "@fortawesome/free-solid-svg-icons"
-import {Container, Button, ListGroup, Form, InputGroup, Row, Col, Badge, Breadcrumb, Modal} from "react-bootstrap"
+import { faCheck, faTimes,ListGroup, faDownload, faSearch, faAngleLeft, faAngleRight  } from "@fortawesome/free-solid-svg-icons"
+import {Container, Button, Form, InputGroup, Row, Col, Badge, Breadcrumb, Modal} from "react-bootstrap"
 import universe from "@data/universe.json"
 import axios from 'axios';
 import { useRouter } from "next/router"
 import {connect} from 'react-redux';
-import screenerAction from '../../src/actions/screenerAction'
+import screenerAction from '@src/actions/screenerAction'
 import { bindActionCreators } from "redux"
 import StockListPagination from "@components/StockPagination"
-import { useStockNames } from "@hooks/useStockNames"
+
 
 
 export function getAllPostIds() {
@@ -35,12 +35,9 @@ export async function getPostData(slug) {
 }
 
 export async function getServerSideProps({ params, query }) {
-  const postData =await getPostData(query.slug)
-  let slug = params.slug
-  
+  // const parameters= getAllPostIds()
 
-
-let res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/universe-data/${postData.slug}`);
+let res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/universe-data/sptsx`);
 let data = res.data;
 
 const totalStocks = data.count
@@ -59,11 +56,9 @@ return {
     loggedUser: false,
     title: "Fintank Stock Screener",
     data,
-    postData,
     numberOfPages,
     totalStocks,
-    resultsPerPage,
-    slug
+    resultsPerPage
   },
 }
 }
@@ -83,14 +78,16 @@ const Universe = (props) => {
   const [keyWord, setKeyWord] = useState('');
   const [ticker, setTicker] = useState('');
   const [minMarketCap, setMinMarketCap] = useState(0);
-  const [maxMarketCap, setMaxMarketCap] = useState(100000000000000);
-  const [minPrice, setMinPrice] = useState(0.00);
-  const [maxPrice, setMaxPrice] = useState(99999999);
+  const [maxMarketCap, setMaxMarketCap] = useState();
+  const [minPrice, setMinPrice] = useState();
+  const [maxPrice, setMaxPrice] = useState();
   const [showPriceFilter, setShowPriceFilter] = useState(true);
-  const [maxBeta, setMaxBeta] = useState(100);
+  const [maxBeta, setMaxBeta] = useState(0);
   const [minBeta, setMinBeta] = useState(0);
   const [showBetaFilter, setShowBetaFilter] = useState(true);
-  const [minDividend, setMinDividend] = useState(0);
+  const [maxVolume, setMaxVolume] = useState();
+  const [minVolume, setMinVolume] = useState();
+  const [minDividend, setMinDividend] = useState();
   const [country, setCountry] = useState('');
   const [sectorScreener, setSectorScreener] = useState('');
   const [subSectorScreener, setSubSectorScreener] = useState('');
@@ -113,10 +110,6 @@ const Universe = (props) => {
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [searchTicker, setSearchTicker] = useState('')
   const onFocus = () => setSearchFocus(!searchFocus)
-
-
-  const {data:stockNames} = useStockNames();
-  const allStocks = stockNames?.stocks
 
   const router = useRouter();
 
@@ -202,30 +195,26 @@ const Universe = (props) => {
   }
 
 
-  const handleScreenSubmit = (e) => {
+  const handleScreenSubmit = async(e) => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = {
-      "market_cap_max": maxMarketCap ? maxMarketCap : null,
-      "market_cap_min": minMarketCap ? minMarketCap : null,
-      "beta_max": maxBeta ? maxBeta : null,
-      "beta_min": minBeta ? minBeta : null,
-      "beta_max": maxBeta ? maxBeta : null,
-      "beta_min": minBeta ? minBeta : null,
-      "sector": sectorScreener ? sectorScreener : null,
-      "sub_industry": subSectorScreener ? subSectorScreener : null,
-      "dividend_min": minDividend ? minDividend : null,
-      "country": country ? country : null,
-      "price_max": maxPrice ? maxPrice : null,
-      "price_min": minPrice ? minPrice : null,
-    }      
-    props.screenerActionRun(formData);
+    const formData = new FormData();      
+    formData.append("market_cap_max", maxMarketCap ? maxMarketCap : undefined);
+    formData.append("market_cap_min", minMarketCap? minMarketCap : 0);
+    formData.append("beta_max", maxBeta ? maxBeta : undefined);
+    formData.append("beta_min", minBeta ? minBeta : undefined);
+    formData.append("dividend_min", minDividend ? minDividend : undefined);
+    formData.append("sector", sectorScreener ? sectorScreener : undefined);
+    formData.append("sub_industry", subSectorScreener ? subSectorScreener : undefined);
+    formData.append("country", country ? country : undefined);
+    formData.append("price_max", maxPrice ? maxPrice : undefined);
+    formData.append("price_min", minPrice ? minPrice : undefined);
+    const screenedItems = await props.screenerActionRun(formData);
     setLoading(false)
     !loading && window.open("/screener","_blank")
   }
 
-  console.log(props.screenerAction)
 
 
   useEffect(() => {
@@ -246,8 +235,9 @@ const Universe = (props) => {
         setUniverse(sectorScreen)
         return sectorScreen
       }
+      
     }
-
+    console.log(sectorHookFilter)
     handleSelect(sectorHookFilter);
   
   }, [sectorHookFilter, univerData])
@@ -269,13 +259,6 @@ const Universe = (props) => {
 
 
 
-  useEffect(() => {
-    if (['commodities', 'cryptos', 'etfs', ].indexOf(router.query.slug) >=0){
-      setIsEquityRelated(false)
-    }
-  }, [router])
-
-
   
 
   return (
@@ -288,11 +271,11 @@ const Universe = (props) => {
           <Breadcrumb.Item active>Host view</Breadcrumb.Item>
         </Breadcrumb>
         <div className="d-flex justify-content-between align-items-end mb-5">
-          <h1 className="hero-heading mb-0">{props.postData.stockItem.title}</h1>
+          <h1 className="hero-heading mb-0">{`S&P/TSX Composite`}</h1>
         </div>
         <Row>
             <Col xl="5" className="mx-auto">
-              <Form onSubmit={returnQuery}>
+            <Form onSubmit={returnQuery}>
                 <InputGroup>
                   <Form.Control
                     type="text"
@@ -318,26 +301,25 @@ const Universe = (props) => {
             </Col>
           </Row>
 
-        
-          <div className="d-flex justify-content-between align-items-center flex-column flex-lg-row mb-5 mt-5">
-                <div className="me-3">
-                  <p className="mb-3 mb-lg-0">
-                    There are <strong>{props.data.count}</strong> Equities. <i className="text-muted">Some Equities May not be listed</i>
-                  </p>
-                </div>
-                <div className="text-center">
-                  <label className="form-label me-2">Sectors</label>
-                  <Select
-                    id="sector"
-                    options={sector.sectors}
-                    value={sectorHookFilter}
-                    placeholder = {sectorHookFilter}
-                    onChange = {(e) => setSectorFilter(e.value)}
-                    className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
-                    classNamePrefix="selectpicker"
-                  />
-                </div>
-              </div>
+        <div className="d-flex justify-content-between align-items-center flex-column flex-lg-row mb-5 mt-5">
+          <div className="me-3">
+            <p className="mb-3 mb-lg-0">
+              There are <strong>{props.data.count}</strong> Equities. <i className="text-muted">Some Equities May not be listed</i>
+            </p>
+          </div>
+          <div className="text-center">
+            <label className="form-label me-2">Sectors</label>
+            <Select
+              id="sector"
+              options={sector.sectors}
+              value={sectorHookFilter}
+              placeholder = {sectorHookFilter}
+              onChange = {(e) => setSectorFilter(e.value)}
+              className="dropdown bootstrap-select me-3 mb-3 mb-lg-0"
+              classNamePrefix="selectpicker"
+            />
+          </div>
+        </div>
 
         {isEquityRelated && <section className="pb-3">
         <Button onClick={onClickModal}>Launch Stock Screener</Button>
@@ -473,7 +455,7 @@ const Universe = (props) => {
                               onChange={(e) => setSectorScreener(e.target.value)}
                             /> */}
                             <Form.Select aria-label="Default select example" onChange={(e)=>setSectorScreener(e.target.value)}>
-                              <option value="">Select Sector</option>
+                              <option>Select Sector</option>
                               <option value="Technology">Information Technology</option>
                               <option value="Consumer Cyclical">Consumer Cyclical</option>
                               <option value="Consumer Defensive">Consumer Defensive</option>
@@ -504,7 +486,7 @@ const Universe = (props) => {
                             <div className="mb-4">
                               <Form.Label htmlFor="loginUsername">Country</Form.Label>
                               <Form.Select aria-label="Default select example" onChange={(e)=>setCountry(e.target.value)}>
-                              <option value="">Select Country</option>
+                              <option>Select Country</option>
                               {sector.country.map((sub, i) => {
                                 return(
                                   <option key={i} value={sub.value}>{sub.label}</option>
@@ -547,6 +529,7 @@ const Universe = (props) => {
         }
         
         <StockListPagination dataProps={universe} itemsPerPage={limitIndex} />
+       
       </Container>
     </section>
   )

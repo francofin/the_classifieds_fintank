@@ -43,7 +43,7 @@ export async function getServerSideProps({params, query}) {
     const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${postData.slug}`);
     // const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/${topic}`);
     const responseNews = res.data;
-    
+
     return {
         props: {
         nav: {
@@ -190,16 +190,16 @@ const News = (props) => {
               </Col>
               <Col xs="9" lg="4" className="align-self-center mb-3 mb-lg-0">
                 <div className="d-flex align-items-center mb-1 mb-lg-3">
-                  <h2 className="h5 mb-0" dangerouslySetInnerHTML={{__html: `${message.name}`}} />
+                  <h2 className="h5 mb-0" dangerouslySetInnerHTML={{__html: `${message.name ? message.name : message.title}`}} />
                 </div>
-                <p className="text-sm text-muted">{message.category}</p>
+                <p className="text-sm text-muted">{message.category ? message.category : ""}</p>
                 <Badge
                   pill
                   bg={"success-light"}
                   text={"success"}
                   className="p-2"
                 >
-                <p dangerouslySetInnerHTML ={{__html: `${message.provider[0].name}`}} />
+                <p dangerouslySetInnerHTML ={{__html: `${message.provider ? message.provider[0].name : message.site}`}} />
                 </Badge>
                 <Link href={message.url}>
                   <a className="stretched-link" target="_blank"></a>
@@ -208,10 +208,10 @@ const News = (props) => {
               <Col xs="10" lg="7" className="ms-auto">
                 <Row>
                   <Col md="8" className="py-3">
-                    <p className="text-sm mb-0" dangerouslySetInnerHTML ={{__html: `${message.description}`}} />
+                    <p className="text-sm mb-0" dangerouslySetInnerHTML ={{__html: `${message.description ? message.description : message.text}`}} />
                   </Col>
                   <Col md="4" className="text-end py-3">
-                    <p className="text-sm">{adjustTimeStamp(message.datePublished)}</p>
+                    <p className="text-sm">{adjustTimeStamp(message.datePublished ? message.datePublished : message.publishedDate)}</p>
                   </Col>
                   <Link href={message.url}>
                     <a className="stretched-link" target="_blank"></a>

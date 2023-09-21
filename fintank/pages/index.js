@@ -11,14 +11,13 @@ import Guides from "@components/Guides"
 import Instagram from "@components/Instagram"
 import CardPost from "@components/CardPost"
 import NewsPost from "@components/NewsPost"
-import SwiperTestimonial from "@components/SwiperTestimonial"
+// import ApexCharts from 'apexcharts'
+// import ReactApexChart from 'react-apexcharts'
 import data from "@data/index.json"
 import blog from "@data/blog.json"
-import Icon from "@components/Icon"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
 import { useHomeIndex } from "@hooks/useHomeIndex"
-import { useSectorReturnTS } from "@hooks/UseSectorTS"
 import { useSectorData } from "@hooks/UseSectorData"
 import { connect } from "react-redux"
 import { useStockNames } from "@hooks/useStockNames"
@@ -36,6 +35,9 @@ import {
 import { Line } from 'react-chartjs-2';
 import { useIndexData } from "@hooks/useIndexReturns"
 import { useIndexCharter } from "@hooks/useIndexChart"
+import dynamic from 'next/dynamic'
+import { useHeatMap } from "@hooks/useHeatMap"
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 ChartJS.register(
   CategoryScale,
@@ -84,6 +86,7 @@ export async function getStaticProps() {
   const moverData = await fetcher(URL);
   const upgradeData = await fetcher(UPGRADEURL);
   const fmpRes = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/fmp`);
+  const heatMapData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/heat-map`);
   const responseNews = fmpRes.data;
   const sp500 = 'GSPC';
   const nasdaq = 'IXIC';
@@ -98,6 +101,10 @@ export async function getStaticProps() {
   const ten = 'TNX';
   const thirty = 'TYX';
 
+const  heatMapForPage = heatMapData?.data?.heat_map
+
+  
+
   
   return {
     props: {
@@ -111,6 +118,7 @@ export async function getStaticProps() {
       moverData,
       upgradeData,
       responseNews,
+      heatMapForPage,
       sp500,
       nasdaq,
       tsx,
@@ -130,6 +138,7 @@ export async function getStaticProps() {
 const Index = (props) => {
 
   const indexData = useHomeIndex()
+  // const heatMapData = useHeatMap()
   const [frequency, setFrequency] = useState('fifteen')
   const [newFreq, setNewFreq] = useState('')
   const [sectorReturnTS, setSectorReturnTs] = useState({})
@@ -152,7 +161,75 @@ const Index = (props) => {
   const billData = useIndexData(props.bill);
   const tenData = useIndexData(props.ten);
   const thirtyData = useIndexData(props.thirty);
+  // console.log(heatMapData?.data?.heat_map)
 
+
+  const heatMapOptions = {
+          
+    series: [
+      {
+        data: props.heatMapForPage
+      }
+    ],
+    options: {
+      legend: {
+        show: false
+      },
+      chart: {
+        height: 350,
+        type: 'treemap'
+      },
+      title: {
+        text: 'S&P 500 Stock Performance'
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: '12px',
+        },
+        formatter: function(text, op) {
+          return [text, op.value]
+        },
+        offsetY: -4
+      },
+      plotOptions: {
+        treemap: {
+          enableShades: true,
+          shadeIntensity: 0,
+          reverseNegativeShade: true,
+          colorScale: {
+            ranges: [
+              {
+                from: -9999,
+                to: -6,
+                color: '#700b13'
+              },
+              {
+                from: -5.99999,
+                to: -3,
+                color: '#a3343d'
+              },
+              {
+                from: -2.999,
+                to: 0,
+                color: '#f299a0'
+              },
+              {
+                from: 0.001,
+                to: 3,
+                color: '#2f9410'
+              },
+              {
+                from: 3.0001,
+                to: 9999,
+                color: '#376e26'
+              }
+            ]
+          }
+        }
+      }
+    },
+  };
 
 
 
@@ -171,42 +248,9 @@ const Index = (props) => {
 
   let fmpNewsArticles = props.responseNews.data
   const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
-  // const {exportedData, options, exportedVolData} = useSectorReturnTS(frequency)
 
   const {data:stockNames} = useStockNames();
   const allStocks = stockNames?.stocks
-
-  // const adjustFrequencyName = (frequency) => {
-  //   switch(frequency){
-  //     case 'fifteen':
-  //       setCleanFrequencyName('15')
-  //       break;
-  //     case 'thirty':
-  //       setCleanFrequencyName('30')
-  //       break;
-  //     case 'sixty':
-  //       setCleanFrequencyName('60')
-  //       break;
-  //     case 'ninety':
-  //       setCleanFrequencyName('90')
-  //       break;
-
-  //   }
-  // }
-
-
-  // useEffect(() => {
-  //   setSectorReturnTs(exportedData)
-  //   setSectorReturnOptions(options)
-  //   setLoading(true)
-  //   adjustFrequencyName(frequency)
-
-  // }, [frequency])
-
-
-  // const handleFrequencyChange = (e) => {
-  //   setFrequency(e)
-  // }
 
   const randomTickerSearch = () => {
     let randomIndex = Math.floor(Math.random()*allStocks?.length)
@@ -215,7 +259,6 @@ const Index = (props) => {
     router.push(`/stock-data/${randomSymbol}`)
   }
 
-console.log(props)
 
   return (
     <React.Fragment>
@@ -495,7 +538,20 @@ console.log(props)
                 }}
               />
           </Container>
+          <Container fluid>
+              <div className="text-center pb-lg-4">
+                <p className="h2">
+                  S&P Stock Performance
+                </p>
+              </div>
+              <Row>
+              {(typeof window !== 'undefined') &&
+                <ReactApexChart options={heatMapOptions?.options} series={heatMapOptions?.series} type="treemap" height={750} />
+              }
+              </Row>
+          </Container>
         </section>
+
       )}
       {blog.posts && (
         <section className="py-6 bg-gray-100">
@@ -581,19 +637,5 @@ function mapStateToProps(state){
 }
 
 
-// export default Index
-
 export default connect(mapStateToProps)(Index);
 
-
-// export async function getServerSideProps(){
-//   const res = await axios.get(`${process.env.API_URL}/all_indexes/`);
-//   console.log(res)
-//   const data = res.data;
-
-//   return {
-//     props:{
-//       data,
-//     }
-//   }
-// }

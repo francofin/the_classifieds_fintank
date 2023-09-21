@@ -147,91 +147,7 @@ const UserPersonal = () => {
                 </Form>
               </Collapse>
             </div>
-            {/* <div className="text-block">
-              <Row className="mb-3">
-                <Col sm="9">
-                  <h5>Address</h5>
-                </Col>
-                <Col sm="3" className="text-end">
-                  <Button
-                    variant="link"
-                    className="ps-0 text-primary collapsed"
-                    onClick={() => setAddressCollapse(!addressCollapse)}
-                  >
-                    Change
-                  </Button>
-                </Col>
-              </Row>
-              <div className="d-flex text-sm text-muted">
-                <FontAwesomeIcon icon={faAddressBook} className="fa-fw me-2" />
-                <div className="mt-n1">
-                  {data.address.line1}
-                  <br />
-                  {data.address.line2}
-                </div>
-              </div>
-              <Collapse in={addressCollapse}>
-                <Form>
-                  <Row className="pt-4">
-                    <Col md="6" className="mb-4">
-                      <Form.Label htmlFor="street">Street</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="street"
-                        id="street"
-                        defaultValue="123 Main St."
-                      />
-                    </Col>
-                    <Col md="6" className="mb-4">
-                      <Form.Label htmlFor="apt">Apt. (optional)</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="apt"
-                        id="apt"
-                        defaultValue="Apt #7"
-                      />
-                    </Col>
-                    <Col md="6" className="mb-4">
-                      <Form.Label htmlFor="city">City</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="city"
-                        id="city"
-                        defaultValue="San Francisco"
-                      />
-                    </Col>
-                    <Col md="6" className="mb-4">
-                      <Form.Label htmlFor="state">State</Form.Label>
-                      <Select
-                        id="state"
-                        name="state"
-                        options={data.options}
-                        defaultValue={data.options[0]}
-                        className="selectpicker z-index-20"
-                        classNamePrefix="selectpicker"
-                      />
-                    </Col>
-                    <Col md="6" className="mb-4">
-                      <Form.Label htmlFor="zip">Zip</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="zip"
-                        id="zip"
-                        defaultValue="902 10"
-                      />
-                    </Col>
-                  </Row>
-                  <Button
-                    type="submit"
-                    variant="outline-primary"
-                    className=" mb-4"
-                  >
-                    Save address
-                  </Button>
-                </Form>
-              </Collapse>
-            </div> */}
-          </Col>
+        </Col>
           <Col md="6" lg="4" className="ms-lg-auto">
             <Card className="border-0 shadow">
               <Card.Header className="bg-primary-light py-4 border-0">
@@ -250,7 +166,7 @@ const UserPersonal = () => {
               <Card.Body className="p-4">
                 <p className="text-muted text-sm card-text">
                   Fintank Does not releases contact information for users.
-                  <strong>If you wish to share this information with another subscriber, you can decide to share your contact card.</strong>.
+                  <strong>If you wish to share this information with another subscriber, you can decide to share your contact card.</strong>
                 </p>
               </Card.Body>
             </Card>

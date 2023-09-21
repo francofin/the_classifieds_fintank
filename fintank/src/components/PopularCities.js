@@ -61,11 +61,11 @@ const PopularCities = (props) => {
                   </Link>
                     <Card.Header className="mt-3 border-0 py-0 position-relative d-flex align-items-center text-white justify-content-center h-50" style={{background:"rgba(78,78,78,0.5)"}}>
                         <div>
-                          <h6 className="mb-0" dangerouslySetInnerHTML ={{__html: `${story.description.slice(0,100)}....`}} />
+                          <h6 className="mb-0" dangerouslySetInnerHTML ={{__html: `${story.description ?story.description.slice(0,100) : story.text.slice(0,100)}....`}} />
                         </div>
                     </Card.Header>
                     <div className="d-flex align-items-center text-white bold justify-content-center py-6 py-lg-7 position-relative">
-                        <p className="text-uppercase mb-0" dangerouslySetInnerHTML={{__html: `Source: ${story.provider[0].name}`}} />
+                        <p className="text-uppercase mb-0" dangerouslySetInnerHTML={{__html: `Source: ${story.provider ? story.provider[0].name : story.site}`}} />
                     </div>
                 </Card>
               </Col>

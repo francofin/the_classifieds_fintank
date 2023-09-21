@@ -106,9 +106,9 @@ export async function getServerSideProps({query }) {
 
     const ticker = query.ticker
     console.log(ticker)
-    const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/commod-data/${ticker}`);
-    const data = stockRequested.data
-    console.log(data)
+    // const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/commod-data/${ticker}`);
+    // const data = stockRequested.data
+    // console.log(data)
 
     const dailyStockData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailycommoddata/${ticker}`);
     const dailyData = dailyStockData.data;
@@ -126,7 +126,7 @@ export async function getServerSideProps({query }) {
         },
         // title: postData.title,
         postData,
-        data,
+        ticker,
         dailyData,
         labels,
         prices,
@@ -135,8 +135,8 @@ export async function getServerSideProps({query }) {
     }
 }
 const StockDetail = (props) => {
-  const stockData = props.data.stock[0]
-  const requestedData = useCommodData(stockData.symbol)
+  const stockData = props.ticker
+  const requestedData = useCommodData(stockData)
   
 
   const chartData = {

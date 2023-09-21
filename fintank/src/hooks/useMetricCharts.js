@@ -122,7 +122,7 @@ export const useMetricCharts = (dataOne, dataTwo, dataThree, dataFour, dataFive,
                 setDataPack(dataThree && dataThree[indexTwo]?.moving_average)
             } else if(nasdaqDataFourIndexes.includes(comparisonIndex)){
                 setDataPack(dataFour && dataFour[comparisonIndex]?.moving_average)
-            } else if(nasdaqDataFiveIndexes.includes(indcomparisonIndexecomparisonIndexxTwo)){
+            } else if(nasdaqDataFiveIndexes.includes(comparisonIndex)){
                 setDataPack(dataFive && dataFive[comparisonIndex]?.moving_average)
             }
         } else if (slug === 'dow'){

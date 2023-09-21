@@ -11,9 +11,9 @@ export const useBarChart = (ticker, chartTickers, chartData, myFactor) => {
     const peerColor = 'rgba(222, 204, 11, 0.5)';
     const stockColor = 'rgba(46, 46, 46, 0.5)'
     let customBackgroundColor = [];
-    if(myChartLabels){
-        for (let i=0; i<myChartLabels.length; i++){
-            if (myChartLabels[i] === selectStock){
+    if(chartTickers){
+        for (let i=0; i<chartTickers.length; i++){
+            if (chartTickers[i] === ticker){
                 customBackgroundColor.push(stockColor)
             } else{
                 customBackgroundColor.push(peerColor)
@@ -27,7 +27,7 @@ export const useBarChart = (ticker, chartTickers, chartData, myFactor) => {
     }
     
 
-    const customBorderColor = myChartLabels?.map(() => 'rgba(46, 46, 46, 0.5)');
+    const customBorderColor = chartTickers?.map(() => 'rgba(46, 46, 46, 0.5)');
     
     useEffect(() => {
         const drawChart = () => {
@@ -35,13 +35,13 @@ export const useBarChart = (ticker, chartTickers, chartData, myFactor) => {
                 let chart= {
                     labels:myChartLabels,
                     datasets: [
-                        {
+                        {   axis:'y',
                             label: factor,
                             data:myChartData,
                             borderColor:customBorderColor,
-                            backgroundColor:customBackgroundColor
-                        }
-                    ]
+                            backgroundColor:customBackgroundColor,
+                        },
+                    ],
                 }
                 setBarChartCreated(true)
                 return chart

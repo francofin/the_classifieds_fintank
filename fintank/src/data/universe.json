@@ -80,6 +80,16 @@
       "content": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestib...",
       "link": "post",
       "img": "img/photo/photo-1514890547357-a9ee288728e0.jpg"
+    },
+    {
+      "id": "8",
+      "title": "Dow Jones Industrial Average",
+      "slug": "dj",
+      "category": "Guides",
+      "date": "January 16, 2016",
+      "content": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestib...",
+      "link": "post",
+      "img": "img/photo/photo-1514890547357-a9ee288728e0.jpg"
     }
   ]
 }

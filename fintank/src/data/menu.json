@@ -4,17 +4,17 @@
     "link":"/"
   },
   {
-    "title":"About",
+    "title": "Research",
     "dropdown": [
       {
-        "title": "About Fintank",
-        "link": "/about"
-      },
-      {
-        "title": "FAQ",
-        "link": "/faq"
-      }
-    ]
+      "title": "Capital Markets Charts",
+      "link": "/capital-markets"
+    },
+    {
+      "title": "Research Articles",
+      "link": "/research-posts"
+    }
+  ]
   },
   {
     "title":"Major Indexes",
@@ -71,6 +71,12 @@
             {
               "title": "Inflation",
               "link": "/newsarticles/inflation",
+              "parent": "Home",
+              "new": true
+            },
+            {
+              "title": "Crypto News",
+              "link": "/newsarticles/crypto",
               "parent": "Home",
               "new": true
             }
@@ -213,37 +219,42 @@
         "link": "/universe/nasdaq"
       },
       {
+        "title": "Dow Jones",
+        "link": "/universe/dj"
+      },
+      {
         "title": "Canadian Equities",
-        "link": "/universe/sptsx"
+        "link": "/tsx"
       },
       {
         "title": "European Equities",
-        "link": "/universe/eurostocks",
+        "link": "/euro",
         "new": true
       },
       {
         "title": "ETFs",
         "link": "/universe/etfs",
         "new": true
-      },
-      {
-        "title": "All Stocks",
-        "link": "/universe/allstocks",
-        "new": true
       }
     ]
   },
   {
     "title": "Commodities",
-    "link": "/universe/commodities"
+    "link": "/commodity"
   },
+ 
   {
-    "title": "Crypto",
-    "link": "/universe/cryptos"
-  },
-  {
-    "title": "Research",
-    "link": "/research-posts"
+    "title":"About",
+    "dropdown": [
+      {
+        "title": "About Fintank",
+        "link": "/about"
+      },
+      {
+        "title": "FAQ",
+        "link": "/faq"
+      }
+    ]
   },
   {
     "title": "Sign up",

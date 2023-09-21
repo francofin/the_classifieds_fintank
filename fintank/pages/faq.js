@@ -52,7 +52,7 @@ const Faq = () => {
               const groupedQuestions =
                 group.questions && groupByN(2, group.questions)
               return (
-                <div key={group.title} className="py-4">
+                <div key={group.title} className="py-4" >
                   <h2 className="mb-5 text-primary">{group.title}</h2>
                   <Row>
                     {groupedQuestions.map((questions) => (
@@ -60,9 +60,9 @@ const Faq = () => {
                         {questions.map((question) => (
                           <React.Fragment key={question.title}>
                             <h5>{question.title}</h5>
-                            <p className="text-muted mb-4">
-                              {question.content}
-                            </p>
+                            <p className="text-muted mb-4" dangerouslySetInnerHTML={{ __html: question.content }} />
+                              {/* {question.content}
+                            </p> */}
                           </React.Fragment>
                         ))}
                       </Col>
