@@ -13,7 +13,49 @@ import { isAuthenticatedUser } from '@utils/isAuthenticated';
 import axios from 'axios';
 import { useUserWatchList } from "@hooks/useWatchList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useWatchListCovar } from "@hooks/useWatchListCOvar";
+import { useWatchListLineChart } from "@hooks/useWatchListLineChart";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  BarElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line, Bar, Scatter } from 'react-chartjs-2';
 
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+export const barOptions = {
+  indexAxis: 'y',
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom',
+    },
+    title: {
+      display: false,
+      text: 'Comparative Exposures',
+    },
+  },
+};
 
 export async function getServerSideProps({req}){
   const access_token = req.cookies.access;
@@ -33,13 +75,31 @@ export async function getServerSideProps({req}){
                 Authorization: `Bearer ${access_token}`
             },
         });
+
+  const userAnalysis = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/userwatchlistanalysis/`,{
+    headers: {
+        Authorization: `Bearer ${access_token}`
+    },
+  });
+
+  const userYTDAnalysis = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/userytdanalysis/`,{
+    headers: {
+        Authorization: `Bearer ${access_token}`
+    },
+  });
+
+  const watchlistAnalysis = userAnalysis.data;
     
   const watchList = res.data;
+
+  const ytdAnalysis = userYTDAnalysis.data;
 
     return {
       props: {
         access_token,
         watchList,
+        watchlistAnalysis,
+        ytdAnalysis,
         nav: {
           light: true,
           classes: "shadow",
@@ -51,7 +111,7 @@ export async function getServerSideProps({req}){
     }
 }
 
-const UserProfile = ({access_token, watchList}) => {
+const UserProfile = ({access_token, watchList, watchlistAnalysis, ytdAnalysis}) => {
   const {user, loading, logout, updated, imageData,
     clearErrors, updateUser, setUpdated, avatar,
     error, handleImageUpload, handleImageRemove, getUserWatchlist} = useContext(DjangoAuthContext);
@@ -89,9 +149,13 @@ const UserProfile = ({access_token, watchList}) => {
 
 
   const watchListCalls = useUserWatchList(watchList);
+  const ytdWatchlistAnalysis = ytdAnalysis?.data
 
-  console.log(watchListCalls);
+  console.log(ytdWatchlistAnalysis);
 
+  const {chartCreated:volChartUp, createChart:volChart} = useWatchListCovar(ytdWatchlistAnalysis?.contr_to_vol, ytdWatchlistAnalysis?.stocks)
+  const {chartCreated:retChartUp, createChart:retChart} = useWatchListCovar(ytdWatchlistAnalysis?.contr_to_ret, ytdWatchlistAnalysis?.stocks)
+  const {chartCreated:createdChart, createChart:chartData, chartOptions} = useWatchListLineChart(ytdWatchlistAnalysis?.dates, ytdWatchlistAnalysis?.prices)
 
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -234,8 +298,33 @@ const adjustTimeStamp = (date) => {
                     <li key={item}>{item}</li>
                   ))}
                 </Card.Text>
+                <div
+              style={{ top: "100px" }}
+              className="p-4 shadow ms-lg-4 rounded sticky-top"
+            >
+              <p className="text-muted text-center">
+                <span className="text-primary h5">
+                  Price Performance Since Adding to Watchlist
+                </span>{" "}
+              </p>
+              {watchlistAnalysis && watchlistAnalysis?.data?.map((stock, i) => {
+                return (<div key={i}>
+                        <hr className="my-1" />
+                        <h5 className="text-sm text-center">
+                        {stock.symbol}: {Number(stock?.return_since_addition) > 0 ? 
+                        <span className="text-sm text-center" style={{color:'green'}}>
+                        {Number(stock?.return_since_addition).toFixed(2)}%
+                        </span> : 
+                        <span className="text-sm text-center" style={{color:'red'}}>
+                        {Number(stock?.return_since_addition).toFixed(2)}%
+                        </span>}
+                        </h5>
+                      </div>)
+              })}
+              </div>
               </Card.Body>
             </Card>
+            
           </Col>
           <Col lg="9" className="ps-lg-5">
             <h1 className="hero-heading mb-0">{`Welcome Back @${user?.first_name}!`}</h1>
@@ -246,66 +335,6 @@ const adjustTimeStamp = (date) => {
                 </Badge>
               </p>
               <div dangerouslySetInnerHTML={{ __html: data.content }} />
-              <Button onClick={onClickModal}>Customize Profile</Button>
-              <Modal show={modal} onHide={onClickModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title className="text-uppercase" as="h6">
-                    {`@${user?.first_name}'s Banner`}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p className="text-muted">
-                    <strong>Customize your Banner and Avatar. Set your banner to a goal you wish to achieve.</strong>
-                    </p>
-                    <div className="w-100 py-2 px-md-2 px-xxl-2 position-relative">
-                    <Form className="form-validate" onSubmit={handleSubmit}>
-                      <div {...getRootProps({ className: "dropzone dz-clickable" })}>
-                          <input {...getInputProps()}/>
-                  
-                          <div className="dz-message text-muted">
-                          <p>What are you investing towards?</p>
-                          <p>
-                              <span className="note">
-                              (Click to Upload{" "}
-                              <strong>Your Aspirational Goal</strong>.)
-                              </span>
-                          </p>
-                          </div>
-                      </div>
-                    {user?.profile_picture_cs ?
-                      <div className="position-relative h-100">
-                      <p>Current Banner</p>
-                      <Row>
-                          <Col lg="9">
-                            <Image
-                            src={user?.profile_picture_cs}
-                            alt=""
-                            width={154}
-                            height={154}
-                            layout="fixed"
-                            />
-                            </Col>
-                            <Col lg="3">
-                              <Button onClick={removeImage} >Remove Image</Button>
-                            </Col>
-                        </Row>
-                    </div> : 
-                    ''
-                    }
-                      
-                      <div className="justify-content-end py-3">
-                        <Button type='submit'>Save changes</Button>
-                      </div>
-                      
-                    </Form>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer className="justify-content-end">
-                    <Button variant="outline-muted" onClick={onClickModal}>
-                    Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
             </div>
             <div className="text-block">
               <h4 className="mb-5">{`@${user?.first_name}'s WatchList`}</h4>
@@ -352,8 +381,8 @@ const adjustTimeStamp = (date) => {
                           <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                             <h6 className="label-heading">Change</h6>
                             <p className="text-sm fw-bold">%{stock.changesPercentage}</p>
-                            <h6 className="label-heading">Trading Range</h6>
-                            <p className="text-sm fw-bold">${stock.range}</p>
+                            <h6 className="label-heading">Price/Earnings</h6>
+                            <p className="text-sm fw-bold">{stock.pe}</p>
                           </Col>
                           <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                             <h6 className="label-heading">Day High</h6>
@@ -387,6 +416,43 @@ const adjustTimeStamp = (date) => {
               </ListGroup>
               : ''}
               </Row>
+              <Row>
+              {(volChartUp && retChartUp) &&
+               
+                <React.Fragment>
+                  <h4 className="mb-5">WatchList Analyis</h4>
+                  <Row className="pt-3">
+                    <Col lg="6">
+                        <div>
+                          <h5 className="mb-3">Contribution To Watchlist Volatility </h5>
+                        </div>
+                      <Bar options={barOptions} data={volChart} height={400} width={300}/>
+                    </Col>
+                    <Col lg="6">
+                        <div>
+                          <h5 className="mb-3">Contribution to Watchlist Return</h5>
+                        </div>
+                      <Bar options={barOptions} data={retChart} height={400} width={300}/>
+                    </Col>
+                  </Row>
+                </React.Fragment>}
+                </Row>
+                <Row>
+                {createdChart && 
+                  <section className="py-4 bg-gray-100">
+                    <div className="text-block">
+                        <h6 className="mb-3">{`@${user?.first_name}'s WatchList Price Moves`}</h6>
+                      </div>
+                      <Container>
+                    
+                        <Row className="pt-3">
+                          <Col lg="12">
+                            <Line options={chartOptions} data={chartData} height={100} width={200}/>
+                          </Col>
+                        </Row>
+                    </Container>
+                  </section>}
+                </Row>
             </div>
             {/* <div className="text-block">
               <Reviews data={data.reviews} />
