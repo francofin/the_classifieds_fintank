@@ -13,7 +13,7 @@ import { isAuthenticatedUser } from '@utils/isAuthenticated';
 import axios from 'axios';
 import { useUserWatchList } from "@hooks/useWatchList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useWatchListCovar } from "@hooks/useWatchListCOvar";
+import { useWatchListCovar } from "@hooks/useCovarWatchList";
 import { useWatchListLineChart } from "@hooks/useWatchListLineChart";
 import {
   Chart as ChartJS,
