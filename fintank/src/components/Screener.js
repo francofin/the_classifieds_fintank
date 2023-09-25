@@ -36,7 +36,6 @@ export async function getStaticProps() {
 
 const Screener = (props) => {
 
-  console.log(props.screenerResults)
   let screenResults = props.screenerResults
   const stockLength = screenResults.length
   const [universe, setUniverse] = useState(screenResults)
@@ -58,7 +57,7 @@ const Screener = (props) => {
       }
       
     }
-    console.log(sectorHookFilter)
+
     handleSelect(sectorHookFilter);
   
   }, [sectorHookFilter, screenResults])

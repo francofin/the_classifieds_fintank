@@ -29,7 +29,6 @@ const Header = (props) => {
  
   // highlight not only active dropdown item, but also its parent, i.e. dropdown toggle
   const highlightDropdownParent = () => {
-    console.log("Initial Route", Router.route);
     menu.map((item) => {
       item.dropdown &&
         item.dropdown.map((dropdownLink) => {

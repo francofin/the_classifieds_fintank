@@ -41,7 +41,6 @@ export async function getStaticProps() {
 
 const KnowledgeBase = (props) => {
   const articles = props.data.indexes
-  console.log(articles)
   return (
     <React.Fragment>
         <section className="d-flex align-items-center dark-overlay">

@@ -13,8 +13,6 @@ const CommodListPagination = ({ itemsPerPage, dataProps }) => {
 
   const router = useRouter();
 
-  console.log(router)
-
 
   const endOffset = itemOffset + itemsPerPage;
 //   const currentItems = stocksShown.slice(itemOffset, endOffset);

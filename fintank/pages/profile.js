@@ -130,7 +130,6 @@ const UserProfile = ({access_token, watchList, watchlistAnalysis, ytdAnalysis}) 
   const [analysisLink, setAnalysisLink] = useState("/stock-data/[ticker]");
   const [linkAs, setLinkAs] = useState(`/stock-data/`)
   const router = useRouter();
-  console.log(user)
 
   const [modal, setModal] = useState(false)
 
@@ -150,8 +149,6 @@ const UserProfile = ({access_token, watchList, watchlistAnalysis, ytdAnalysis}) 
 
   const watchListCalls = useUserWatchList(watchList);
   const ytdWatchlistAnalysis = ytdAnalysis?.data
-
-  console.log(ytdWatchlistAnalysis);
 
   const {chartCreated:volChartUp, createChart:volChart} = useWatchListCovar(ytdWatchlistAnalysis?.contr_to_vol, ytdWatchlistAnalysis?.stocks)
   const {chartCreated:retChartUp, createChart:retChart} = useWatchListCovar(ytdWatchlistAnalysis?.contr_to_ret, ytdWatchlistAnalysis?.stocks)

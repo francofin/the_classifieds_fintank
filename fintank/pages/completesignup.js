@@ -77,9 +77,6 @@ const CompleteSignup = () => {
 
         try{
           const result = await signInWithEmailLink(auth, email, window.location.href);
-          if (result){
-            console.log(result);
-          }
          
           if(result.user.emailVerified){
               window.localStorage.removeItem('fintankSignInEmail');

@@ -255,7 +255,6 @@ const Index = (props) => {
   const randomTickerSearch = () => {
     let randomIndex = Math.floor(Math.random()*allStocks?.length)
     let randomSymbol = allStocks[randomIndex].symbol
-    console.log(randomSymbol);
     router.push(`/stock-data/${randomSymbol}`)
   }
 

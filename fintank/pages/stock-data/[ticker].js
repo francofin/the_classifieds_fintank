@@ -211,7 +211,6 @@ const StockDetail = (props) => {
   }
 
   const {user, loading, addToWatchlist, error, clearErrors, checkStockOnWatchlist, addedStockToWatchlist, setAddedStockToWatchlist} = useContext(DjangoAuthContext);
-  console.log(addedStockToWatchlist)
 
   const [dataForStock, setDataForStock] = useState(null);
   const [frequency, setFrequency] = useState('30d');

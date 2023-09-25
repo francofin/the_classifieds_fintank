@@ -105,7 +105,6 @@ export const options = {
 export async function getServerSideProps({query }) {
 
     const ticker = query.ticker
-    console.log(ticker)
     // const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/commod-data/${ticker}`);
     // const data = stockRequested.data
     // console.log(data)
@@ -159,9 +158,6 @@ const StockDetail = (props) => {
   const {chartLabels, chartReturns} = useStockReturns(props.dailyData,frequency)
   const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
   
-
-
-  console.log(useStockChart(frequency, chartLabels,chartReturns))
 
   useEffect(() => {
     setDataForStock(requestedData ? requestedData[0] : "")

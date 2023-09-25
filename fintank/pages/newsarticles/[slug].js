@@ -68,7 +68,6 @@ const News = (props) => {
     // const newsNoImages = newsDataWithImages.data.filter((news, i) => !news.image)
     const imagesForBanner = bannerImages.bannerImages
     
-    console.log(newsNoImages)
     const [randomImage, setRandomImage] = useState(0)
 
     const topicImages = useImagesSelector(props.topic)

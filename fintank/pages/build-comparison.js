@@ -87,9 +87,6 @@ const ChartArea = (props) => {
     const onFocus = () => setSearchFocus(!searchFocus);
     const router = useRouter();
     
-
-    console.log(dataOne);
-    console.log(dataTwo);
     
 
     const {indexChartCreated:defaultChartUp, createIndexChart:defaultChart, chartOptions:defaultOptions} = useChartUpdater(loadedIndexes,dataOne?.data?.prices,dataOne?.data?.dates, dataTwo?.data?.prices,dataTwo?.data?.dates);
@@ -176,7 +173,6 @@ const ChartArea = (props) => {
     }
 
     const removeIndex = (stock) => {
-      console.log(stock)
       const updatedIndexes = loadedIndexes.filter((item) => item != stock);
       setLoadedIndexes(updatedIndexes);
     }

@@ -13,8 +13,6 @@ const StockListPagination = ({ itemsPerPage, dataProps }) => {
 
   const router = useRouter();
 
-  console.log(router.query.slug)
-
 
   const endOffset = itemOffset + itemsPerPage;
 //   const currentItems = stocksShown.slice(itemOffset, endOffset);

@@ -211,7 +211,6 @@ export const djComparisons = ['NSEI', 'TX60_TS', 'FCHI', 'NYITR', 'IBEX', 'BSESN
   export async function getServerSideProps({query, req }) {
 
     let slug = query.slug
-    console.log("My Slug", slug)
     const stockValuations = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getstockvaluations/${slug}`);
     const valuationData = stockValuations.data;
 
@@ -333,31 +332,26 @@ const IndexDetail = (props) => {
 
 
   function onIndexChange (index){
-    console.log(index)
     setLoadedIndexName(index.label);
     setLoadedIndex(index.value);
   }
 
   function onReturnIndexChange (index){
-    console.log(index)
     setReturnLoadedIndexName(index.label);
     setreturnLoadedIndex(index.value);
   }
 
   function onBetaIndexChange (index){
-    console.log(index)
     setBetaLoadedIndexName(index.label);
     setBetaLoadedIndex(index.value);
   }
 
   function onVolIndexChange (index){
-    console.log(index)
     setVolLoadedIndexName(index.label);
     setVolLoadedIndex(index.value);
   }
 
   function onSharpeIndexChange (index){
-    console.log(index)
     setRRLoadedIndexName(index.label);
     setRRLoadedIndex(index.value);
   }

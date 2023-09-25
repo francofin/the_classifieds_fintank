@@ -57,7 +57,6 @@ const DjangoAuthProvider = ({children}) => {
     }, [user])
 
     const login = async ({username, password}) => {
-        console.log("I ran");
         
         try {
             setLoading(true);
@@ -266,7 +265,6 @@ const DjangoAuthProvider = ({children}) => {
                     Authorization: `Bearer ${access_token}`
                 },
             })
-            console.log(res.data)
 
             if(res.data){
                 setLoading(false)

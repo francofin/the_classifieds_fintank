@@ -23,7 +23,7 @@ const Layout = (pageProps) => {
   return (
     <SSRProvider>
       <div
-        style={{ paddingTop: pageProps.noPaddingTop ? "0" : "72px" }}
+        style={{ paddingTop: pageProps.noPaddingTop ? "0" : "100px" }}
         className={pageProps.className}
       >
         <Head>

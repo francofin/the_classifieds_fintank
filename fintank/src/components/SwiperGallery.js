@@ -82,7 +82,7 @@ useEffect(() => {
         }}
       >
         {data.map((item, index) => (
-          <SwiperSlide key={index} className="img-gallery">
+          <SwiperSlide key={index} className="img-gallery" style={{ cursor: "pointer" }}>
             <Image
               src={`/images/Research/${item.img}`}
               width={1350}

@@ -130,7 +130,6 @@ const Universe = (props) => {
         (suggestion['symbol'].toLowerCase().indexOf(userInput.toLowerCase()) > -1) || (suggestion['name'].toLowerCase().indexOf(userInput.toLowerCase()) > -1)
     );
 
-    console.log(suggestionFilter)
 
     // setActiveSuggestion(0)
     setFilteredSuggestions(suggestionFilter)
@@ -236,7 +235,6 @@ const Universe = (props) => {
       }
       
     }
-    console.log(sectorHookFilter)
     handleSelect(sectorHookFilter);
   
   }, [sectorHookFilter, univerData])

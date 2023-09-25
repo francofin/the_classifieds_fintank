@@ -58,8 +58,8 @@ const UserSecurity = () => {
   const successCallBack = (position) => {
     console.log(position)
   }
-  console.log(navigator.geolocation.getCurrentPosition(successCallBack))
-  console.log(navigator)
+  // console.log(navigator.geolocation.getCurrentPosition(successCallBack))
+  // console.log(navigator)
 
   return (
     <section className="py-5">

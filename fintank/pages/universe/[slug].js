@@ -137,7 +137,6 @@ const Universe = (props) => {
         (suggestion['symbol'].toLowerCase().indexOf(userInput.toLowerCase()) > -1) || (suggestion['name'].toLowerCase().indexOf(userInput.toLowerCase()) > -1)
     );
 
-    console.log(suggestionFilter)
 
     // setActiveSuggestion(0)
     setFilteredSuggestions(suggestionFilter)
@@ -225,7 +224,6 @@ const Universe = (props) => {
     !loading && window.open("/screener","_blank")
   }
 
-  console.log(props.screenerAction)
 
 
   useEffect(() => {

@@ -122,7 +122,6 @@ export const useEquitySpreadCharter = (index, indexData, frequency) => {
     useEffect(() => {
 
         setSelectedFrequency(frequency)
-        console.log(frequency, "From Hook")
         
         if (selectedFrequency === 'Quarterly'){
             setMyChartLabels(indexData?.quarterly?.dates);

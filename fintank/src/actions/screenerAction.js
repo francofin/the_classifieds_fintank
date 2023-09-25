@@ -3,14 +3,10 @@ import swal from 'sweetalert';
 
 
 const getScreenResults = async(screenData) => {
-    console.log(screenData)
     const res = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/screen/`, screenData);
-    console.log(res)
     try{
         
-        console.log(res)
         if(res.data){
-            console.log(res.data)
             swal({
                 title: `Screen Run Successfully`,
                 icon: "success",

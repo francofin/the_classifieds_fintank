@@ -14,7 +14,6 @@ const S3 = new AWS.S3(awsConfig);
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async(req, res) => {
-    console.log("From API", req);
     try{
         const {imageKey} = req.body;
         const params ={

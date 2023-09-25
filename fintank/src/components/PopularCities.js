@@ -8,9 +8,7 @@ import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
 import marketImages from "@data/markets.json"
 
 const PopularCities = (props) => {
-  console.log("stories", props.blockStories)
-  console.log("images", props.topicImage)
-
+ 
   const getRandomIndexNumber = () => {
     let imageDataLength = props.topicImage.length;
     let randomIndex = Math.floor(Math.random() * imageDataLength)

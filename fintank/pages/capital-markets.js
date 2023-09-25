@@ -235,8 +235,6 @@ const CapitalMarketIndicators = (props) =>{
 
   
 
-  console.log(economicData)
-
   return (
     <React.Fragment>
       <section className="hero-home">

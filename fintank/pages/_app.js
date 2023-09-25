@@ -4,7 +4,6 @@ import { DjangoAuthProvider} from '@context/authContext';
 import { Provider } from "react-redux";
 import { wrapper, theStore, persistor } from "@src/store";
 import { PersistGate } from 'redux-persist/integration/react'
-
 import "swiper/css/bundle"
 // swiper core styles
 import "swiper/css"

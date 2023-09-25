@@ -109,7 +109,6 @@ export const options = {
 export async function getServerSideProps({query }) {
 
     const ticker = query.ticker
-    console.log(ticker)
     const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/etf-data/${ticker}`);
     const data = stockRequested.data
 
@@ -180,8 +179,6 @@ const StockDetail = (props) => {
 
   }, [requestedETFData])
 
-
-  console.log(useSectorBarChart(etfData?.sectorsList, stockData.name))
 
   const {barChartCreated:sectorBarChart, createChart:sectorChartCreated} = useSectorBarChart(etfData?.sectorsList, stockData.name);
 

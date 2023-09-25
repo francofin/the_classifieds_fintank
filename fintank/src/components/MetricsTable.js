@@ -13,10 +13,9 @@ import {
 
 
 const MetricsTable = (props) => (
-    <section className="py-6">
     <Container>
       <Row>
-        <Table striped responsive="xs" hover className="text-gray-700">
+        <Table striped responsive hover className="text-gray-700 text-sm">
           <tbody>
             <tr>
               <th className="py-4 align-middle">Date</th>
@@ -346,7 +345,6 @@ const MetricsTable = (props) => (
         </Table>
       </Row>
     </Container>
-  </section>
   )
   
   export default MetricsTable

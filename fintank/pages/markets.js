@@ -47,7 +47,6 @@ const KnowledgeBase = (props) => {
         setAllIndexData(indexData)
     }, [indexData])
 
-    console.log("All Data", allIndexData)
 
   return (
     <React.Fragment>

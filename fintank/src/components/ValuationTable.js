@@ -24,7 +24,7 @@ const ValuationsTable = (props) => {
     <section className="py-2">
     <Container>
       <Row>
-        <Table striped responsive="xs" hover className="text-gray-700">
+        <Table striped responsive hover className="text-gray-700 text-sm">
           <tbody>
           
               <tr>

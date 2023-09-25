@@ -46,7 +46,6 @@ const UserPersonal = () => {
   const [phoneNumber, setPhoneNumber] = useState("+42055544466")
 
 
-  console.log(userProfile)
 
   return (
     <section className="py-5">
