@@ -414,7 +414,7 @@ const adjustTimeStamp = (date) => {
               : ''}
               </Row>
               <Row>
-              {(volChartUp && retChartUp) &&
+              {(volChartUp && retChartUp && watchListCalls) &&
                
                 <React.Fragment>
                   <h4 className="mb-5">WatchList Analyis</h4>
@@ -435,7 +435,7 @@ const adjustTimeStamp = (date) => {
                 </React.Fragment>}
                 </Row>
                 <Row>
-                {createdChart && 
+                {(createdChart && watchListCalls) &&
                   <section className="py-4 bg-gray-100">
                     <div className="text-block">
                         <h6 className="mb-3">{`@${user?.first_name}'s WatchList Price Moves`}</h6>

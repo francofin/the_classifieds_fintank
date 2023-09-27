@@ -9,7 +9,7 @@ export const useWatchListLineChart = (labels, data) => {
     const [createChart, setCreateChart] = useState(null);
 
     const dataSets = []
-    for(let i=0; i<data.length; i++){
+    for(let i=0; i<data?.length; i++){
         dataSets.push({
             label: data[i].symbol,
             data: data[i].prices,
