@@ -42,6 +42,10 @@
       {
         "title": "TSX Composite",
         "link": "/indexes/tsx"
+      },
+      {
+        "title": "ETF Performance",
+        "link": "/etf-performance"
       }
     ]
   },
