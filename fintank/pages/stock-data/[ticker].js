@@ -1,22 +1,15 @@
 import React, { useEffect, useState, useMemo, useContext } from "react";
-import Link from "next/link";
-import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import NewsPost from "@components/NewsPost"
 import {Container,Row,Col,Form,Button, ToggleButton, Badge, Overlay} from "react-bootstrap";
 import Swiper from "@components/Swiper"
-import UseWindowSize from "@hooks/UseWindowSize";
 import roomData from "@data/stock-research.json";
 import blog from "@data/blog.json";
 import SwiperGallery from "@components/SwiperGallery";
 import Image from "@components/CustomImage";
 import MetricsTable from "@components/MetricsTable";
-import Gallery from "@components/Gallery";
-import Map from "@components/Map";
 import { DjangoAuthContext } from '@context/authContext';
 import { useStockData } from "@hooks/useStockData";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons"
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
 import { useStockChart } from "@hooks/useStockCharts";

@@ -79,7 +79,7 @@ export const indexLineOptions = {
   }
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
   const URL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/movers/`;
   const UPGRADEURL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getmarketupgradesdowngrades/`;

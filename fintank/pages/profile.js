@@ -3,8 +3,8 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useDropzone } from "react-dropzone";
 import { DjangoAuthContext } from '@context/authContext';
-import { Container, Row, Col, Card, Badge, Modal, Button, Form, ListGroup } from "react-bootstrap"
-import { faCheck, faTimes, faDownload, faSearch, faAngleLeft, faAngleRight  } from "@fortawesome/free-solid-svg-icons"
+import { Container, Row, Col, Card, Badge, Modal, Button, Form, ListGroup, Nav } from "react-bootstrap"
+import { faCheck, faTimes, faDownload, faSearch, faAngleLeft, faAngleRight, faHeart } from "@fortawesome/free-solid-svg-icons"
 import data from "@data/user-profile.json"
 import CardRoom from "@components/CardRoom"
 import Icon from "@components/Icon"
@@ -70,6 +70,13 @@ export async function getServerSideProps({req}){
     }
   }
 
+  let userIsAuthenticated;
+    if(access_token){
+      userIsAuthenticated = await isAuthenticatedUser(access_token);
+    }else{
+      userIsAuthenticated =null
+    }
+
   const res = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/get_portfolio/`,{
             headers: {
                 Authorization: `Bearer ${access_token}`
@@ -88,11 +95,14 @@ export async function getServerSideProps({req}){
     },
   });
 
+  
   const watchlistAnalysis = userAnalysis.data;
     
   const watchList = res.data;
 
   const ytdAnalysis = userYTDAnalysis.data;
+
+  console.log(ytdAnalysis)
 
     return {
       props: {
@@ -100,6 +110,7 @@ export async function getServerSideProps({req}){
         watchList,
         watchlistAnalysis,
         ytdAnalysis,
+        userIsAuthenticated,
         nav: {
           light: true,
           classes: "shadow",
@@ -111,7 +122,7 @@ export async function getServerSideProps({req}){
     }
 }
 
-const UserProfile = ({access_token, watchList, watchlistAnalysis, ytdAnalysis}) => {
+const UserProfile = ({access_token, watchList, watchlistAnalysis, ytdAnalysis, userIsAuthenticated}) => {
   const {user, loading, logout, updated, imageData,
     clearErrors, updateUser, setUpdated, avatar,
     error, handleImageUpload, handleImageRemove, getUserWatchlist} = useContext(DjangoAuthContext);
@@ -213,7 +224,18 @@ const adjustTimeStamp = (date) => {
   return new Date(date).toLocaleDateString(undefined, options)
 }
 
-
+// const removeStock = (symbol) => {
+//   if(userIsAuthenticated){
+//     removeFromWatchlist(symbol, access_token)
+    
+//   } else {
+//     swal({
+//       title: `You Must Create An Account In Order To Track Your Watch List. Thank You`,
+//       icon: "warning",
+//   });
+//   }
+  
+// }
 
   return (
     <React.Fragment>
@@ -401,17 +423,40 @@ const adjustTimeStamp = (date) => {
                               />
                               {adjustTimeStamp(stock.earningsAnnouncement)}
                             </span>
+                            
                             }
                             <br className="d-none d-lg-block" />
                           </Col>
+                          
                         </Row>
                       </Col>
                     </Row>
                   </ListGroup.Item>
+                    
                 </Link>
+                
               ))}
               </ListGroup>
               : ''}
+              {/* {watchListCalls && (
+                  <React.Fragment>
+                    <h5>Click to Remove Stock From Watchlist</h5>
+                    <Nav className="nav-pills-custom">
+                      {watchListCalls?.map((stock, index) => (
+                        <Nav.Item key={stock.symbol}>
+                          <Button
+                            variant="link"
+
+                            >
+                            <Nav.Link>
+                              {stock.symbol}
+                            </Nav.Link>
+                          </Button>
+                        </Nav.Item>
+                      ))}
+                    </Nav>
+                  </React.Fragment>
+                )} */}
               </Row>
               <Row>
               {(volChartUp && retChartUp && watchListCalls) &&

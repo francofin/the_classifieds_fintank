@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import Link from "next/link";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
@@ -15,7 +15,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from 'axios';
 import { useStockReturns } from "@hooks/useStockReturns";
 import { useStockChart } from "@hooks/useStockCharts";
-
+import { isAuthenticatedUser } from '@utils/isAuthenticated';
+import { DjangoAuthContext } from '@context/authContext';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -106,7 +107,7 @@ export const options = {
 };
 
 
-export async function getServerSideProps({query }) {
+export async function getServerSideProps({query, req}) {
 
     const ticker = query.ticker
     const stockRequested = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/etf-data/${ticker}`);
@@ -117,6 +118,16 @@ export async function getServerSideProps({query }) {
     const dailyData = dailyStockData.data;
     const labels = dailyData.dates;
     const prices = dailyData.prices;
+
+    let userIsAuthenticated
+
+    const access_token = req.cookies.access || '';
+    if(access_token){
+      userIsAuthenticated = await isAuthenticatedUser(access_token);
+    }else{
+      userIsAuthenticated =null
+    }
+    
 
 
     
@@ -132,8 +143,10 @@ export async function getServerSideProps({query }) {
         postData,
         data,
         dailyData,
+        access_token,
         labels,
         prices,
+        userIsAuthenticated
         },
     }
 }
@@ -154,6 +167,8 @@ const StockDetail = (props) => {
     }]
   }
 
+  const {user, loading, addToWatchlist, error, clearErrors, checkStockOnWatchlist, addedStockToWatchlist, setAddedStockToWatchlist} = useContext(DjangoAuthContext);
+
   const [dataForStock, setDataForStock] = useState(null);
 
   const [frequency, setFrequency] = useState('30d');
@@ -167,11 +182,23 @@ const StockDetail = (props) => {
   const {chartCreated, createChart} = useStockChart(frequency, chartLabels,chartReturns);
   
 
-
-
   useEffect(() => {
     setDataForStock(requestedData ? requestedData[0] : "")
-  }, [requestedData])
+    const isOnProfileWatchlist = async() => {
+      let isOnWatchlist = await checkStockOnWatchlist(stockData.symbol, props.access_token)
+      await setAddedStockToWatchlist(isOnWatchlist)
+    }
+
+    isOnProfileWatchlist()
+    
+
+    
+  }, [requestedData, stockData])
+
+
+  // useEffect(() => {
+  //   setDataForStock(requestedData ? requestedData[0] : "")
+  // }, [requestedData])
 
   useEffect(() => {
  
@@ -210,6 +237,19 @@ const StockDetail = (props) => {
       return () => clearTimeout(timer)
     }
   }, [range])
+
+  const addStockToWatchList = () => {
+    if(props.userIsAuthenticated){
+      addToWatchlist(stockData.symbol, props.access_token)
+      
+    } else {
+      swal({
+        title: `You Must Create An Account In Order To Track Your Watch List. Thank You`,
+        icon: "warning",
+    });
+    }
+    
+  }
 
 
   const changeFrequency = (frequency) => {
@@ -371,6 +411,25 @@ const StockDetail = (props) => {
                 </h5>
                 
                 <hr className="my-4" />
+                <div className="py-1">
+                {addedStockToWatchlist ?
+                  <Button
+                  type="button"
+                  variant="outline-primary"
+                  disabled
+                >
+                  Stock Already Added To Your Watchlist 
+                </Button>
+                :
+              <Button
+                  type="button"
+                  variant="outline-primary"
+                  onClick={addStockToWatchList}
+                >
+                  Add ETF to WatchList
+                </Button>
+                }
+              </div>
               </div>
             </Col>
           </Row>
