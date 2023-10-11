@@ -256,33 +256,33 @@ const DjangoAuthProvider = ({children}) => {
         
     }
 
-    // const removeFromWatchlist = async (ticker, access_token) => {
+    const removeFromWatchlist = async (ticker, access_token) => {
         
-    //     try{
-    //         setLoading(true)
-    //         const res = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/deletefromwatchlist/${ticker}/`, 
-    //         {},
-    //         {
-    //             headers: {
-    //                 Authorization: `Bearer ${access_token}`
-    //             },
-    //         });
-    //         if(res.data.added === true){
-    //             setLoading(false)
-    //             setAddedStockToWatchlist(false)
-    //             swal({
-    //                 title: `Stock Removed From Watch List`,
-    //                 icon: "success",
-    //             });
+        try{
+            setLoading(true)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/deletefromwatchlist/${ticker}/`, 
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+            });
+            if(res.data.added === true){
+                setLoading(false)
+                setAddedStockToWatchlist(false)
+                swal({
+                    title: `Stock Removed From Watch List`,
+                    icon: "success",
+                });
                 
-    //         }
+            }
             
-    //     } catch(error) {
-    //         setLoading(false)
-    //         setError(error.response && (error.response.data.detail || error.response.data.error))
-    //     }
+        } catch(error) {
+            setLoading(false)
+            setError(error.response && (error.response.data.detail || error.response.data.error))
+        }
         
-    // }
+    }
 
     const checkStockOnWatchlist = async (ticker, access_token) => {
         try{
@@ -367,7 +367,7 @@ const DjangoAuthProvider = ({children}) => {
             setUpdated,
             getCurrentProfile,
             getUserWatchlist,
-            // removeFromWatchlist,
+            removeFromWatchlist,
             addToWatchlist,
             checkStockOnWatchlist,
             addedStockToWatchlist,

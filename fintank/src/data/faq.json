@@ -1,7 +1,7 @@
 {
     "title": "F.A.Q.s",
     "subtitle": "Frequently asked questions",
-    "content": "As we continue to learn, grow and become more knowledgable on all things finance, here a few simple defintions and thoughts to get you started, motivated and integrated with the professionals.",
+    "content": "As we continue to learn, grow and become more knowledegable on all things finance, here are a few simple definitions and thoughts to get you started, motivated and integrated with the professionals.",
     "questionGroups": [
         {
             "title": "Data Sources",
@@ -12,7 +12,7 @@
                 },
                 {
                     "title": "How Does Fintank Verify Its Data ?",
-                    "content": "While There are many different data sources for financial data all with different methodologies for measuring and calculating many of the metrics available, Fintank compares its data from its providers with other data sources to ensure that data is in line with estimates of the wider investment community. "
+                    "content": "While there are many different data sources for financial data all with different methodologies for measuring and calculating many of the metrics available, Fintank compares its data from its providers with other data sources to ensure that data is in line with estimates of the wider investment community. "
                 },
                 {
                     "title": "Raw Data Source",
@@ -20,7 +20,7 @@
                 },
                 {
                     "title": "Missing Data Sources",
-                    "content": "Fintank does its best to ensure its data sources are up to date. We run weekly tasks to ensure that data is continuously updated and refreshed to ensure you consitently have accurate resources. In our experience, Equities in EMEA and Emerging Markets may be slightly inconsistent and constantly changing as markets conditions change."
+                    "content": "Fintank does its best to ensure its data sources are up to date. We run weekly tasks to ensure that data is continuously updated and refreshed to ensure you consistently have accurate resources. In our experience, Equities in EMEA and Emerging Markets may be slightly inconsistent and constantly changing as market conditions change."
                 },
                 {
                     "title": "Return Calculations",
@@ -37,11 +37,11 @@
                 },
                 {
                     "title": "Does Fintank Post Any Opinion Articles",
-                    "content": "As Fintank continues to grow, Research articles, knowledge topics and opinion pieces will be posted to enhance and support the broad investment community. Currently, Fintank only maintains our proprietary quantitative analysi tools and continues to develop these."
+                    "content": "As Fintank continues to grow, Research articles, knowledge topics and opinion pieces will be posted to enhance and support the broad investment community. Currently, Fintank only maintains our proprietary quantitative analysis tools and continues to develop these."
                 },
                 {
                     "title": "Does Fintank Allow Advertisers?",
-                    "content": "Please feel free to inquire as to using our platform as a tool to advertise, Fintank currently has limited online real estate for advertisers as we prefer to take an investor and market first approach to use our platform for stock and market news and analysis. As we continue to grow, we encourage advertisers and sponsors, this is a crucial part of the market whcih spreads the messag eof the latest technilogies, innovations for Small and Medium enterprises alike."
+                    "content": "Please feel free to inquire as to using our platform as a tool to advertise, Fintank currently has limited online real estate for advertisers as we prefer to take an investor and market first approach to use our platform for stock and market news and analysis. As we continue to grow, we encourage advertisers and sponsors, this is a crucial part of the market which spreads the message of the latest technologies and innovations for Small and Medium enterprises alike."
                 }
             ]
         },
@@ -53,8 +53,8 @@
                     "content": "Fintank's stock user model, does not track data at the individuals user level, but aggregate user level and will publish stock and ownership reports quarterly and annually, as to stock count ownership, viewership and average length of time in a users portfolio. Diligence is a community wide effort."
                 },
                 {
-                    "title": "Does Fintank provide a trading platform for individuals to place buy, sell or hold orders>",
-                    "content": "Fintank is not an online trading platform, We are working tirelesly to create an all encompasing digitel platform, that allows you to fully manage your portfolio, but currently we provide purely research and quantitative tools to discover new equities for your portfolio."
+                    "title": "Does Fintank provide a trading platform for individuals to place buy, sell or hold orders.",
+                    "content": "Fintank is not an online trading platform. We are working tirelessly to create an all encompassing digital platform, that allows you to fully manage your portfolio, but currently, we provide purely research and quantitative tools to discover new equities for your portfolio."
                 }
             ]
         }

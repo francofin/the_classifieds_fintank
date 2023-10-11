@@ -47,8 +47,8 @@
                 "link": "/universe/commodities"
             },
             {
-                "title": "Crypto",
-                "link": "/universe/cryptos"
+                "title": "ETF Performance",
+                "link": "/etf-performance"
             },
             {
                 "title": "Index Performance",
@@ -63,15 +63,24 @@
         "links": [
             {
                 "title": "Market news",
-                "link": "/news/markets"
+                "link": "/newsarticles/markets"
             },
             {
                 "title": "US News",
-                "link": "/news/etaunido"
+                "link": "/newsarticles/etaunido"
             },
             {
                 "title": "Technology",
-                "link": "/news/tech"
+                "link": "/newsarticles/tech"
+            },
+            {
+              "title": "Economy",
+              "link": "/newsarticles/economy",
+              "parent": "Home"
+            },
+            {
+              "title": "China",
+              "link": "/newsarticles/china"
             }
         ],
         "lg": "2",

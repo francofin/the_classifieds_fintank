@@ -102,7 +102,7 @@ export async function getServerSideProps({req}){
 
   const ytdAnalysis = userYTDAnalysis.data;
 
-  console.log(ytdAnalysis)
+
 
     return {
       props: {
@@ -124,7 +124,7 @@ export async function getServerSideProps({req}){
 
 const UserProfile = ({access_token, watchList, watchlistAnalysis, ytdAnalysis, userIsAuthenticated}) => {
   const {user, loading, logout, updated, imageData,
-    clearErrors, updateUser, setUpdated, avatar,
+    clearErrors, updateUser, setUpdated, avatar,removeFromWatchlist,
     error, handleImageUpload, handleImageRemove, getUserWatchlist} = useContext(DjangoAuthContext);
 
   
@@ -224,18 +224,19 @@ const adjustTimeStamp = (date) => {
   return new Date(date).toLocaleDateString(undefined, options)
 }
 
-// const removeStock = (symbol) => {
-//   if(userIsAuthenticated){
-//     removeFromWatchlist(symbol, access_token)
+const removeStock = (e) => {
+  if(userIsAuthenticated){
+    removeFromWatchlist(e.target.text, access_token)
+    // console.log(e.target.text)
     
-//   } else {
-//     swal({
-//       title: `You Must Create An Account In Order To Track Your Watch List. Thank You`,
-//       icon: "warning",
-//   });
-//   }
+  } else {
+    swal({
+      title: `You Must Create An Account In Order To Track Your Watch List. Thank You`,
+      icon: "warning",
+  });
+  }
   
-// }
+}
 
   return (
     <React.Fragment>
@@ -438,7 +439,7 @@ const adjustTimeStamp = (date) => {
               ))}
               </ListGroup>
               : ''}
-              {/* {watchListCalls && (
+              {watchListCalls && (
                   <React.Fragment>
                     <h5>Click to Remove Stock From Watchlist</h5>
                     <Nav className="nav-pills-custom">
@@ -446,7 +447,8 @@ const adjustTimeStamp = (date) => {
                         <Nav.Item key={stock.symbol}>
                           <Button
                             variant="link"
-
+                            key={stock.symbol}
+                            onClick={(e) => removeStock(e)}
                             >
                             <Nav.Link>
                               {stock.symbol}
@@ -456,7 +458,7 @@ const adjustTimeStamp = (date) => {
                       ))}
                     </Nav>
                   </React.Fragment>
-                )} */}
+                )}
               </Row>
               <Row>
               {(volChartUp && retChartUp && watchListCalls) &&

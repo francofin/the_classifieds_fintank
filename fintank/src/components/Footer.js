@@ -113,7 +113,7 @@ const Footer = () => {
                       ))}
                     </ul>
                   )}
-                  {item.form && (
+                  {/* {item.form && (
                     <Form id="newsletter-form" action="#">
                       <InputGroup className="input-group mb-3">
                         <Form.Control
@@ -135,7 +135,7 @@ const Footer = () => {
                         </Button>
                       </InputGroup>
                     </Form>
-                  )}
+                  )} */}
                 </Col>
               ))}
           </Row>
