@@ -261,6 +261,10 @@
     ]
   },
   {
+    "title": "Stock Charter",
+    "link": "/build-comparison"
+  },
+  {
     "title": "Sign up",
     "link": "/signup",
     "hideToLoggedUser": true

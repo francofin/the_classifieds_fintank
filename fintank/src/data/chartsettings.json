@@ -15,6 +15,74 @@
             "value": "Global"
         }
     ],
+    "frequency": [
+        {
+            "label": "1 Minute",
+            "value": "1min"
+        },
+        {
+            "label": "5 Minute",
+            "value": "5min"
+        },
+        {
+            "label": "10 Minute",
+            "value": "10min"
+        },
+        {
+            "label": "30 Minute",
+            "value": "30min"
+        },
+        {
+            "label": "1 Hour",
+            "value": "1hr"
+        },
+        {
+            "label": "3 Hour",
+            "value": "3hr"
+        },
+        {
+            "label": "1 Day",
+            "value": "1day"
+        }
+    ],
+    "technicalPeriods": [
+        {
+            "label": "1 Period",
+            "value": "1"
+        },
+        {
+            "label": "9 Period",
+            "value": "9"
+        },
+        {
+            "label": "10 Period",
+            "value": "10"
+        },
+        {
+            "label": "13 Period",
+            "value": "13"
+        },
+        {
+            "label": "20 Period",
+            "value": "20"
+        },
+        {
+            "label": "26 Period",
+            "value": "26"
+        },
+        {
+            "label": "50 Period",
+            "value": "50"
+        },
+        {
+            "label": "3 Period",
+            "value": "3hr"
+        },
+        {
+            "label": "1 Period",
+            "value": "1day"
+        }
+    ],
     "economicdata": [
         {
             "label": "GDP",
