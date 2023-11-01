@@ -7,7 +7,6 @@ const CardTeam = (props) => {
   const data = props.data
   return (
     <Card className="border-0 hover-animate bg-transparent">
-      <Link href={data.link}>
         <a className="position-relative">
           <div className="card-img-top team-img">
             <Image
@@ -26,7 +25,6 @@ const CardTeam = (props) => {
             }`}
           />
         </a>
-      </Link>
       <Card.Body className="team-body text-center">
         <Card.Title as="h6">{data.title}</Card.Title>
         <Card.Subtitle as="p" className="text-muted text-xs text-uppercase">

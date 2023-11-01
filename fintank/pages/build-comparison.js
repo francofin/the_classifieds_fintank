@@ -15,6 +15,7 @@ import { faArrowRight, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { useNewCandleStick } from "@hooks/useNewCandleSticks";
 import { useStockNames } from "@hooks/useStockNames"
 import { useRouter } from "next/router"
+import Icon from "@components/Icon"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -798,6 +799,63 @@ const submitADLHandler = async(e) => {
             </Row>
           </Container>
         </section>
+        <section className="py-1 bg-gray-100">
+          <Container>
+            <div className="text-center pb-lg-4">
+              <p className="subtitle text-secondary">
+                {`Chart Equities With Ease Using our Technical Overlays`}
+              </p>
+              <h2 className="mb-3">{`The Fintank's Charting Platform`}</h2>
+            </div>
+            <Row>
+            <Col
+                lg="4"
+                className="mb-1 mb-lg-0 text-center"
+              >
+                <div className="px-0 px-lg-3">
+                  <div className="icon-rounded bg-primary-light mb-3">
+                    <Icon
+                      icon='earth-globe-1'
+                      className="text-primary w-2rem h-2rem"
+                    />
+                  </div>
+                  <h3 className="h5">Select Equities</h3>
+                  <p className="text-muted">Choose Equities from the search bar in the selection secion below and hit search.</p>
+                </div>
+              </Col>
+              <Col
+                lg="4"
+                className="mb-1 mb-lg-0 text-center"
+              >
+                <div className="px-0 px-lg-3">
+                  <div className="icon-rounded bg-primary-light mb-3">
+                    <Icon
+                      icon='time-1'
+                      className="text-primary w-2rem h-2rem"
+                    />
+                  </div>
+                  <h3 className="h5">Select A Frequency to Chart</h3>
+                  <p className="text-muted">Daily frequency shows data for the past 120 business days, If an intraday period is selected, you must select a from date and data shown to most recent data point. This frequency is utilized in the technical indicators.</p>
+                </div>
+              </Col>
+              <Col
+                lg="4"
+                className="mb-1 mb-lg-0 text-center"
+              >
+                <div className="px-0 px-lg-3">
+                  <div className="icon-rounded bg-primary-light mb-3">
+                    <Icon
+                      icon='compass-1'
+                      className="text-primary w-2rem h-2rem"
+                    />
+                  </div>
+                  <h3 className="h5">Select An Indicator to plot</h3>
+                  <p className="text-muted">Indicators include SMA, EMA, WMA, DEMA, TEMA, ADX, A/D Line, MACD and RSI. This is based on the frequency selected.</p>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </section>
         <Container fluid className="py-5 px-lg-5">
           <Row>
             <Col lg="3" className="pt-3">
@@ -930,7 +988,7 @@ const submitADLHandler = async(e) => {
                     variant="link"
                     className="btn-collapse ps-0 text-primary"
                   >
-                    {filterCollapse ? "Close Time Series" : "Time Series Data"}
+                    {filterCollapse ? "Minimize" : "Select Equities To Chart"}
                   </Button>
                   <Collapse in={filterLineCollapse}>
                         <div>
