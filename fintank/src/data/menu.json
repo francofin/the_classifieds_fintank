@@ -4,11 +4,15 @@
     "link":"/"
   },
   {
-    "title": "Research",
+    "title": "Market and Factor Research",
     "dropdown": [
       {
       "title": "Capital Markets Charts",
       "link": "/capital-markets"
+    },
+    {
+      "title": "Factor Performance",
+      "link": "/factor-performance"
     },
     {
       "title": "Research Articles",

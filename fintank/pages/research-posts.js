@@ -85,15 +85,6 @@ const KnowledgeBase = (props) => {
                   to Finance, Programming, mostly in python, Quantitative Investing, Data Science and Different areas of Macro
                   Economic Analysis.
                 </p>
-                <InputGroup>
-                  <Form.Control
-                    type="text"
-                    placeholder="Search Something ... "
-                  />
-                  <Button type="submit">
-                    <FontAwesomeIcon icon={faSearch} />
-                  </Button>
-                </InputGroup>
               </Form>
             </Col>
           </Row>

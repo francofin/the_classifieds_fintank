@@ -15,7 +15,7 @@ import { useRouter } from "next/router"
 import bannerImages from "@data/banner.json"
 import { useImagesSelector } from "@hooks/UseImageSelect"
 import { useNewsGenerator } from "@hooks/useNewsGenerator"
-
+import { selectImages } from "@utils/imageSelect"
 
 export function getAllTopicIds() {
   return topics.posts.map((post) => ({
@@ -70,7 +70,7 @@ const News = (props) => {
     
     const [randomImage, setRandomImage] = useState(0)
 
-    const topicImages = useImagesSelector(props.topic)
+    const topicImages = selectImages(props.topic)
 
     useEffect(() => {
       let randomIndex = Math.floor(Math.random()*imagesForBanner.length)

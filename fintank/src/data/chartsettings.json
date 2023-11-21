@@ -45,6 +45,50 @@
             "value": "1day"
         }
     ],
+    "markets": [
+        {
+            "label": "S&P 500",
+            "value": "sp"
+        },
+        {
+            "label": "Dow Jones Industrial Average",
+            "value": "dj"
+        },
+        {
+            "label": "NASDAQ 100",
+            "value": "nas"
+        },
+        {
+            "label": "Russell 2000",
+            "value": "r2"
+        },
+        {   
+            "label": "S&P/TSX Composite",
+            "value": "tsx"
+        },
+        {
+            "label": "MSCI World Index",
+            "value": "msci"
+        }
+    ],
+    "factorPeriods": [
+        {
+            "label": "1 Month Returns",
+            "value": "1M"
+        },
+        {
+            "label": "3 Month Returns",
+            "value": "3M"
+        },
+        {
+            "label": "6 Month Returns",
+            "value": "6M"
+        },
+        {
+            "label": "Year to Date Returns",
+            "value": "ytd"
+        }
+    ],
     "technicalPeriods": [
         {
             "label": "1 Period",
