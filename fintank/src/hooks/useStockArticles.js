@@ -15,7 +15,7 @@ export const useStockArticles = (ticker) => {
         `${process.env.NEXT_PUBLIC_FMP_STOCK_NEWS}${ticker}&limit=50&apikey=${process.env.NEXT_PUBLIC_FMP_API}`,
         fetcher,
         {
-            refreshInterval: 300000000
+            refreshInterval: 3000000000
         }
     )
 

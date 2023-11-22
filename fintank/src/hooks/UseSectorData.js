@@ -18,7 +18,7 @@ export const useSectorData = () => {
         URL,
         fetcher,
         {
-            refreshInterval: 3000000
+            refreshInterval: 3000000000000
         }
     )
 

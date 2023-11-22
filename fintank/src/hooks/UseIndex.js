@@ -18,7 +18,7 @@ export const useIndex = () => {
         URL,
         fetcher,
         {
-            refreshInterval: 20000
+            refreshInterval: 2000000
         }
     )
 

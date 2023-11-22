@@ -83,23 +83,26 @@ export async function getServerSideProps() {
 
   const URL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/movers/`;
   const UPGRADEURL = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getmarketupgradesdowngrades/`;
+  const dailyIndexData = `${process.env.NEXT_PUBLIC_FINTANK_API_URL}/getdailyindexdatabulk/`;
   const moverData = await fetcher(URL);
   const upgradeData = await fetcher(UPGRADEURL);
   const fmpRes = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/newsarticles/fmp`);
   const heatMapData = await axios.get(`${process.env.NEXT_PUBLIC_FINTANK_API_URL}/heat-map`);
+  const indexRequest = await fetcher(dailyIndexData);
+  const indexData = indexRequest.data;
   const responseNews = fmpRes.data;
-  const sp500 = 'GSPC';
-  const nasdaq = 'IXIC';
-  const tsx = 'GSPTSE';
-  const ftse = 'FTSE';
-  const r2000 = 'RUT';
-  const dji ='DJI';
-  const vix = 'VIX';
-  const japan = 'N225';
-  const hongkong = 'HSI';
-  const bill = 'IRX';
-  const ten = 'TNX';
-  const thirty = 'TYX';
+  // const sp500 = 'GSPC';
+  // const nasdaq = 'IXIC';
+  // const tsx = 'GSPTSE';
+  // const ftse = 'FTSE';
+  // const r2000 = 'RUT';
+  // const dji ='DJI';
+  // const vix = 'VIX';
+  // const japan = 'N225';
+  // const hongkong = 'HSI';
+  // const bill = 'IRX';
+  // const ten = 'TNX';
+  // const thirty = 'TYX';
 
 const  heatMapForPage = heatMapData?.data?.heat_map
 
@@ -119,18 +122,19 @@ const  heatMapForPage = heatMapData?.data?.heat_map
       upgradeData,
       responseNews,
       heatMapForPage,
-      sp500,
-      nasdaq,
-      tsx,
-      ftse,
-      r2000,
-      dji,
-      vix,
-      japan,
-      hongkong, 
-      bill, 
-      ten,
-      thirty
+      indexData
+      // sp500,
+      // nasdaq,
+      // tsx,
+      // ftse,
+      // r2000,
+      // dji,
+      // vix,
+      // japan,
+      // hongkong, 
+      // bill, 
+      // ten,
+      // thirty
     },
   }
 }
@@ -139,29 +143,11 @@ const Index = (props) => {
 
   const indexData = useHomeIndex()
   // const heatMapData = useHeatMap()
-  const [frequency, setFrequency] = useState('fifteen')
-  const [newFreq, setNewFreq] = useState('')
-  const [sectorReturnTS, setSectorReturnTs] = useState({})
-  const [sectorReturnOptions, setSectorReturnOptions] = useState({})
-  const [sectorVolTS, setSectorVolTs] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [fmpData, setFmpData] = useState([])
-  const [cleanFrequencyName, setCleanFrequencyName] = useState('')
   const {data:sectorData} = useSectorData()
   const router = useRouter();
-  const sp500Data = useIndexData(props.sp500);
-  const nasData = useIndexData(props.nasdaq);
-  const tsxData = useIndexData(props.tsx);
-  const r2Data = useIndexData(props.r2000);
-  const djiData = useIndexData(props.dji);
-  const ftseData = useIndexData(props.ftse);
-  const vixData = useIndexData(props.vix);
-  const japanData = useIndexData(props.japan);
-  const hongkongData = useIndexData(props.hongkong);
-  const billData = useIndexData(props.bill);
-  const tenData = useIndexData(props.ten);
-  const thirtyData = useIndexData(props.thirty);
-  // console.log(heatMapData?.data?.heat_map)
+  const allIndexPrices = props.indexData
+
+  console.log(allIndexPrices)
 
 
   const heatMapOptions = {
@@ -233,18 +219,18 @@ const Index = (props) => {
 
 
 
-  const {indexChartCreated:sp500ChartCreated, createIndexChart:sp500IndexChart, indexName:sp500Name} = useIndexCharter(props.sp500, sp500Data?.index_dates, sp500Data?.index_prices)
-  const {indexChartCreated:nasdaqChartCreated, createIndexChart:nasdaqIndexChart, indexName:nasdaqName} = useIndexCharter(props.nasdaq, nasData?.index_dates, nasData?.index_prices)
-  const {indexChartCreated:dowJonesChartCreated, createIndexChart:dowJonesIndexChart, indexName:dowJonesName} = useIndexCharter(props.dji, djiData?.index_dates, djiData?.index_prices)
-  const {indexChartCreated:russellChartCreated, createIndexChart:russellIndexChart, indexName:russellName} = useIndexCharter(props.r2000, r2Data?.index_dates, r2Data?.index_prices)
-  const {indexChartCreated:tsxChartCreated, createIndexChart:tsxIndexChart, indexName:tsxName} = useIndexCharter(props.tsx, tsxData?.index_dates, tsxData?.index_prices)
-  const {indexChartCreated:ftseChartCreated, createIndexChart:ftseIndexChart, indexName:ftseName} = useIndexCharter(props.ftse, ftseData?.index_dates, ftseData?.index_prices)
-  const {indexChartCreated:vixChartCreated, createIndexChart:vixIndexChart, indexName:vixName} = useIndexCharter(props.vix, vixData?.index_dates, vixData?.index_prices)
-  const {indexChartCreated:japanChartCreated, createIndexChart:japanIndexChart, indexName:japanName} = useIndexCharter(props.japan, japanData?.index_dates, japanData?.index_prices)
-  const {indexChartCreated:hkChartCreated, createIndexChart:hkIndexChart, indexName:hkName} = useIndexCharter(props.hongkong, hongkongData?.index_dates, hongkongData?.index_prices)
-  const {indexChartCreated:billChartCreated, createIndexChart:billIndexChart, indexName:billName} = useIndexCharter(props.bill, billData?.index_dates, billData?.index_prices)
-  const {indexChartCreated:tenChartCreated, createIndexChart:tenIndexChart, indexName:tenName} = useIndexCharter(props.ten, tenData?.index_dates, tenData?.index_prices)
-  const {indexChartCreated:thirtyChartCreated, createIndexChart:thirtyIndexChart, indexName:thirtyName} = useIndexCharter(props.thirty, thirtyData?.index_dates, thirtyData?.index_prices)
+  const {indexChartCreated:sp500ChartCreated, createIndexChart:sp500IndexChart, indexName:sp500Name} = useIndexCharter('GSPC', allIndexPrices?.sp500?.dates, allIndexPrices?.sp500?.prices)
+  const {indexChartCreated:nasdaqChartCreated, createIndexChart:nasdaqIndexChart, indexName:nasdaqName} = useIndexCharter('IXIC', allIndexPrices?.nas?.dates, allIndexPrices?.nas?.prices)
+  const {indexChartCreated:dowJonesChartCreated, createIndexChart:dowJonesIndexChart, indexName:dowJonesName} = useIndexCharter('DJI', allIndexPrices?.dj?.dates, allIndexPrices?.dj?.prices)
+  const {indexChartCreated:russellChartCreated, createIndexChart:russellIndexChart, indexName:russellName} = useIndexCharter('RUT', allIndexPrices?.rus?.dates, allIndexPrices?.rus?.prices)
+  const {indexChartCreated:tsxChartCreated, createIndexChart:tsxIndexChart, indexName:tsxName} = useIndexCharter('GSPTSE', allIndexPrices?.tsx?.dates, allIndexPrices?.tsx?.prices)
+  const {indexChartCreated:ftseChartCreated, createIndexChart:ftseIndexChart, indexName:ftseName} = useIndexCharter('FTSE', allIndexPrices?.ftse?.dates, allIndexPrices?.ftse?.prices)
+  const {indexChartCreated:vixChartCreated, createIndexChart:vixIndexChart, indexName:vixName} = useIndexCharter('VIX', allIndexPrices?.vix?.dates, allIndexPrices?.vix?.prices)
+  const {indexChartCreated:japanChartCreated, createIndexChart:japanIndexChart, indexName:japanName} = useIndexCharter('N225', allIndexPrices?.nik?.dates, allIndexPrices?.nik?.prices)
+  const {indexChartCreated:hkChartCreated, createIndexChart:hkIndexChart, indexName:hkName} = useIndexCharter('HSI', allIndexPrices?.hsi?.dates, allIndexPrices?.hsi?.prices)
+  const {indexChartCreated:billChartCreated, createIndexChart:billIndexChart, indexName:billName} = useIndexCharter('IRX', allIndexPrices?.bill?.dates, allIndexPrices?.bill?.prices)
+  const {indexChartCreated:tenChartCreated, createIndexChart:tenIndexChart, indexName:tenName} = useIndexCharter('TNX', allIndexPrices?.ten?.dates, allIndexPrices?.ten?.prices)
+  const {indexChartCreated:thirtyChartCreated, createIndexChart:thirtyIndexChart, indexName:thirtyName} = useIndexCharter('TYX', allIndexPrices?.thirty?.dates, allIndexPrices?.thirty?.prices)
 
   let fmpNewsArticles = props.responseNews.data
   const noNewsLanesArticles = fmpNewsArticles.filter((article, i) => (article.site!=="newslanes") && (article.image!==null) )
@@ -621,10 +607,6 @@ const Index = (props) => {
           </Container>
         </section>
       )}
-      {/* <Guides /> */}
-      {/* <LastMinute greyBackground /> */}
-      
-
     </React.Fragment>
   )
 }
