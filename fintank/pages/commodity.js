@@ -29,7 +29,7 @@ export async function getPostData(slug) {
       }
     }
   }
-}a
+}
 
 export async function getServerSideProps({ params, query }) {
   // const parameters= getAllPostIds()

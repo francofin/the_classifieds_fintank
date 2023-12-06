@@ -11,7 +11,7 @@
 # next.js
 /.next/
 /out/
-commands.txt
+
 # production
 /build
 
@@ -35,4 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+commands.txt
 fireBaseConfig

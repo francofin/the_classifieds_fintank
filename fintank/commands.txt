@@ -5,3 +5,8 @@ run_redis = docker run -it --rm -p 6379:6379 "cfe-redis"
   //   "title": "Data Charting",
   //   "link": "/build-comparison"
   // },
+
+  {
+    "title": "Commodities",
+    "link": "/commodity"
+  },
