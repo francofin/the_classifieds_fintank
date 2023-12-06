@@ -11,7 +11,7 @@ const CardTeam = (props) => {
           <div className="card-img-top team-img">
             <Image
               src={`/images/homeImages/${data.img}`}
-              alt={data.title}
+              alt="Stock and Market Research"
               width={408}
               height={420}
               layout="responsive"

@@ -413,10 +413,7 @@ const StockPerformances = (props) => {
             <section className="py-1 bg-gray-100">
               <Container>
                 <div className="text-center pb-lg-4">
-                  <p className="subtitle text-secondary">
-                    {`Chart Equities With Ease Using our Technical Overlays`}
-                  </p>
-                  <h2 className="mb-3">{`The Fintank's Charting Platform`}</h2>
+                  <h2 className="mb-3">{`Stock Performance By Factor`}</h2>
                 </div>
                 <Row>
                 <Col

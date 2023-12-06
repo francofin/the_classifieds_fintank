@@ -165,7 +165,6 @@ const UserPersonal = () => {
               <Card.Body className="p-4">
                 <p className="text-muted text-sm card-text">
                   Fintank does not releases contact information for users.
-                  <strong> If you wish to share this information with another subscriber, you can decide to share your contact card.</strong>
                 </p>
               </Card.Body>
             </Card>
