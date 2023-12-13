@@ -19,12 +19,13 @@ export const useBarChart = (ticker, chartTickers, chartData, myFactor) => {
                 customBackgroundColor.push(peerColor)
             }
         };
-    } else{
-        swal({
-            title: `Just a Heads Up, no Peer Data Currently In our Database For This Equity. We Continue to Develop our capabilites to better Serve you.`,
-            icon: "warning",
-        });
-    }
+    } 
+    // else{
+    //     swal({
+    //         title: `Just a Heads Up, no Peer Data Currently In our Database For This Equity. We Continue to Develop our capabilites to better Serve you.`,
+    //         icon: "warning",
+    //     });
+    // }
     
 
     const customBorderColor = chartTickers?.map(() => 'rgba(46, 46, 46, 0.5)');
