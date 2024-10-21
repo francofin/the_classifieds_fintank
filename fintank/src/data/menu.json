@@ -4,28 +4,19 @@
     "link":"/"
   },
   {
-    "title": "Market and Factor Research",
-    "dropdown": [
-      {
-      "title": "Capital Markets Charts",
-      "link": "/capital-markets"
-    },
-    {
-      "title": "Factor Performance",
-      "link": "/factor-performance"
-    },
-    {
-      "title": "Research Articles",
-      "link": "/research-posts"
-    }
-  ]
-  },
-  {
-    "title":"Major Indexes",
+    "title":"Market Performance",
     "dropdown": [
       {
         "title": "Index Performance",
         "link": "/markets"
+      },
+      {
+        "title": "ETF Performance",
+        "link": "/etf-performance"
+      },
+      {
+        "title": "Crypto Performance",
+        "link": "/crypto-performance"
       },
       {
         "title": "S&P 500",
@@ -46,12 +37,25 @@
       {
         "title": "TSX Composite",
         "link": "/indexes/tsx"
-      },
-      {
-        "title": "ETF Performance",
-        "link": "/etf-performance"
       }
     ]
+  },
+  {
+    "title": "Market and Factor Research",
+    "dropdown": [
+      {
+      "title": "Capital Markets Charts",
+      "link": "/capital-markets"
+    },
+    {
+      "title": "Factor Performance",
+      "link": "/factor-performance"
+    },
+    {
+      "title": "Research Articles",
+      "link": "/research-posts"
+    }
+  ]
   },
   {
     "title": "News",

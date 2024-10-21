@@ -36,7 +36,7 @@ const MarketReturns = (props) => {
       <Card.Body className="d-flex align-items-center">
         <div className="w-100">
           <Card.Title as="h6">
-            <Link href="/detail-rooms">
+            <Link href="#">
               <a className="text-decoration-none text-dark">{props.data.symbol}</a>
             </Link>
             <p>

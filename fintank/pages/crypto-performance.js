@@ -4,11 +4,7 @@ import {
   Row,
   Col,
   Card,
-  Badge,
-  InputGroup,
   Breadcrumb,
-  Form,
-  Button,
 } from "react-bootstrap"
 import data from "@data/knowledge-base.json"
 import Link from "next/link"
@@ -16,7 +12,7 @@ import Icon from "@components/Icon"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faAngleDoubleRight, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { faArrowTrendDown, faArrowTrendUp } from "@fortawesome/free-solid-svg-icons"
-import { useIndex } from "@hooks/UseIndex"
+import { useCryptoPerformance } from "@hooks/useCryptoPerformance"
 import axios from 'axios';
 
 export async function getStaticProps() {
@@ -32,19 +28,21 @@ export async function getStaticProps() {
         classes: "shadow",
         color: "white",
       },
-      title: "Market Performance",
+      title: "Crypto Performance",
     },
   }
 }
 
-const KnowledgeBase = (props) => {
-    const {data: indexData} = useIndex();
+const CryptoPerformance = (props) => {
+    const {data: indexData} = useCryptoPerformance();
     
 
     const [allIndexData, setAllIndexData] = useState([])
 
     useEffect(() => {
-        setAllIndexData(indexData)
+        
+        const sortedData = indexData?.sort((a,b) => b.marketCap - a.marketCap);
+        setAllIndexData(sortedData)
     }, [indexData])
 
 
@@ -63,14 +61,14 @@ const KnowledgeBase = (props) => {
             <Breadcrumb.Item active>{props.title}</Breadcrumb.Item>
           </Breadcrumb>
 
-          <h1 className="hero-heading">Global Indexes</h1>
+          <h1 className="hero-heading">Top 100 CryptoCurrencies By MarketCap</h1>
 
         </Container>
       </section>
       <section>
         <Container>
           <Row className="py-5 pt-lg-0 mt-lg-n5">
-            {allIndexData?.map((block, index) => (
+            {allIndexData?.slice(0,101)?.map((block, index) => (
               <Col key={index} lg="4" className="mb-3 mb-lg-0 text-center">
                 <Card className="border-0 shadow-sm hover-animate h-100">
                   <Card.Body className="p-4">
@@ -90,6 +88,7 @@ const KnowledgeBase = (props) => {
                     {(block.changesPercentage).toFixed(2)}% 
                     </p>
                     }
+                    <p className="text-muted text-sm mb-0">Market Cap: ${((block.marketCap)/10**9).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}B</p>
                     <p className="text-muted text-sm mb-0">50 Day Average: ${(block.priceAvg50).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                     <p className="text-muted text-sm mb-0">200 Day Average: ${(block.priceAvg200).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                   </Card.Body>
@@ -103,4 +102,4 @@ const KnowledgeBase = (props) => {
   )
 }
 
-export default KnowledgeBase
+export default CryptoPerformance

@@ -392,8 +392,8 @@ const Index = (props) => {
             <Row>
               {sectorData.sector_data.map((sector, index) => (
                 <Col
-                  xs="6"
-                  lg="4"
+                  xs="4"
+                  lg="3"
                   xl="3"
                   className={`px-0 ${
                     index === sectorData.sector_data.length
