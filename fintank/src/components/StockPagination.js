@@ -88,8 +88,14 @@ const StockListPagination = ({ itemsPerPage, dataProps }) => {
                         <p className="text-sm fw-bold">{stock.cik}</p>
                       </Col>
                       <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
+                        <Row>
                         <h6 className="label-heading">Sector</h6>
                         <p className="text-sm fw-bold">{stock.sector}</p>
+                        </Row>
+                        <Row>
+                        <h6 className="label-heading">Sub Sector</h6>
+                        <p className="text-sm fw-bold">{stock.industry}</p>
+                        </Row>
                       </Col>
                       <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                         <h6 className="label-heading">Price</h6>
@@ -97,7 +103,7 @@ const StockListPagination = ({ itemsPerPage, dataProps }) => {
                       </Col>
                       <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                         <h6 className="label-heading">Market Cap</h6>
-                        <p className="text-sm fw-bold">{stock.mktCap}</p>
+                        <p className="text-sm fw-bold">${((stock.mktCap)/10**9).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}B</p>
                       </Col>
                     </Row>
                   </Col>
