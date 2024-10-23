@@ -101,7 +101,7 @@ const ScreenListPagination = ({ itemsPerPage, dataProps }) => {
                     </Col>
                     <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                       <h6 className="label-heading">Market Cap</h6>
-                      <p className="text-sm fw-bold">{(stock.marketCap).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                      <p className="text-sm fw-bold">${(stock.marketCap/10**9).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}B</p>
                     </Col>
                     <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                       <h6 className="label-heading">County</h6>

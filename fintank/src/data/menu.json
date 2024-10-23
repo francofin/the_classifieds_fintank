@@ -198,22 +198,22 @@
     "services": [
       {
         "title": "Portfolio Analysis",
-        "content": "Find the perfect place",
+        "content": "Test Stock Ideas",
         "icon": "destination-map-1"
       },
       {
         "title": "Stock Research",
-        "content": "And get great rewards",
+        "content": "Information with one click",
         "icon": "money-box-1"
       },
       {
         "title": "Portfolio Tracker",
-        "content": "24/7 Available Support",
+        "content": "Track of the equities you want",
         "icon": "customer-support-1"
       },
       {
-        "title": "Crypto Payment",
-        "content": "Secure Payment",
+        "title": "Crypto Research",
+        "content": "Coin Metrics",
         "icon": "secure-payment-1"
       }
     ],

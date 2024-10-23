@@ -160,7 +160,7 @@ const CapitalMarketIndicators = (props) =>{
 
 
   const {data:stockNames} = useStockNames();
-  const allStocks = stockNames?.stocks;
+  const allStocks = stockNames?.stocks.filter((stock, i) => (stock.universe === "sp500") || (stock.universe === "tsx"));
 
   const randomTickerSearch = () => {
     let randomIndex = Math.floor(Math.random()*allStocks?.length)

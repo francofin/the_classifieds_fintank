@@ -428,7 +428,7 @@ const StockPerformances = (props) => {
                         />
                       </div>
                       <h3 className="h5">Select Index</h3>
-                      <p className="text-muted">The selected index will be divided into deciles or quartiles based on the number of stocks in the Index.</p>
+                      <p className="text-muted">The stocks in the selected index will be divided into deciles or quartiles based on the number of stocks in the Index.</p>
                     </div>
                   </Col>
                   <Col
@@ -443,7 +443,7 @@ const StockPerformances = (props) => {
                         />
                       </div>
                       <h3 className="h5">Select A Frequency to Show for the Factors</h3>      
-                      <p className="text-muted">The available frequencies include 1 Month, 3 Month, 6 Month and Year to Date returns. The performance of the stocks in the Index is divided based on select fundamental attributes. 
+                      <p className="text-muted">The available frequencies include 1 Month, 3 Month, 6 Month and Year to Date returns. The performance of the stocks in the Index is divided based on the specific fundamental attribute. 
                       Stocks are sorted from highest to lowest based on the fundamental attributes presented, and the performance for a specific decile or quartile is computed. The stocks in each bucket are equal weighted.
                       The factor performance can help determine what stocks performed well over the selected frequency and what type of factor has been driving the markets.</p>
                     </div>

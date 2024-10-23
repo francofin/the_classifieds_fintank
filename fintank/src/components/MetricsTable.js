@@ -121,7 +121,7 @@ const MetricsTable = (props) => (
                     key={column.date}
                     className="py-4 text-center align-middle"
                   >
-                    {Number(column.marketCap).toFixed(2)}
+                    ${(Number(column.marketCap)/10**9).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}B
                   </td>
                 ))}
             </tr>
@@ -133,7 +133,7 @@ const MetricsTable = (props) => (
                     key={column.date}
                     className="py-4 text-center align-middle"
                   >
-                    {Number(column.enterpriseValue).toFixed(2)}
+                    ${(Number(column.enterpriseValue)/10**9).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}B
                   </td>
                 ))}
             </tr>

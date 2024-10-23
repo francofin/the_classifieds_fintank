@@ -27,7 +27,6 @@ export default function SearchForm({ id, className, childClassname }) {
 
 
   const onSearchChange = (e) => {
-    // const { suggestions  = allStocks;
     const userInput = e.target.value;
 
     // Filter our suggestions that don't contain the user's input

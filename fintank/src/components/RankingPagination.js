@@ -58,11 +58,11 @@ const RankingListPagination = ({dataProps, metric, bucket}) => {
                   </Col>
                   <Col xs="6" md="4" lg="4" className="align-self-center mb-3 mb-lg-0">
                   <h6 className="label-heading">Period Return</h6>
-                    <p className="text-sm fw-bold">{stock.return}</p>
+                    <p className="text-sm fw-bold">{stock.return.toFixed(2)}%</p>
                   </Col>
                   <Col xs="6" md="4" lg="4" className="align-self-center mb-3 mb-lg-0">
                     <h6 className="label-heading">{metric}</h6>
-                    <p className="text-sm fw-bold">{stock.metric}</p>
+                    <p className="text-sm fw-bold">{stock.metric.toFixed(2)}</p>
                   </Col>
                   {/* <Col xs="6" md="4" lg="3" className="py-3 mb-3 mb-lg-0">
                     <h6 className="label-heading">Price</h6>
